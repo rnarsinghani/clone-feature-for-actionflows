@@ -3,352 +3,700 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clone Flow — Prototype</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Action Flows — Clone Prototype</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-    .flow-row:hover .menu-trigger { opacity: 1; }
-    .menu-trigger { opacity: 0; transition: opacity 0.15s; }
-    .flow-row:hover { background: #f9fafb; }
-    .step-node {
-      border: 1.5px solid #d1d5db;
-      border-radius: 8px;
-      padding: 10px 16px;
-      background: white;
-      font-size: 13px;
-      text-align: center;
-      width: 140px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    /* ── Zendesk design tokens ── */
+    :root {
+      --bg: #F6F5F4;
+      --surface: #FFFFFF;
+      --surface-elevated: #FFFFFF;
+      --nav-rail: #03363D;
+      --text-primary: #293239;
+      --text-secondary: #5C6970;
+      --accent: #1F73B7;
+      --accent-hover: #13456D;
+      --success-bg: #037F52;
+      --success-text: #FFFFFF;
+      --neutral-bg: #E8EAEC;
+      --neutral-text: #293239;
+      --warning: #AC5918;
+      --warning-light: #FFF5E6;
+      --border: #D8DCDE;
+      --border-subtle: #E8EAEC;
+      --border-thead: #9C9A99;
+      --info-light: rgba(31,115,183,0.08);
+      --shadow-sm: 0 1px 2px rgba(3,54,61,0.04);
+      --shadow-md: 0 2px 8px rgba(3,54,61,0.08);
+      --shadow-lg: 0 4px 16px rgba(3,54,61,0.12);
     }
-    .step-node.warning { border-color: #f59e0b; background: #fffbeb; }
-    .connector { width: 2px; height: 24px; background: #d1d5db; margin: 0 auto; }
-    .arrow { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #d1d5db; margin: 0 auto; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 14px; line-height: 1.5; color: var(--text-primary);
+      background: var(--bg); height: 100vh; overflow: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ── Top bar ── */
+    .topbar {
+      background: var(--bg); height: 56px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px; flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 16px; padding-left: 6px; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .topbar-admin-btn {
+      display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+      border-radius: 4px; font-size: 14px; font-weight: 500; color: #2F3941;
+    }
+    .topbar-admin-btn:hover { background: #f0efed; }
+    .search-wrap { position: relative; width: 320px; }
+    .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #68737D; }
+    .search-input {
+      width: 100%; padding: 8px 16px 8px 36px; background: #F8F9F9;
+      border: 1px solid #D8DCDE; border-radius: 999px; font-size: 14px; color: #2F3941;
+      outline: none; transition: background 0.15s;
+    }
+    .search-input:focus { background: white; box-shadow: 0 0 0 3px rgba(79,107,191,0.2); }
+    .search-input::placeholder { color: #68737D; }
+    .avatar { width: 24px; height: 24px; border-radius: 50%; background: #68737D;
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 600; }
+    .topbar-icon-btn {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; color: #68737D;
+    }
+    .topbar-icon-btn:hover { background: #f0efed; }
+
+    /* ── Shell layout ── */
+    .shell { display: flex; flex-direction: column; height: 100vh; }
+    .shell-body { display: flex; flex: 1; min-height: 0; padding: 0 8px 8px; gap: 0; }
+    .shell-inner { display: flex; flex: 1; height: 100%; border-radius: 8px; overflow: hidden; }
+    .main-surface {
+      flex: 1; background: var(--surface); overflow: auto;
+      padding: 40px; border-radius: 8px; border: 1px solid var(--border);
+    }
+
+    /* ── Icon sidebar ── */
+    .icon-rail {
+      width: 56px; display: flex; flex-direction: column; align-items: center;
+      padding: 16px 12px; gap: 16px; flex-shrink: 0;
+    }
+    .icon-rail-btn {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; color: #706F6E; transition: all 0.15s;
+    }
+    .icon-rail-btn:hover { background: #EAE8E7; color: #2F3941; }
+    .icon-rail-btn.active { background: #293239; color: white; }
+
+    /* ── Nav flyout ── */
+    .nav-flyout {
+      width: 240px; display: flex; flex-direction: column; flex-shrink: 0;
+      background: var(--bg); border-right: none;
+    }
+    .nav-flyout-header { padding: 24px 20px 24px 24px; }
+    .nav-flyout-header h2 { font-size: 18px; font-weight: 600; color: #2F3941; }
+    .nav-group { padding: 0 12px; margin-bottom: 20px; }
+    .nav-group-label { font-size: 12px; font-weight: 600; color: #706F6E; padding: 0 12px 8px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 6px 12px;
+      border-radius: 6px; font-size: 14px; font-weight: 500; color: #313131;
+      transition: all 0.15s; margin-bottom: 2px;
+    }
+    .nav-item:hover { background: #EAE8E7; color: #2F3941; }
+    .nav-item.active { background: #293239; color: white; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 40px; }
+    .breadcrumbs { display: flex; align-items: center; gap: 4px; margin-bottom: 16px; font-size: 12px; color: var(--text-secondary); }
+    .breadcrumbs a { color: var(--accent); }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    .breadcrumb-sep { color: #C8C6C4; font-size: 10px; }
+    .page-title { font-size: 26px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+    .page-description { font-size: 14px; color: var(--text-secondary); margin-top: 8px; max-width: 700px; line-height: 1.6; }
+    .page-description a { color: var(--accent); }
+    .page-description a:hover { text-decoration: underline; }
+    .page-header-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+
+    /* ── Button ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 40px; padding: 0 16px; border-radius: 4px; font-size: 14px; font-weight: 500;
+      transition: all 0.15s; outline: none; white-space: nowrap;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-outline {
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline:hover { background: var(--info-light); }
+    .btn-sm { height: 32px; padding: 0 12px; font-size: 12px; }
+    .btn-loading { display: inline-flex; align-items: center; gap: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; display: inline-block; }
+
+    /* ── Table ── */
+    .info-row { font-size: 14px; color: var(--text-secondary); text-align: right; margin-bottom: 16px; }
+    .table-wrap { background: var(--surface); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { border-bottom: 1px solid var(--border-thead); }
+    th { padding: 16px; text-align: left; font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    td { padding: 16px; font-size: 14px; color: var(--text-primary); border-bottom: 1px solid var(--border-subtle); font-variant-numeric: tabular-nums; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr { transition: background 0.1s; cursor: pointer; }
+    tbody tr:hover td { background: var(--info-light); }
+    .td-link { color: var(--accent); font-weight: 600; }
+    .td-link:hover { text-decoration: underline; }
+    .td-muted { color: var(--text-secondary); }
+    .td-menu { width: 48px; }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 2px 10px; border-radius: 2px; font-size: 12px; font-weight: 500;
+    }
+    .badge-active { background: #037F52; color: white; }
+    .badge-inactive { background: #E8EAEC; color: #293239; }
+
+    /* ── Dropdown menu ── */
+    .dropdown-wrap { position: relative; }
+    .dropdown-trigger-btn {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; color: var(--text-secondary); transition: all 0.1s;
+    }
+    .dropdown-trigger-btn:hover { background: var(--bg); color: var(--text-primary); }
+    .dropdown-menu {
+      position: absolute; right: 0; top: calc(100% + 8px); z-index: 100;
+      background: var(--surface); border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); border-radius: 2px; min-width: 220px; padding: 4px 0;
+    }
+    .dropdown-item {
+      position: relative; display: block; width: 100%; text-align: left;
+      padding: 8px 16px; font-size: 14px; color: var(--text-primary);
+      transition: background 0.1s; overflow: hidden;
+    }
+    .dropdown-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--accent); opacity: 0; transition: opacity 0.1s;
+    }
+    .dropdown-item:hover { background: var(--info-light); }
+    .dropdown-item:hover::before { opacity: 1; }
+    .dropdown-item.danger { color: #CD3642; }
+    .dropdown-item.danger:hover { background: #FFF2F3; }
+    .dropdown-item.clone { font-weight: 500; }
+
+    /* ── Modal backdrop + panel ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
+      z-index: 40;
+    }
+    .modal-container {
+      position: fixed; inset: 0; z-index: 50; overflow-y: auto;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-panel {
+      background: var(--surface-elevated); border-radius: 12px;
+      box-shadow: var(--shadow-lg); width: 100%; max-width: 480px;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 16px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .modal-close {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; color: var(--text-secondary); transition: all 0.1s;
+    }
+    .modal-close:hover { color: var(--text-primary); background: var(--bg); }
+    .modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+    .modal-footer {
+      padding: 16px 24px; background: #F8F9F9; border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 8px;
+    }
+    .label-text { display: block; font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
+    .label-text span { color: #CD3642; }
+    .read-only-field {
+      background: #F8F9F9; border: 1px solid var(--border); border-radius: 4px;
+      padding: 8px 12px; font-size: 14px; color: var(--text-secondary);
+    }
+    .text-input {
+      width: 100%; border: 1px solid var(--border); border-radius: 4px;
+      padding: 8px 12px; font-size: 14px; color: var(--text-primary);
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+      height: 40px; background: white;
+    }
+    .text-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(31,115,183,0.12);
+    }
+    .checkbox-row { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+    .checkbox-row input[type=checkbox] { margin-top: 2px; width: 14px; height: 14px; accent-color: var(--accent); flex-shrink: 0; }
+    .checkbox-label { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+    .checkbox-hint { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .info-box {
+      display: flex; gap: 10px; background: #EDF7FF; border-radius: 6px; padding: 12px 14px;
+    }
+    .info-box svg { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+    .info-box p { font-size: 12px; color: #13456D; line-height: 1.5; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #293239; color: white; display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: 999px; font-size: 14px; font-weight: 500;
+      box-shadow: var(--shadow-lg); z-index: 200; white-space: nowrap;
+    }
+    .toast svg { color: #22C55E; }
+
+    /* ── Canvas view ── */
+    .canvas-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      background: #F8F9F9; flex-shrink: 0;
+    }
+    .canvas-toolbar-left { display: flex; align-items: center; gap: 12px; }
+    .back-btn { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-secondary); }
+    .back-btn:hover { color: var(--text-primary); }
+    .canvas-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .canvas-toolbar-right { display: flex; align-items: center; gap: 8px; }
+    .canvas-body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+    .canvas-diagram-area {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 40px; background: #FAFAFA; overflow: auto;
+    }
+    .flow-node {
+      border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 20px;
+      background: white; font-size: 13px; text-align: center; min-width: 160px;
+      box-shadow: var(--shadow-sm); color: var(--text-primary);
+    }
+    .flow-node.warn { border-color: #FFB057; background: #FFF5E6; }
+    .flow-node.warn .warn-icon { display: inline; }
+    .warn-icon { display: none; }
+    .flow-connector { width: 2px; height: 20px; background: var(--border); margin: 0 auto; }
+    .flow-arrow {
+      width: 0; height: 0; margin: 0 auto;
+      border-left: 5px solid transparent; border-right: 5px solid transparent;
+      border-top: 7px solid var(--border);
+    }
+    .validation-panel {
+      width: 280px; border-left: 1px solid var(--border); display: flex; flex-direction: column;
+      background: white; flex-shrink: 0;
+    }
+    .validation-header {
+      padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);
+      background: #FFF5E6;
+    }
+    .validation-header h4 { font-size: 13px; font-weight: 600; color: #AC5918; }
+    .validation-header p { font-size: 12px; color: #703815; margin-top: 2px; }
+    .validation-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .validation-issue {
+      border: 1px solid #FFB057; border-radius: 8px; padding: 12px; background: #FFF9F0;
+    }
+    .validation-issue-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .validation-issue-step { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+    .validation-issue-msg { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.4; }
+    .validation-dismiss { width: 20px; height: 20px; flex-shrink: 0; color: #9C9A99; display: flex; align-items: center; justify-content: center; }
+    .validation-dismiss:hover { color: var(--text-primary); }
+    .validation-action-btn {
+      margin-top: 10px; width: 100%; padding: 6px 12px; font-size: 12px; font-weight: 500;
+      color: #AC5918; border: 1px solid #FFB057; border-radius: 4px;
+      transition: background 0.1s;
+    }
+    .validation-action-btn:hover { background: #FFE8CC; }
+    .divider { height: 1px; background: var(--border); }
+    .divider-v { width: 1px; height: 20px; background: var(--border); }
+
+    /* prototype badge */
+    .proto-badge {
+      font-size: 11px; font-weight: 500; background: #FFF5E6; border: 1px solid #FFB057;
+      color: #703815; padding: 2px 8px; border-radius: 999px;
+    }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body>
 
 <script type="text/babel">
 const { useState, useRef, useEffect } = React;
 
-const INITIAL_FLOWS = [
-  { id: 1, name: "VIP Routing Flow", status: "Active", runs: 2450, trigger: "Ticket Created", steps: ["Trigger: Ticket Created", "Branch: Tag includes 'vip'", "Update Ticket: Set Priority High", "Post to Slack: #vip-alerts"] },
-  { id: 2, name: "Refund Detection", status: "Active", runs: 1203, trigger: "Ticket Created", steps: ["Trigger: Ticket Created", "Branch: Subject contains 'refund'", "Update Ticket: Set Type Billing", "Assign to Refunds Team"] },
-  { id: 3, name: "Escalation Alert", status: "Inactive", runs: 0, trigger: "Ticket Priority Changed", steps: ["Trigger: Priority Changed", "Branch: Priority is Urgent", "Post to Slack: #escalations", "Add Tag: escalated"] },
-  { id: 4, name: "Auto-Close Solved", status: "Active", runs: 8712, trigger: "Ticket Solved", steps: ["Trigger: Ticket Solved", "Wait: 48 hours", "Update Ticket: Status Closed"] },
+/* ─── Data ─── */
+const FLOWS = [
+  { id: 'f1', name: 'Order Return Flow', description: 'Complete order return with refund and notification', trigger: 'Ticket tag: return', successful_runs: 3, failed_runs: 2, action_credits: 48, status: 'active', updated: 'Aug 10, 2026, 2:15 PM',
+    steps: ['Trigger: Ticket tag "return"', 'Branch: Refund amount > $200', 'Update Ticket: Set priority high', 'Post to Slack: #returns-team'] },
+  { id: 'f2', name: 'High-Value Refund Approval', description: 'Escalate high-value refunds for human approval', trigger: 'Refund amount > $200', successful_runs: 2, failed_runs: 2, action_credits: 32, status: 'active', updated: 'Aug 9, 2026, 10:30 AM',
+    steps: ['Trigger: Ticket created', 'Branch: Amount > $200', 'Assign to Approvals Team', 'Send Email: Manager notification'] },
+  { id: 'f3', name: 'VIP Customer Routing', description: 'Route VIP tickets to priority queue with Slack alert', trigger: 'Customer tier: VIP', successful_runs: 5, failed_runs: 0, action_credits: 72, status: 'active', updated: 'Aug 8, 2026, 9:20 AM',
+    steps: ['Trigger: Ticket created', 'Branch: Tag includes "vip"', 'Update Ticket: Set priority urgent', 'Post to Slack: #vip-alerts'] },
+  { id: 'f4', name: 'Escalation Alert', description: 'Multi-channel incident response with escalation matrix', trigger: 'Severity: P0/P1', successful_runs: 0, failed_runs: 0, action_credits: 0, status: 'inactive', updated: 'Aug 5, 2026, 3:10 PM',
+    steps: ['Trigger: Priority changed', 'Branch: Priority is urgent', 'Post to Slack: #escalations', 'Add tag: escalated'] },
+  { id: 'f5', name: 'Subscription Renewal', description: 'Automated renewal with intelligent upsell opportunities', trigger: 'Subscription expiry < 7 days', successful_runs: 3, failed_runs: 1, action_credits: 64, status: 'active', updated: 'Aug 4, 2026, 11:55 AM',
+    steps: ['Trigger: Subscription expiry', 'Branch: Plan type', 'Send Email: Renewal notice', 'Update CRM: Renewal flag'] },
 ];
 
-const VALIDATION_WARNINGS = [
-  { step: "Update Ticket", issue: "Custom field 'Account Tier' may not exist — select a replacement field", action: "Select Replacement" },
-  { step: "Post to Slack", issue: "Slack connection not available — please reconnect", action: "Reconnect Slack" },
+const WARNINGS = [
+  { step: 'Update Ticket', issue: 'Custom field "Account Tier" may not exist in this account — select a replacement field', action: 'Select Replacement' },
+  { step: 'Post to Slack', issue: 'Slack connection not available — please reconnect to continue', action: 'Reconnect Slack' },
 ];
 
-function StatusBadge({ status }) {
-  const color = status === "Active" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500";
-  return <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${color}`}>{status}</span>;
-}
+/* ─── Icons ─── */
+const ChevronDown = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+const SearchIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.5"/><path d="M11 11l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+const DotsIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+const XIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+const BackIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+const ZendeskLogo = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M11.3307 8.28442V19.4383H2.09998L11.3307 8.28442ZM11.3307 4.28442C11.3307 6.82288 9.25382 8.89981 6.71536 8.89981C4.1769 8.89981 2.09998 6.82288 2.09998 4.28442H11.3307ZM12.8692 19.4383C12.8692 16.8998 14.9461 14.8229 17.4846 14.8229C20.0231 14.8229 22.1 16.8998 22.1 19.4383H12.8692ZM12.8692 15.4383V4.28442H22.1L12.8692 15.4383Z" fill="#03363D"/></svg>
+const SpinnerIcon = () => <svg className="spin" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="white" strokeWidth="2" strokeDasharray="10 6" /></svg>
+const CheckIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+const InfoIcon = () => <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>
 
+/* ─── Dropdown ─── */
 function DropdownMenu({ flow, onClone, onClose }) {
   const ref = useRef();
   useEffect(() => {
-    function handle(e) { if (ref.current && !ref.current.contains(e.target)) onClose(); }
-    document.addEventListener("mousedown", handle);
-    return () => document.removeEventListener("mousedown", handle);
+    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
   }, []);
   return (
-    <div ref={ref} className="absolute right-0 top-8 z-20 bg-white rounded-lg shadow-lg border border-gray-200 w-40 py-1">
-      {["Edit", "Clone", flow.status === "Active" ? "Deactivate" : "Activate", "Delete"].map(action => (
-        <button key={action}
-          onClick={() => { if (action === "Clone") onClone(flow); else onClose(); }}
-          className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${action === "Delete" ? "text-red-600 hover:bg-red-50" : "text-gray-700"}`}>
-          {action}
+    <div ref={ref} className="dropdown-menu">
+      {[
+        { label: 'Edit flow', action: null },
+        { label: 'Edit name and description', action: null },
+        { label: 'Clone', action: () => onClone(flow), style: 'clone' },
+        { label: flow.status === 'active' ? 'Deactivate' : 'Activate', action: null },
+        { label: 'View run history', action: null },
+        { label: 'Delete', action: null, style: 'danger' },
+      ].map(({ label, action, style }) => (
+        <button key={label}
+          className={`dropdown-item${style ? ' ' + style : ''}`}
+          onClick={() => { if (action) action(); else onClose(); }}>
+          {label}
         </button>
       ))}
     </div>
   );
 }
 
-function FlowListView({ flows, onClone }) {
+/* ─── Clone Modal ─── */
+function CloneModal({ flow, onConfirm, onCancel }) {
+  const [name, setName] = useState(`${flow.name} (Copy)`);
+  const [activate, setActivate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  return (
+    <>
+      <div className="modal-backdrop" onClick={onCancel} />
+      <div className="modal-container">
+        <div className="modal-panel">
+          <div className="modal-header">
+            <h3>Clone flow</h3>
+            <button className="modal-close" onClick={onCancel}><XIcon /></button>
+          </div>
+          <div className="modal-body">
+            <div>
+              <span className="label-text">Original flow</span>
+              <div className="read-only-field">{flow.name}</div>
+            </div>
+            <div>
+              <span className="label-text">New flow name <span>*</span></span>
+              <input
+                className="text-input"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                autoFocus
+              />
+            </div>
+            <label className="checkbox-row">
+              <input type="checkbox" checked={activate} onChange={e => setActivate(e.target.checked)} />
+              <div>
+                <div className="checkbox-label">Activate cloned flow immediately</div>
+                <div className="checkbox-hint">By default, cloned flows start as Inactive</div>
+              </div>
+            </label>
+            <div className="info-box">
+              <InfoIcon />
+              <p>Cloned flow includes all steps and settings. Connections are preserved if you have access. Execution history is not copied.</p>
+            </div>
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-outline btn-sm" onClick={onCancel}>Cancel</button>
+            <button
+              className="btn btn-primary btn-sm btn-loading"
+              disabled={loading || !name.trim()}
+              onClick={() => { setLoading(true); setTimeout(() => onConfirm({ name: name.trim(), activate }), 900); }}>
+              {loading ? <><SpinnerIcon /> Cloning…</> : 'Clone flow'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ─── Toast ─── */
+function Toast({ msg, onDone }) {
+  useEffect(() => { const t = setTimeout(onDone, 3500); return () => clearTimeout(t); }, []);
+  return <div className="toast"><CheckIcon />{msg}</div>;
+}
+
+/* ─── Canvas View ─── */
+function CanvasView({ flow, clonedName, onBack }) {
+  const [dismissed, setDismissed] = useState([]);
+  const active = WARNINGS.filter((_, i) => !dismissed.includes(i));
+
+  const warnSteps = new Set(active.map(w => w.step.toLowerCase().split(':')[0].trim()));
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'white', borderRadius: 8, border: '1px solid var(--border)' }}>
+      <div className="canvas-toolbar">
+        <div className="canvas-toolbar-left">
+          <button className="back-btn" onClick={onBack}><BackIcon /> Back to flows</button>
+          <div className="divider-v" />
+          <span className="canvas-title">{clonedName}</span>
+          <span className="badge badge-inactive">Inactive</span>
+          {active.length > 0 && <span className="badge" style={{ background: '#FFF5E6', color: '#AC5918' }}>⚠️ {active.length} issue{active.length > 1 ? 's' : ''}</span>}
+        </div>
+        <div className="canvas-toolbar-right">
+          <button className="btn btn-outline btn-sm">Save draft</button>
+          <button className="btn btn-primary btn-sm" disabled={active.length > 0} style={active.length > 0 ? { opacity: 0.4, cursor: 'not-allowed' } : {}}>
+            {active.length > 0 ? 'Resolve issues to activate' : 'Activate flow'}
+          </button>
+        </div>
+      </div>
+      <div className="canvas-body">
+        <div className="canvas-diagram-area">
+          {flow.steps.map((step, i) => {
+            const stepKey = step.toLowerCase().split(':')[0].trim();
+            const hasWarn = warnSteps.has(stepKey);
+            return (
+              <React.Fragment key={i}>
+                <div className={`flow-node${hasWarn ? ' warn' : ''}`}>
+                  {hasWarn && '⚠️ '}{step}
+                </div>
+                {i < flow.steps.length - 1 && <>
+                  <div className="flow-connector" />
+                  <div className="flow-arrow" />
+                </>}
+              </React.Fragment>
+            );
+          })}
+        </div>
+        {active.length > 0 && (
+          <div className="validation-panel">
+            <div className="validation-header">
+              <h4>⚠️ Validation Issues ({active.length})</h4>
+              <p>Resolve all issues before activating</p>
+            </div>
+            <div className="validation-list">
+              {active.map((w, i) => {
+                const idx = WARNINGS.indexOf(w);
+                return (
+                  <div key={i} className="validation-issue">
+                    <div className="validation-issue-header">
+                      <div style={{ flex: 1 }}>
+                        <div className="validation-issue-step">Step: "{w.step}"</div>
+                        <div className="validation-issue-msg">{w.issue}</div>
+                      </div>
+                      <button className="validation-dismiss" onClick={() => setDismissed(d => [...d, idx])}><XIcon /></button>
+                    </div>
+                    <button className="validation-action-btn">{w.action}</button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Flows Table ─── */
+function FlowsTable({ flows, onClone }) {
   const [openMenu, setOpenMenu] = useState(null);
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-        <h2 className="text-base font-semibold text-gray-900">Action Flows</h2>
-        <button className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-colors">
-          <span className="text-lg leading-none">+</span> New Flow
-        </button>
-      </div>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="bg-gray-50 border-b border-gray-100">
-            <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide w-8"><input type="checkbox" className="rounded" /></th>
-            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">Flow Name</th>
-            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">Status</th>
-            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">Runs (30d)</th>
-            <th className="w-12 px-4 py-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {flows.map(flow => (
-            <tr key={flow.id} className="flow-row border-b border-gray-50 last:border-0 cursor-default">
-              <td className="px-6 py-4"><input type="checkbox" className="rounded" /></td>
-              <td className="px-4 py-4">
-                <div className="font-medium text-gray-900">{flow.name}</div>
-                <div className="text-xs text-gray-400 mt-0.5">Trigger: {flow.trigger}</div>
-              </td>
-              <td className="px-4 py-4"><StatusBadge status={flow.status} /></td>
-              <td className="px-4 py-4 text-right text-gray-600">{flow.runs.toLocaleString()}</td>
-              <td className="px-4 py-4 relative">
-                <button
-                  className="menu-trigger p-1.5 rounded-md hover:bg-gray-100 text-gray-500"
-                  onClick={(e) => { e.stopPropagation(); setOpenMenu(openMenu === flow.id ? null : flow.id); }}
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-                    <circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/>
-                  </svg>
-                </button>
-                {openMenu === flow.id && (
-                  <DropdownMenu flow={flow} onClone={(f) => { setOpenMenu(null); onClone(f); }} onClose={() => setOpenMenu(null)} />
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function CloneModal({ flow, onConfirm, onCancel }) {
-  const [newName, setNewName] = useState(`${flow.name} (Copy)`);
-  const [activateNow, setActivateNow] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  function handleClone() {
-    setLoading(true);
-    setTimeout(() => onConfirm({ name: newName.trim() || `${flow.name} (Copy)`, activateNow }), 900);
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onCancel} />
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-        <div className="px-6 py-5 border-b border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900">Clone Flow</h2>
-          <p className="text-sm text-gray-500 mt-0.5">Create an exact copy of this flow</p>
-        </div>
-        <div className="px-6 py-5 space-y-5">
-          <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Original flow</label>
-            <div className="text-sm font-medium text-gray-700 bg-gray-50 rounded-lg px-3 py-2.5 border border-gray-200">{flow.name}</div>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">New flow name <span className="text-red-500">*</span></label>
-            <input
-              className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              value={newName}
-              onChange={e => setNewName(e.target.value)}
-              autoFocus
-            />
-          </div>
-          <label className="flex items-start gap-3 cursor-pointer select-none">
-            <input type="checkbox" className="mt-0.5 rounded accent-green-600" checked={activateNow} onChange={e => setActivateNow(e.target.checked)} />
-            <div>
-              <div className="text-sm font-medium text-gray-700">Activate cloned flow immediately</div>
-              <div className="text-xs text-gray-400 mt-0.5">By default, cloned flows start as Inactive</div>
-            </div>
-          </label>
-          <div className="bg-blue-50 rounded-lg px-4 py-3 flex gap-2.5">
-            <svg className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>
-            <p className="text-xs text-blue-700">Cloned flow includes all steps and settings. Connections are preserved if you have access. Execution history is not copied.</p>
-          </div>
-        </div>
-        <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3 border-t border-gray-100">
-          <button onClick={onCancel} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-          <button onClick={handleClone} disabled={loading || !newName.trim()}
-            className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:opacity-60 rounded-lg transition-colors flex items-center gap-2">
-            {loading && <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>}
-            {loading ? "Cloning…" : "Clone Flow"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FlowCanvas({ flow, clonedName, onBack }) {
-  const [dismissedWarnings, setDismissedWarnings] = useState([]);
-  const activeWarnings = VALIDATION_WARNINGS.filter((_, i) => !dismissedWarnings.includes(i));
-
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 bg-gray-50">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1.5">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
-            Back to flows
-          </button>
-          <span className="text-gray-300">|</span>
-          <span className="text-sm font-semibold text-gray-800">{clonedName}</span>
-          <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-medium">Inactive</span>
-          {activeWarnings.length > 0 && (
-            <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-              ⚠️ {activeWarnings.length} issue{activeWarnings.length > 1 ? "s" : ""}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <button className="px-3 py-1.5 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Save Draft</button>
-          <button className="px-3 py-1.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg disabled:opacity-40" disabled={activeWarnings.length > 0}>
-            {activeWarnings.length > 0 ? "Resolve issues to activate" : "Activate Flow"}
-          </button>
-        </div>
-      </div>
-
-      {/* Canvas area */}
-      <div className="flex" style={{ minHeight: 480 }}>
-        {/* Flow diagram */}
-        <div className="flex-1 flex flex-col items-center justify-center py-10 px-8 bg-gray-50/50">
-          <div className="flex flex-col items-center gap-0">
-            {flow.steps.map((step, i) => {
-              const hasWarning = activeWarnings.some(w => step.toLowerCase().includes(w.step.toLowerCase().split(":")[0].toLowerCase()));
-              return (
-                <React.Fragment key={i}>
-                  <div className={`step-node ${hasWarning ? "warning" : ""}`}>
-                    {hasWarning && <span className="mr-1">⚠️</span>}
-                    {step}
-                  </div>
-                  {i < flow.steps.length - 1 && (
-                    <div className="flex flex-col items-center">
-                      <div className="connector" />
-                      <div className="arrow" />
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Warnings sidebar */}
-        {activeWarnings.length > 0 && (
-          <div className="w-72 border-l border-gray-200 bg-white flex flex-col">
-            <div className="px-4 py-3 border-b border-gray-100 bg-amber-50">
-              <p className="text-sm font-semibold text-amber-800">⚠️ Validation Issues ({activeWarnings.length})</p>
-              <p className="text-xs text-amber-600 mt-0.5">Resolve all issues before activating</p>
-            </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {activeWarnings.map((w, i) => (
-                <div key={i} className="border border-amber-200 rounded-lg p-3 bg-amber-50/50">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1">
-                      <div className="text-xs font-semibold text-gray-700">Step: "{w.step}"</div>
-                      <div className="text-xs text-gray-500 mt-1 leading-relaxed">{w.issue}</div>
-                    </div>
-                    <button onClick={() => setDismissedWarnings(d => [...d, VALIDATION_WARNINGS.indexOf(w)])}
-                      className="text-gray-400 hover:text-gray-600 shrink-0">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                  </div>
-                  <button className="mt-2 w-full text-center text-xs font-medium text-amber-700 border border-amber-300 rounded-md py-1.5 hover:bg-amber-100 transition-colors">
-                    {w.action}
-                  </button>
-                </div>
+    <div className="table-wrap">
+      <div style={{ overflowX: 'auto' }}>
+        <table>
+          <thead>
+            <tr>
+              {['Name', 'Description', 'Successful runs', 'Failed runs', 'Action credits used', 'Status', 'Updated', ''].map(h => (
+                <th key={h}>{h}</th>
               ))}
-            </div>
-          </div>
-        )}
+            </tr>
+          </thead>
+          <tbody>
+            {flows.map(flow => (
+              <tr key={flow.id}>
+                <td><span className="td-link">{flow.name}</span></td>
+                <td><span className="td-muted">{flow.description}</span></td>
+                <td><span className="td-muted">{flow.successful_runs}</span></td>
+                <td><span className="td-muted">{flow.failed_runs}</span></td>
+                <td><span className="td-muted">{flow.action_credits}</span></td>
+                <td>
+                  <span className={`badge badge-${flow.status}`}>
+                    {flow.status.charAt(0).toUpperCase() + flow.status.slice(1)}
+                  </span>
+                </td>
+                <td><span className="td-muted">{flow.updated}</span></td>
+                <td className="td-menu" onClick={e => e.stopPropagation()}>
+                  <div className="dropdown-wrap">
+                    <button className="dropdown-trigger-btn" onClick={() => setOpenMenu(openMenu === flow.id ? null : flow.id)}>
+                      <DotsIcon />
+                    </button>
+                    {openMenu === flow.id && (
+                      <DropdownMenu
+                        flow={flow}
+                        onClone={f => { setOpenMenu(null); onClone(f); }}
+                        onClose={() => setOpenMenu(null)}
+                      />
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
-function Toast({ message, onDone }) {
-  useEffect(() => { const t = setTimeout(onDone, 3500); return () => clearTimeout(t); }, []);
-  return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 bg-gray-900 text-white text-sm font-medium px-5 py-3 rounded-full shadow-xl animate-bounce-in">
-      <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-      {message}
-    </div>
-  );
-}
-
+/* ─── App ─── */
 function App() {
-  const [flows, setFlows] = useState(INITIAL_FLOWS);
+  const [flows, setFlows] = useState(FLOWS);
   const [cloneTarget, setCloneTarget] = useState(null);
-  const [clonedFlow, setClonedFlow] = useState(null);
+  const [canvas, setCanvas] = useState(null);
   const [toast, setToast] = useState(null);
-  const [view, setView] = useState("list"); // "list" | "canvas"
+  const [view, setView] = useState('list');
 
-  function handleCloneConfirm({ name, activateNow }) {
-    const newFlow = {
-      id: Date.now(),
-      name,
-      status: activateNow ? "Active" : "Inactive",
-      runs: 0,
-      trigger: cloneTarget.trigger,
-      steps: cloneTarget.steps,
-      hasWarnings: true,
-    };
+  function handleConfirm({ name, activate }) {
+    const newFlow = { ...cloneTarget, id: Date.now().toString(), name, status: activate ? 'active' : 'inactive',
+      successful_runs: 0, failed_runs: 0, action_credits: 0, updated: 'Just now' };
     setFlows(f => [newFlow, ...f]);
-    setClonedFlow({ flow: cloneTarget, name, activateNow });
+    setCanvas({ flow: cloneTarget, name });
     setCloneTarget(null);
-    setToast(`"${name}" created successfully`);
-    setView("canvas");
+    setToast(`"${name}" cloned successfully`);
+    setView('canvas');
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top nav */}
-      <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-3">
-        <div className="w-7 h-7 bg-green-600 rounded-md flex items-center justify-center">
-          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    <div className="shell">
+      {/* Top bar */}
+      <div className="topbar">
+        <div className="topbar-left">
+          <ZendeskLogo />
+          <button className="topbar-admin-btn">
+            Admin center <ChevronDown />
+          </button>
+          <button className="topbar-admin-btn" style={{ fontWeight: 400, color: '#5C6970' }}>
+            acme-corp <ChevronDown />
+          </button>
         </div>
-        <span className="text-sm font-semibold text-gray-700">Action Builder</span>
-        <span className="text-gray-300 text-xs">›</span>
-        <span className="text-sm text-gray-500">Action Flows</span>
-        <span className="ml-auto text-xs text-gray-400 bg-amber-50 border border-amber-200 text-amber-600 px-2 py-0.5 rounded-full font-medium">
-          Prototype — Clone Flow Feature
-        </span>
+        <div className="topbar-right">
+          <div className="search-wrap">
+            <SearchIcon />
+            <input className="search-input" placeholder="Search admin center" />
+          </div>
+          <button className="topbar-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10.7982 2.26062C10.6925 1.90814 10.3681 1.66675 10.0001 1.66675C9.63208 1.66675 9.30766 1.90814 9.20191 2.26062C8.60241 4.2588 7.82538 5.68376 6.75457 6.75457C5.68376 7.82538 4.2588 8.60241 2.26062 9.20191C1.90814 9.30766 1.66675 9.63208 1.66675 10.0001C1.66675 10.3681 1.90814 10.6925 2.26062 10.7982C4.2588 11.3977 5.68376 12.1747 6.75457 13.2456C7.82538 14.3164 8.60241 15.7413 9.20191 17.7395C9.30766 18.092 9.63208 18.3334 10.0001 18.3334C10.3681 18.3334 10.6925 18.092 10.7982 17.7395C11.3977 15.7413 12.1747 14.3164 13.2456 13.2456C14.3164 12.1747 15.7413 11.3977 17.7395 10.7982C18.092 10.6925 18.3334 10.3681 18.3334 10.0001C18.3334 9.63208 18.092 9.30766 17.7395 9.20191C15.7413 8.60241 14.3164 7.82538 13.2456 6.75457C12.1747 5.68376 11.3977 4.2588 10.7982 2.26062Z" fill="url(#sparkle)"/>
+              <defs><linearGradient id="sparkle" x1="-2.5" y1="-2.5" x2="22.5" y2="22.5" gradientUnits="userSpaceOnUse"><stop offset="0.3" stopColor="#9256B1"/><stop offset="1" stopColor="#4F6BBF"/></linearGradient></defs>
+            </svg>
+          </button>
+          <button className="topbar-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="7" stroke="#706F6E" strokeWidth="1.5"/>
+              <circle cx="10" cy="10" r="3" stroke="#706F6E" strokeWidth="1.5"/>
+            </svg>
+          </button>
+          <div className="avatar" style={{ marginLeft: 8 }}>R</div>
+          <span className="proto-badge" style={{ marginLeft: 12 }}>Prototype</span>
+        </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Action Flows</h1>
-          <p className="text-sm text-gray-500 mt-1">Automate your support workflows. Hover over a flow and click ⋮ to clone it.</p>
-        </div>
+      {/* Body */}
+      <div className="shell-body">
+        <div className="shell-inner">
+          {/* Icon rail */}
+          <div className="icon-rail">
+            {[
+              { id: 'home', path: 'M11.4163 2.87911C10.5632 2.29258 9.43683 2.29258 8.58367 2.87911L3.58367 6.31661C2.90529 6.78299 2.5 7.55347 2.5 8.37671V15C2.5 16.3807 3.61929 17.5 5 17.5H7.08333C7.54357 17.5 7.91667 17.1269 7.91667 16.6666V13.75C7.91667 12.5994 8.84942 11.6666 10 11.6666C11.1506 11.6666 12.0833 12.5994 12.0833 13.75V16.6666C12.0833 17.1269 12.4564 17.5 12.9167 17.5H15C16.3807 17.5 17.5 16.3807 17.5 15V8.37671C17.5 7.55347 17.0947 6.78299 16.4163 6.31661L11.4163 2.87911Z' },
+              { id: 'sparkle-nav', path: 'M9.9945 4.07296C9.94684 3.65203 9.59101 3.33385 9.16734 3.33342C8.74376 3.33298 8.38717 3.65043 8.33867 4.07126C8.11269 6.03045 7.53087 7.37449 6.61923 8.28614C5.70759 9.19775 4.36354 9.77958 2.40435 10.0056C1.98352 10.0541 1.66607 10.4107 1.6665 10.8342C1.66694 11.2579 1.98512 11.6137 2.40605 11.6614C4.3321 11.8796 5.70675 12.4613 6.64157 13.3792C7.5713 14.2922 8.16416 15.6342 8.33642 17.5738C8.37467 18.0042 8.73542 18.3339 9.16742 18.3334C9.5995 18.3329 9.95951 18.0023 9.99675 17.5719C10.1618 15.6652 10.7542 14.2928 11.69 13.3569C12.6259 12.4211 13.9983 11.8287 15.905 11.6637C16.3354 11.6264 16.666 11.2664 16.6665 10.8343C16.667 10.4023 16.3373 10.0416 15.9069 10.0033C13.9673 9.83108 12.6253 9.23825 11.7123 8.30848C10.7944 7.37367 10.2127 5.99901 9.9945 4.07296Z' },
+              { id: 'building', path: 'M16.6667 15.8333V5C16.6667 3.61929 15.5475 2.5 14.1667 2.5H5.83341C4.45271 2.5 3.33341 3.61929 3.33341 5V15.8333H2.50008C2.03985 15.8333 1.66675 16.2064 1.66675 16.6667C1.66675 17.1269 2.03985 17.5 2.50008 17.5H17.5001C17.9603 17.5 18.3334 17.1269 18.3334 16.6667C18.3334 16.2064 17.9603 15.8333 17.5001 15.8333H16.6667Z', fillRule: 'evenodd', clipRule: 'evenodd' },
+              { id: 'people', path: 'M2.91577 5.83333C2.91577 3.99238 4.40815 2.5 6.2491 2.5C8.09005 2.5 9.58242 3.99238 9.58242 5.83333C9.58242 7.67428 8.09005 9.16667 6.2491 9.16667C4.40815 9.16667 2.91577 7.67428 2.91577 5.83333ZM10.4158 5.83333C10.4158 3.99238 11.9082 2.5 13.7491 2.5C15.5901 2.5 17.0824 3.99238 17.0824 5.83333C17.0824 7.67428 15.5901 9.16667 13.7491 9.16667C11.9082 9.16667 10.4158 7.67428 10.4158 5.83333Z' },
+              { id: 'grid', active: true, path: 'M2.50195 4.99963C2.50195 3.62007 3.62031 2.50171 4.99987 2.50171H6.66654C8.0461 2.50171 9.16445 3.62007 9.16445 4.99963V6.66629C9.16445 8.04586 8.0461 9.16425 6.66654 9.16425H4.99987C3.62031 9.16425 2.50195 8.04586 2.50195 6.66629V4.99963ZM2.50195 13.333C2.50195 11.9534 3.62031 10.8351 4.99987 10.8351H6.66654C8.0461 10.8351 9.16445 11.9534 9.16445 13.333V14.9997C9.16445 16.3792 8.0461 17.4976 6.66654 17.4976H4.99987C3.62031 17.4976 2.50195 16.3792 2.50195 14.9997V13.333ZM10.8353 4.99963C10.8353 3.62007 11.9536 2.50171 13.3332 2.50171H14.9999C16.3795 2.50171 17.4978 3.62007 17.4978 4.99963V6.66629C17.4978 8.04586 16.3795 9.16425 14.9999 9.16425H13.3332C11.9536 9.16425 10.8353 8.04586 10.8353 6.66629V4.99963Z' },
+            ].map(({ id, active, path, fillRule, clipRule }) => (
+              <button key={id} className={`icon-rail-btn${active ? ' active' : ''}`}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  {fillRule ? <path fillRule={fillRule} clipRule={clipRule} d={path}/> : <path d={path}/>}
+                </svg>
+              </button>
+            ))}
+          </div>
 
-        {view === "list" ? (
-          <FlowListView flows={flows} onClone={setCloneTarget} />
-        ) : (
-          clonedFlow && (
-            <FlowCanvas
-              flow={clonedFlow.flow}
-              clonedName={clonedFlow.name}
-              onBack={() => setView("list")}
-            />
-          )
-        )}
+          {/* Nav flyout */}
+          <div className="nav-flyout">
+            <div className="nav-flyout-header">
+              <h2>Apps and integrations</h2>
+            </div>
+            <nav>
+              <div className="nav-group">
+                <div className="nav-group-label">Actions</div>
+                {[
+                  { label: 'Action flows', active: true },
+                  { label: 'Custom actions' },
+                  { label: 'Run history' },
+                ].map(({ label, active }) => (
+                  <div key={label} className={`nav-item${active ? ' active' : ''}`}>{label}</div>
+                ))}
+              </div>
+            </nav>
+          </div>
+
+          {/* Main content */}
+          <main className="main-surface">
+            {view === 'list' ? (
+              <>
+                <div className="page-header">
+                  <div className="breadcrumbs">
+                    <a href="#">Apps and integrations</a>
+                    <span className="breadcrumb-sep">›</span>
+                    <a href="#">Actions</a>
+                    <span className="breadcrumb-sep">›</span>
+                    <span>Action flows</span>
+                  </div>
+                  <div className="page-header-row">
+                    <div>
+                      <h1 className="page-title">Action flows</h1>
+                      <p className="page-description">
+                        Enhance team productivity with action flows that automate processes and sync data across Zendesk and external systems.
+                        Actions executed when flows run count toward your plan limit, with some exceptions.{' '}
+                        <a href="#">Learn about limits and add-ons</a>
+                      </p>
+                    </div>
+                    <button className="btn btn-primary">Create flow</button>
+                  </div>
+                </div>
+                <div className="info-row">Data is updated hourly and reflects the last 30 days.</div>
+                <FlowsTable flows={flows} onClone={setCloneTarget} />
+              </>
+            ) : (
+              canvas && <CanvasView flow={canvas.flow} clonedName={canvas.name} onBack={() => setView('list')} />
+            )}
+          </main>
+        </div>
       </div>
 
-      {cloneTarget && (
-        <CloneModal
-          flow={cloneTarget}
-          onConfirm={handleCloneConfirm}
-          onCancel={() => setCloneTarget(null)}
-        />
-      )}
-
-      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
+      {cloneTarget && <CloneModal flow={cloneTarget} onConfirm={handleConfirm} onCancel={() => setCloneTarget(null)} />}
+      {toast && <Toast msg={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 
 <div id="root"></div>
