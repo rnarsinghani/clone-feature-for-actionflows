@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Action Flows — Clone Prototype</title>
+  <title>Action Flows — Clone + Copy/Paste Prototype</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -13,15 +13,12 @@
       --bg: #F6F5F4;
       --surface: #FFFFFF;
       --surface-elevated: #FFFFFF;
-      --nav-rail: #03363D;
       --text-primary: #293239;
       --text-secondary: #5C6970;
       --accent: #1F73B7;
       --accent-hover: #13456D;
       --success-bg: #037F52;
-      --success-text: #FFFFFF;
       --neutral-bg: #E8EAEC;
-      --neutral-text: #293239;
       --warning: #AC5918;
       --warning-light: #FFF5E6;
       --border: #D8DCDE;
@@ -72,7 +69,7 @@
 
     /* ── Shell layout ── */
     .shell { display: flex; flex-direction: column; height: 100vh; }
-    .shell-body { display: flex; flex: 1; min-height: 0; padding: 0 8px 8px; gap: 0; }
+    .shell-body { display: flex; flex: 1; min-height: 0; padding: 0 8px 8px; }
     .shell-inner { display: flex; flex: 1; height: 100%; border-radius: 8px; overflow: hidden; }
     .main-surface {
       flex: 1; background: var(--surface); overflow: auto;
@@ -94,7 +91,7 @@
     /* ── Nav flyout ── */
     .nav-flyout {
       width: 240px; display: flex; flex-direction: column; flex-shrink: 0;
-      background: var(--bg); border-right: none;
+      background: var(--bg);
     }
     .nav-flyout-header { padding: 24px 20px 24px 24px; }
     .nav-flyout-header h2 { font-size: 18px; font-weight: 600; color: #2F3941; }
@@ -105,7 +102,7 @@
       border-radius: 6px; font-size: 14px; font-weight: 500; color: #313131;
       transition: all 0.15s; margin-bottom: 2px;
     }
-    .nav-item:hover { background: #EAE8E7; color: #2F3941; }
+    .nav-item:hover { background: #EAE8E7; }
     .nav-item.active { background: #293239; color: white; }
 
     /* ── Page header ── */
@@ -117,7 +114,6 @@
     .page-title { font-size: 26px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
     .page-description { font-size: 14px; color: var(--text-secondary); margin-top: 8px; max-width: 700px; line-height: 1.6; }
     .page-description a { color: var(--accent); }
-    .page-description a:hover { text-decoration: underline; }
     .page-header-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
 
     /* ── Button ── */
@@ -129,13 +125,9 @@
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover { background: var(--accent-hover); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-outline {
-      background: transparent; color: var(--accent);
-      border: 1px solid var(--accent);
-    }
+    .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
     .btn-outline:hover { background: var(--info-light); }
     .btn-sm { height: 32px; padding: 0 12px; font-size: 12px; }
-    .btn-loading { display: inline-flex; align-items: center; gap: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spin { animation: spin 0.8s linear infinite; display: inline-block; }
 
@@ -162,7 +154,7 @@
     .badge-active { background: #037F52; color: white; }
     .badge-inactive { background: #E8EAEC; color: #293239; }
 
-    /* ── Dropdown menu ── */
+    /* ── Dropdown (list view) ── */
     .dropdown-wrap { position: relative; }
     .dropdown-trigger-btn {
       width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
@@ -176,8 +168,7 @@
     }
     .dropdown-item {
       position: relative; display: block; width: 100%; text-align: left;
-      padding: 8px 16px; font-size: 14px; color: var(--text-primary);
-      transition: background 0.1s; overflow: hidden;
+      padding: 8px 16px; font-size: 14px; color: var(--text-primary); transition: background 0.1s;
     }
     .dropdown-item::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
@@ -189,25 +180,21 @@
     .dropdown-item.danger:hover { background: #FFF2F3; }
     .dropdown-item.clone { font-weight: 500; }
 
-    /* ── Modal backdrop + panel ── */
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
-      z-index: 40;
-    }
+    /* ── Clone Modal ── */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 40; }
     .modal-container {
       position: fixed; inset: 0; z-index: 50; overflow-y: auto;
       display: flex; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-panel {
       background: var(--surface-elevated); border-radius: 12px;
-      box-shadow: var(--shadow-lg); width: 100%; max-width: 480px;
-      overflow: hidden;
+      box-shadow: var(--shadow-lg); width: 100%; max-width: 480px; overflow: hidden;
     }
     .modal-header {
       padding: 16px 24px; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
     }
-    .modal-header h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .modal-header h3 { font-size: 14px; font-weight: 600; }
     .modal-close {
       width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
       border-radius: 6px; color: var(--text-secondary); transition: all 0.1s;
@@ -230,17 +217,12 @@
       outline: none; transition: border-color 0.15s, box-shadow 0.15s;
       height: 40px; background: white;
     }
-    .text-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(31,115,183,0.12);
-    }
+    .text-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,115,183,0.12); }
     .checkbox-row { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
     .checkbox-row input[type=checkbox] { margin-top: 2px; width: 14px; height: 14px; accent-color: var(--accent); flex-shrink: 0; }
-    .checkbox-label { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+    .checkbox-label { font-size: 14px; font-weight: 500; }
     .checkbox-hint { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .info-box {
-      display: flex; gap: 10px; background: #EDF7FF; border-radius: 6px; padding: 12px 14px;
-    }
+    .info-box { display: flex; gap: 10px; background: #EDF7FF; border-radius: 6px; padding: 12px 14px; }
     .info-box svg { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
     .info-box p { font-size: 12px; color: #13456D; line-height: 1.5; }
 
@@ -251,65 +233,173 @@
       padding: 12px 20px; border-radius: 999px; font-size: 14px; font-weight: 500;
       box-shadow: var(--shadow-lg); z-index: 200; white-space: nowrap;
     }
-    .toast svg { color: #22C55E; }
+    .toast svg { flex-shrink: 0; }
 
-    /* ── Canvas view ── */
+    /* ── Canvas shell ── */
     .canvas-toolbar {
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 16px; border-bottom: 1px solid var(--border);
       background: #F8F9F9; flex-shrink: 0;
     }
-    .canvas-toolbar-left { display: flex; align-items: center; gap: 12px; }
+    .canvas-toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .canvas-toolbar-right { display: flex; align-items: center; gap: 8px; }
     .back-btn { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-secondary); }
     .back-btn:hover { color: var(--text-primary); }
-    .canvas-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    .canvas-toolbar-right { display: flex; align-items: center; gap: 8px; }
+    .canvas-title { font-size: 14px; font-weight: 600; }
     .canvas-body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
     .canvas-diagram-area {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 40px; background: #FAFAFA; overflow: auto;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: 32px 40px 60px; background: #FAFAFA; overflow: auto; gap: 0;
     }
-    .flow-node {
-      border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 20px;
-      background: white; font-size: 13px; text-align: center; min-width: 160px;
+    .divider-v { width: 1px; height: 20px; background: var(--border); }
+
+    /* ── Canvas step card ── */
+    .canvas-step {
+      position: relative;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 10px 14px; background: white;
+      font-size: 13px; min-width: 200px; max-width: 260px;
       box-shadow: var(--shadow-sm); color: var(--text-primary);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      transition: border-color 0.12s;
+      flex-shrink: 0;
     }
-    .flow-node.warn { border-color: #FFB057; background: #FFF5E6; }
-    .flow-node.warn .warn-icon { display: inline; }
-    .warn-icon { display: none; }
-    .flow-connector { width: 2px; height: 20px; background: var(--border); margin: 0 auto; }
+    .canvas-step:hover { border-color: var(--accent); }
+    .canvas-step.warn { border-color: #FFB057; background: #FFF5E6; }
+    .canvas-step.just-pasted { border-color: #22C55E; background: #F0FDF4; animation: popIn 0.25s ease; }
+    @keyframes popIn { 0% { transform: scale(0.94); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+    .canvas-step-label { flex: 1; line-height: 1.4; }
+    .step-dots-btn {
+      opacity: 0; flex-shrink: 0; width: 22px; height: 22px;
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); transition: all 0.1s;
+    }
+    .canvas-step:hover .step-dots-btn { opacity: 1; }
+    .step-dots-btn:hover { background: var(--bg); color: var(--text-primary); }
+
+    /* ── Step context menu ── */
+    .step-menu {
+      position: absolute; right: 0; top: calc(100% + 4px); z-index: 300;
+      background: white; border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); border-radius: 6px; min-width: 168px; padding: 4px 0;
+    }
+    .step-menu-item {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 8px 12px; font-size: 13px; color: var(--text-primary);
+      text-align: left; transition: background 0.1s; white-space: nowrap;
+    }
+    .step-menu-item:hover { background: var(--info-light); }
+    .step-menu-item.danger { color: #CD3642; }
+    .step-menu-item.danger:hover { background: #FFF2F3; }
+    .step-menu-item.disabled { opacity: 0.4; pointer-events: none; }
+    .step-menu-hr { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* ── Connectors ── */
+    .flow-connector { width: 2px; height: 20px; background: var(--border); margin: 0 auto; flex-shrink: 0; }
     .flow-arrow {
-      width: 0; height: 0; margin: 0 auto;
+      width: 0; height: 0; margin: 0 auto; flex-shrink: 0;
       border-left: 5px solid transparent; border-right: 5px solid transparent;
       border-top: 7px solid var(--border);
     }
+
+    /* ── Paste zone (step) ── */
+    .paste-zone {
+      width: 200px; height: 26px; flex-shrink: 0;
+      border: 2px dashed var(--accent); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500; color: var(--accent);
+      cursor: pointer; transition: background 0.1s; gap: 4px;
+    }
+    .paste-zone:hover { background: var(--info-light); }
+
+    /* ── Branch block ── */
+    .branch-header-node {
+      border: 1.5px solid var(--border); border-radius: 8px;
+      background: white; padding: 10px 14px;
+      font-size: 13px; display: flex; align-items: center; gap: 8px;
+      box-shadow: var(--shadow-sm); min-width: 220px; flex-shrink: 0;
+    }
+    .branch-header-node.warn { border-color: #FFB057; background: #FFF5E6; }
+    .branch-header-label { flex: 1; }
+    .copy-branch-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 500; color: var(--accent);
+      border: 1px solid rgba(31,115,183,0.4);
+      flex-shrink: 0; transition: background 0.1s; white-space: nowrap;
+    }
+    .copy-branch-btn:hover { background: var(--info-light); }
+
+    /* branch horizontal spread */
+    .branch-paths-outer {
+      display: flex; flex-direction: column; align-items: center; width: 100%;
+    }
+    .branch-h-bar {
+      height: 2px; background: var(--border); flex-shrink: 0;
+      align-self: stretch; margin: 0 40px;
+    }
+    .branch-paths-row {
+      display: flex; align-items: flex-start; justify-content: center; gap: 0;
+    }
+    .branch-path-col {
+      display: flex; flex-direction: column; align-items: center; padding: 0 24px;
+    }
+    .branch-path-label {
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+      background: var(--info-light); color: var(--accent);
+      border: 1px solid rgba(31,115,183,0.2); white-space: nowrap; flex-shrink: 0;
+    }
+    .branch-path-label.new-branch { background: #F0FDF4; color: #037F52; border-color: #86EFAC; }
+
+    /* Paste branch col */
+    .paste-branch-col {
+      display: flex; flex-direction: column; align-items: center; padding: 0 24px;
+    }
+    .paste-branch-box {
+      border: 2px dashed var(--accent); border-radius: 8px;
+      width: 160px; min-height: 70px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500; color: var(--accent);
+      cursor: pointer; padding: 12px; text-align: center; gap: 6px;
+      transition: background 0.1s;
+    }
+    .paste-branch-box:hover { background: var(--info-light); }
+
+    /* ── Clipboard pill ── */
+    .clipboard-pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 10px 4px 8px;
+      background: var(--info-light); border: 1px solid rgba(31,115,183,0.25);
+      border-radius: 999px; font-size: 12px; color: var(--accent); font-weight: 500;
+    }
+    .clipboard-clear {
+      display: flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 50%;
+      color: var(--text-secondary); flex-shrink: 0;
+    }
+    .clipboard-clear:hover { background: rgba(0,0,0,0.08); color: var(--text-primary); }
+
+    /* ── Validation panel ── */
     .validation-panel {
       width: 280px; border-left: 1px solid var(--border); display: flex; flex-direction: column;
       background: white; flex-shrink: 0;
     }
-    .validation-header {
-      padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);
-      background: #FFF5E6;
-    }
+    .validation-header { padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); background: #FFF5E6; }
     .validation-header h4 { font-size: 13px; font-weight: 600; color: #AC5918; }
     .validation-header p { font-size: 12px; color: #703815; margin-top: 2px; }
     .validation-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-    .validation-issue {
-      border: 1px solid #FFB057; border-radius: 8px; padding: 12px; background: #FFF9F0;
-    }
+    .validation-issue { border: 1px solid #FFB057; border-radius: 8px; padding: 12px; background: #FFF9F0; }
     .validation-issue-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .validation-issue-step { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+    .validation-issue-step { font-size: 12px; font-weight: 600; }
     .validation-issue-msg { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.4; }
     .validation-dismiss { width: 20px; height: 20px; flex-shrink: 0; color: #9C9A99; display: flex; align-items: center; justify-content: center; }
     .validation-dismiss:hover { color: var(--text-primary); }
     .validation-action-btn {
       margin-top: 10px; width: 100%; padding: 6px 12px; font-size: 12px; font-weight: 500;
-      color: #AC5918; border: 1px solid #FFB057; border-radius: 4px;
-      transition: background 0.1s;
+      color: #AC5918; border: 1px solid #FFB057; border-radius: 4px; transition: background 0.1s;
     }
     .validation-action-btn:hover { background: #FFE8CC; }
-    .divider { height: 1px; background: var(--border); }
-    .divider-v { width: 1px; height: 20px; background: var(--border); }
 
     /* prototype badge */
     .proto-badge {
@@ -319,22 +409,16 @@
   </style>
 </head>
 <body>
-
 <script type="text/babel">
 const { useState, useRef, useEffect } = React;
 
-/* ─── Data ─── */
+/* ─── Flows data ─── */
 const FLOWS = [
-  { id: 'f1', name: 'Order Return Flow', description: 'Complete order return with refund and notification', trigger: 'Ticket tag: return', successful_runs: 3, failed_runs: 2, action_credits: 48, status: 'active', updated: 'Aug 10, 2026, 2:15 PM',
-    steps: ['Trigger: Ticket tag "return"', 'Branch: Refund amount > $200', 'Update Ticket: Set priority high', 'Post to Slack: #returns-team'] },
-  { id: 'f2', name: 'High-Value Refund Approval', description: 'Escalate high-value refunds for human approval', trigger: 'Refund amount > $200', successful_runs: 2, failed_runs: 2, action_credits: 32, status: 'active', updated: 'Aug 9, 2026, 10:30 AM',
-    steps: ['Trigger: Ticket created', 'Branch: Amount > $200', 'Assign to Approvals Team', 'Send Email: Manager notification'] },
-  { id: 'f3', name: 'VIP Customer Routing', description: 'Route VIP tickets to priority queue with Slack alert', trigger: 'Customer tier: VIP', successful_runs: 5, failed_runs: 0, action_credits: 72, status: 'active', updated: 'Aug 8, 2026, 9:20 AM',
-    steps: ['Trigger: Ticket created', 'Branch: Tag includes "vip"', 'Update Ticket: Set priority urgent', 'Post to Slack: #vip-alerts'] },
-  { id: 'f4', name: 'Escalation Alert', description: 'Multi-channel incident response with escalation matrix', trigger: 'Severity: P0/P1', successful_runs: 0, failed_runs: 0, action_credits: 0, status: 'inactive', updated: 'Aug 5, 2026, 3:10 PM',
-    steps: ['Trigger: Priority changed', 'Branch: Priority is urgent', 'Post to Slack: #escalations', 'Add tag: escalated'] },
-  { id: 'f5', name: 'Subscription Renewal', description: 'Automated renewal with intelligent upsell opportunities', trigger: 'Subscription expiry < 7 days', successful_runs: 3, failed_runs: 1, action_credits: 64, status: 'active', updated: 'Aug 4, 2026, 11:55 AM',
-    steps: ['Trigger: Subscription expiry', 'Branch: Plan type', 'Send Email: Renewal notice', 'Update CRM: Renewal flag'] },
+  { id: 'f1', name: 'Order Return Flow', description: 'Complete order return with refund and notification', trigger: 'Ticket tag: return', successful_runs: 3, failed_runs: 2, action_credits: 48, status: 'active', updated: 'Aug 10, 2026, 2:15 PM' },
+  { id: 'f2', name: 'High-Value Refund Approval', description: 'Escalate high-value refunds for human approval', trigger: 'Refund amount > $200', successful_runs: 2, failed_runs: 2, action_credits: 32, status: 'active', updated: 'Aug 9, 2026, 10:30 AM' },
+  { id: 'f3', name: 'VIP Customer Routing', description: 'Route VIP tickets to priority queue with Slack alert', trigger: 'Customer tier: VIP', successful_runs: 5, failed_runs: 0, action_credits: 72, status: 'active', updated: 'Aug 8, 2026, 9:20 AM' },
+  { id: 'f4', name: 'Escalation Alert', description: 'Multi-channel incident response with escalation matrix', trigger: 'Severity: P0/P1', successful_runs: 0, failed_runs: 0, action_credits: 0, status: 'inactive', updated: 'Aug 5, 2026, 3:10 PM' },
+  { id: 'f5', name: 'Subscription Renewal', description: 'Automated renewal with intelligent upsell opportunities', trigger: 'Subscription expiry < 7 days', successful_runs: 3, failed_runs: 1, action_credits: 64, status: 'active', updated: 'Aug 4, 2026, 11:55 AM' },
 ];
 
 const WARNINGS = [
@@ -342,22 +426,58 @@ const WARNINGS = [
   { step: 'Post to Slack', issue: 'Slack connection not available — please reconnect to continue', action: 'Reconnect Slack' },
 ];
 
+/* ─── Canvas nodes ─── */
+function getInitialNodes(flowId) {
+  if (flowId === 'f1') return [
+    { id: 'cn1', type: 'trigger', label: 'Trigger: Ticket tag "return"' },
+    {
+      id: 'cn2', type: 'branch', label: 'Branch: Refund amount > $200',
+      paths: [
+        { id: 'cp1', condition: 'Yes — > $200', steps: [
+          { id: 'cs1', type: 'action', label: 'Update Ticket: Set priority high', warnKey: 'update ticket' },
+          { id: 'cs2', type: 'action', label: 'Post to Slack: #returns-team', warnKey: 'post to slack' },
+        ]},
+        { id: 'cp2', condition: 'No — ≤ $200', steps: [
+          { id: 'cs3', type: 'action', label: 'Send Email: Auto-reply' },
+        ]},
+      ],
+    },
+    { id: 'cn3', type: 'action', label: 'Add Tag: processed' },
+  ];
+  const fallbackSteps = {
+    'f2': ['Trigger: Ticket created', 'Branch: Amount > $200', 'Assign to Approvals Team', 'Send Email: Manager notification'],
+    'f3': ['Trigger: Ticket created', 'Branch: Tag includes "vip"', 'Update Ticket: Set priority urgent', 'Post to Slack: #vip-alerts'],
+    'f4': ['Trigger: Priority changed', 'Branch: Priority is urgent', 'Post to Slack: #escalations', 'Add tag: escalated'],
+    'f5': ['Trigger: Subscription expiry', 'Branch: Plan type', 'Send Email: Renewal notice', 'Update CRM: Renewal flag'],
+  };
+  return (fallbackSteps[flowId] || ['Trigger', 'Action 1', 'Action 2']).map((s, i) => ({
+    id: `cn${i}`, type: i === 0 ? 'trigger' : 'action', label: s,
+  }));
+}
+
+let idCounter = 1000;
+function uid() { return 'id_' + (++idCounter); }
+
 /* ─── Icons ─── */
 const ChevronDown = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
 const SearchIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.5"/><path d="M11 11l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-const DotsIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
-const XIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+const DotsIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+const XIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
 const BackIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-const ZendeskLogo = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M11.3307 8.28442V19.4383H2.09998L11.3307 8.28442ZM11.3307 4.28442C11.3307 6.82288 9.25382 8.89981 6.71536 8.89981C4.1769 8.89981 2.09998 6.82288 2.09998 4.28442H11.3307ZM12.8692 19.4383C12.8692 16.8998 14.9461 14.8229 17.4846 14.8229C20.0231 14.8229 22.1 16.8998 22.1 19.4383H12.8692ZM12.8692 15.4383V4.28442H22.1L12.8692 15.4383Z" fill="#03363D"/></svg>
-const SpinnerIcon = () => <svg className="spin" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="white" strokeWidth="2" strokeDasharray="10 6" /></svg>
 const CheckIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
 const InfoIcon = () => <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>
+const SpinnerIcon = () => <svg className="spin" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="white" strokeWidth="2" strokeDasharray="10 6"/></svg>
+const ZendeskLogo = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M11.3307 8.28442V19.4383H2.09998L11.3307 8.28442ZM11.3307 4.28442C11.3307 6.82288 9.25382 8.89981 6.71536 8.89981C4.1769 8.89981 2.09998 6.82288 2.09998 4.28442H11.3307ZM12.8692 19.4383C12.8692 16.8998 14.9461 14.8229 17.4846 14.8229C20.0231 14.8229 22.1 16.8998 22.1 19.4383H12.8692ZM12.8692 15.4383V4.28442H22.1L12.8692 15.4383Z" fill="#03363D"/></svg>
+const CopyIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5.5" y="5.5" width="8" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 3.5H4a1.5 1.5 0 00-1.5 1.5v7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+const ClipboardIcon = () => <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M6 4V3a2 2 0 114 0v1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+const BranchCopyIcon = () => <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 2v4M12 2v4M4 6a4 4 0 004 4M12 6a4 4 0 01-4 4M8 10v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+const TrashIcon = () => <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V2.5a.5.5 0 01.5-.5h3a.5.5 0 01.5.5V4M5 4l.5 9h5L11 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
 
-/* ─── Dropdown ─── */
+/* ─── List view dropdown ─── */
 function DropdownMenu({ flow, onClone, onClose }) {
   const ref = useRef();
   useEffect(() => {
-    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
     document.addEventListener('mousedown', h);
     return () => document.removeEventListener('mousedown', h);
   }, []);
@@ -402,12 +522,7 @@ function CloneModal({ flow, onConfirm, onCancel }) {
             </div>
             <div>
               <span className="label-text">New flow name <span>*</span></span>
-              <input
-                className="text-input"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                autoFocus
-              />
+              <input className="text-input" value={name} onChange={e => setName(e.target.value)} autoFocus />
             </div>
             <label className="checkbox-row">
               <input type="checkbox" checked={activate} onChange={e => setActivate(e.target.checked)} />
@@ -424,7 +539,7 @@ function CloneModal({ flow, onConfirm, onCancel }) {
           <div className="modal-footer">
             <button className="btn btn-outline btn-sm" onClick={onCancel}>Cancel</button>
             <button
-              className="btn btn-primary btn-sm btn-loading"
+              className="btn btn-primary btn-sm"
               disabled={loading || !name.trim()}
               onClick={() => { setLoading(true); setTimeout(() => onConfirm({ name: name.trim(), activate }), 900); }}>
               {loading ? <><SpinnerIcon /> Cloning…</> : 'Clone flow'}
@@ -437,60 +552,359 @@ function CloneModal({ flow, onConfirm, onCancel }) {
 }
 
 /* ─── Toast ─── */
-function Toast({ msg, onDone }) {
-  useEffect(() => { const t = setTimeout(onDone, 3500); return () => clearTimeout(t); }, []);
-  return <div className="toast"><CheckIcon />{msg}</div>;
+function Toast({ msg, icon, onDone }) {
+  useEffect(() => { const t = setTimeout(onDone, 3200); return () => clearTimeout(t); }, [msg]);
+  return (
+    <div className="toast">
+      {icon || <CheckIcon />}
+      {msg}
+    </div>
+  );
+}
+
+/* ─── StepCard ─── */
+function StepCard({ node, clipboard, warnSteps, pastedId, onCopy, onPasteBelow, onDelete }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const ref = useRef();
+  const hasWarn = warnSteps.has(node.warnKey || node.label.toLowerCase().split(':')[0].trim());
+  const isNew = pastedId === node.id;
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) setMenuOpen(false); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, [menuOpen]);
+
+  return (
+    <div
+      ref={ref}
+      className={`canvas-step${hasWarn ? ' warn' : ''}${isNew ? ' just-pasted' : ''}`}
+    >
+      <span className="canvas-step-label">{hasWarn ? '⚠️ ' : ''}{node.label}</span>
+      <button className="step-dots-btn" onClick={() => setMenuOpen(v => !v)}><DotsIcon /></button>
+      {menuOpen && (
+        <div className="step-menu">
+          <button className="step-menu-item" onClick={() => { onCopy(node); setMenuOpen(false); }}>
+            <CopyIcon /> Copy step
+          </button>
+          <button
+            className={`step-menu-item${clipboard?.type !== 'step' ? ' disabled' : ''}`}
+            onClick={() => { if (clipboard?.type === 'step') { onPasteBelow(node.id); setMenuOpen(false); } }}
+          >
+            <ClipboardIcon /> Paste below
+          </button>
+          <div className="step-menu-hr" />
+          <button className="step-menu-item danger" onClick={() => { onDelete(node.id); setMenuOpen(false); }}>
+            <TrashIcon /> Delete step
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── PasteZone ─── */
+function PasteZone({ onClick }) {
+  return (
+    <div className="paste-zone" onClick={onClick}>
+      <ClipboardIcon /> Paste step here
+    </div>
+  );
+}
+
+/* ─── BranchBlock ─── */
+function BranchBlock({ node, clipboard, warnSteps, pastedId, onCopyBranch, onCopyStep, onPasteStepInBranch, onPasteBranch, onDeleteStep }) {
+  const showPasteStepZones = clipboard?.type === 'step';
+  const showPasteBranchCol = clipboard?.type === 'branch';
+
+  return (
+    <div className="branch-paths-outer">
+      {/* Branch header node */}
+      <div className="branch-header-node">
+        <span className="branch-header-label">🔀 {node.label}</span>
+        <button className="copy-branch-btn" onClick={() => onCopyBranch(node)}>
+          <BranchCopyIcon /> Copy branch
+        </button>
+      </div>
+
+      {/* Horizontal bar from center to each column */}
+      <div className="flow-connector" />
+
+      {/* Paths row */}
+      <div className="branch-paths-row">
+        {node.paths.map(path => (
+          <div key={path.id} className="branch-path-col">
+            {/* Vertical drop to label */}
+            <div className="flow-connector" />
+            <div className={`branch-path-label${path._isNew ? ' new-branch' : ''}`}>{path.condition}</div>
+            <div className="flow-connector" />
+            <div className="flow-arrow" />
+
+            {/* Steps in this path */}
+            {path.steps.map((step, si) => (
+              <React.Fragment key={step.id}>
+                <StepCard
+                  node={step}
+                  clipboard={clipboard}
+                  warnSteps={warnSteps}
+                  pastedId={pastedId}
+                  onCopy={onCopyStep}
+                  onPasteBelow={(afterId) => onPasteStepInBranch(node.id, path.id, afterId)}
+                  onDelete={(id) => onDeleteStep(node.id, path.id, id)}
+                />
+                {si < path.steps.length - 1 && (
+                  <>
+                    <div className="flow-connector" />
+                    <div className="flow-arrow" />
+                  </>
+                )}
+              </React.Fragment>
+            ))}
+
+            {/* Paste-step zone at end of each path */}
+            {showPasteStepZones && (
+              <>
+                <div className="flow-connector" />
+                <PasteZone onClick={() => onPasteStepInBranch(node.id, path.id, null)} />
+              </>
+            )}
+          </div>
+        ))}
+
+        {/* Paste-branch column */}
+        {showPasteBranchCol && (
+          <div className="paste-branch-col">
+            <div className="flow-connector" />
+            <div style={{ width: 2, height: 0 }} />
+            <div className="branch-path-label" style={{ opacity: 0, pointerEvents: 'none' }}>placeholder</div>
+            <div className="flow-connector" />
+            <div className="flow-arrow" style={{ borderTopColor: 'var(--accent)' }} />
+            <div className="paste-branch-box" onClick={() => onPasteBranch(node.id)}>
+              <BranchCopyIcon />
+              Paste branch here
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Reconnect line back to center */}
+      <div className="flow-connector" />
+    </div>
+  );
 }
 
 /* ─── Canvas View ─── */
 function CanvasView({ flow, clonedName, onBack }) {
   const [dismissed, setDismissed] = useState([]);
-  const active = WARNINGS.filter((_, i) => !dismissed.includes(i));
+  const [nodes, setNodes] = useState(() => getInitialNodes(flow.id));
+  const [clipboard, setClipboard] = useState(null);
+  const [pastedId, setPastedId] = useState(null);
+  const [toast, setToast] = useState(null);
 
-  const warnSteps = new Set(active.map(w => w.step.toLowerCase().split(':')[0].trim()));
+  const activeWarnings = WARNINGS.filter((_, i) => !dismissed.includes(i));
+  const warnSteps = new Set(activeWarnings.map(w => w.step.toLowerCase()));
+
+  function showToast(msg) {
+    setToast(msg);
+  }
+
+  /* ── Copy handlers ── */
+  function handleCopyStep(node) {
+    setClipboard({ type: 'step', data: node, label: node.label });
+    showToast(`Step copied — click a paste zone to place it`);
+  }
+
+  function handleCopyBranch(branchNode) {
+    setClipboard({ type: 'branch', data: branchNode, label: branchNode.label });
+    showToast(`Branch copied — click the paste zone to add a new branch`);
+  }
+
+  /* ── Paste step: top-level (between linear nodes) ── */
+  function pasteStepAtIndex(afterIndex) {
+    const newStep = { ...clipboard.data, id: uid(), label: clipboard.data.label + ' (Copy)', _fresh: true };
+    setNodes(prev => {
+      const arr = [...prev];
+      arr.splice(afterIndex + 1, 0, newStep);
+      return arr;
+    });
+    setPastedId(newStep.id);
+    setClipboard(null);
+    showToast(`"${clipboard.data.label}" pasted`);
+    setTimeout(() => setPastedId(null), 1500);
+  }
+
+  /* ── Paste step: inside a branch path ── */
+  function pasteStepInBranch(branchNodeId, pathId, afterStepId) {
+    const newStep = { ...clipboard.data, id: uid(), label: clipboard.data.label + ' (Copy)' };
+    setNodes(prev => prev.map(n => {
+      if (n.id !== branchNodeId) return n;
+      return {
+        ...n,
+        paths: n.paths.map(p => {
+          if (p.id !== pathId) return p;
+          const idx = afterStepId ? p.steps.findIndex(s => s.id === afterStepId) : p.steps.length - 1;
+          const steps = [...p.steps];
+          steps.splice(idx + 1, 0, newStep);
+          return { ...p, steps };
+        }),
+      };
+    }));
+    setPastedId(newStep.id);
+    setClipboard(null);
+    showToast(`"${clipboard.data.label}" pasted`);
+    setTimeout(() => setPastedId(null), 1500);
+  }
+
+  /* ── Paste branch ── */
+  function pasteBranch(branchNodeId) {
+    const src = clipboard.data;
+    const newPath = {
+      id: uid(),
+      condition: (src.paths[0]?.condition || 'New path') + ' (Copy)',
+      _isNew: true,
+      steps: (src.paths[0]?.steps || []).map(s => ({ ...s, id: uid() })),
+    };
+    setNodes(prev => prev.map(n => {
+      if (n.id !== branchNodeId) return n;
+      return { ...n, paths: [...n.paths, newPath] };
+    }));
+    setClipboard(null);
+    showToast(`Branch pasted — update the condition to continue`);
+  }
+
+  /* ── Delete step: top-level ── */
+  function deleteTopLevelStep(nodeId) {
+    setNodes(prev => prev.filter(n => n.id !== nodeId));
+  }
+
+  /* ── Delete step: inside a branch path ── */
+  function deleteBranchStep(branchNodeId, pathId, stepId) {
+    setNodes(prev => prev.map(n => {
+      if (n.id !== branchNodeId) return n;
+      return {
+        ...n,
+        paths: n.paths.map(p => {
+          if (p.id !== pathId) return p;
+          return { ...p, steps: p.steps.filter(s => s.id !== stepId) };
+        }),
+      };
+    }));
+  }
+
+  const showPasteZones = clipboard?.type === 'step';
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'white', borderRadius: 8, border: '1px solid var(--border)' }}>
+      {/* Toolbar */}
       <div className="canvas-toolbar">
         <div className="canvas-toolbar-left">
           <button className="back-btn" onClick={onBack}><BackIcon /> Back to flows</button>
           <div className="divider-v" />
           <span className="canvas-title">{clonedName}</span>
           <span className="badge badge-inactive">Inactive</span>
-          {active.length > 0 && <span className="badge" style={{ background: '#FFF5E6', color: '#AC5918' }}>⚠️ {active.length} issue{active.length > 1 ? 's' : ''}</span>}
+          {activeWarnings.length > 0 && (
+            <span className="badge" style={{ background: '#FFF5E6', color: '#AC5918' }}>
+              ⚠️ {activeWarnings.length} issue{activeWarnings.length > 1 ? 's' : ''}
+            </span>
+          )}
+          {clipboard && (
+            <div className="clipboard-pill">
+              <ClipboardIcon />
+              {clipboard.type === 'step' ? 'Step copied' : 'Branch copied'}
+              <button className="clipboard-clear" onClick={() => setClipboard(null)} title="Clear clipboard">
+                <XIcon />
+              </button>
+            </div>
+          )}
         </div>
         <div className="canvas-toolbar-right">
           <button className="btn btn-outline btn-sm">Save draft</button>
-          <button className="btn btn-primary btn-sm" disabled={active.length > 0} style={active.length > 0 ? { opacity: 0.4, cursor: 'not-allowed' } : {}}>
-            {active.length > 0 ? 'Resolve issues to activate' : 'Activate flow'}
+          <button
+            className="btn btn-primary btn-sm"
+            disabled={activeWarnings.length > 0}
+            style={activeWarnings.length > 0 ? { opacity: 0.4, cursor: 'not-allowed' } : {}}>
+            {activeWarnings.length > 0 ? 'Resolve issues to activate' : 'Activate flow'}
           </button>
         </div>
       </div>
+
+      {/* Body */}
       <div className="canvas-body">
         <div className="canvas-diagram-area">
-          {flow.steps.map((step, i) => {
-            const stepKey = step.toLowerCase().split(':')[0].trim();
-            const hasWarn = warnSteps.has(stepKey);
+          {nodes.map((node, i) => {
+            const isBranch = node.type === 'branch';
             return (
-              <React.Fragment key={i}>
-                <div className={`flow-node${hasWarn ? ' warn' : ''}`}>
-                  {hasWarn && '⚠️ '}{step}
-                </div>
-                {i < flow.steps.length - 1 && <>
-                  <div className="flow-connector" />
-                  <div className="flow-arrow" />
-                </>}
+              <React.Fragment key={node.id}>
+                {/* Paste zone above this node */}
+                {showPasteZones && i > 0 && (
+                  <>
+                    <div className="flow-connector" />
+                    <PasteZone onClick={() => pasteStepAtIndex(i - 1)} />
+                  </>
+                )}
+
+                {i > 0 && !showPasteZones && (
+                  <>
+                    <div className="flow-connector" />
+                    <div className="flow-arrow" />
+                  </>
+                )}
+
+                {isBranch ? (
+                  <BranchBlock
+                    node={node}
+                    clipboard={clipboard}
+                    warnSteps={warnSteps}
+                    pastedId={pastedId}
+                    onCopyBranch={handleCopyBranch}
+                    onCopyStep={handleCopyStep}
+                    onPasteStepInBranch={pasteStepInBranch}
+                    onPasteBranch={pasteBranch}
+                    onDeleteStep={deleteBranchStep}
+                  />
+                ) : (
+                  <StepCard
+                    node={node}
+                    clipboard={clipboard}
+                    warnSteps={warnSteps}
+                    pastedId={pastedId}
+                    onCopy={handleCopyStep}
+                    onPasteBelow={(afterId) => pasteStepAtIndex(i)}
+                    onDelete={deleteTopLevelStep}
+                  />
+                )}
               </React.Fragment>
             );
           })}
+
+          {/* Paste zone after last node */}
+          {showPasteZones && (
+            <>
+              <div className="flow-connector" />
+              <PasteZone onClick={() => pasteStepAtIndex(nodes.length - 1)} />
+            </>
+          )}
+
+          {/* Hint when clipboard is active */}
+          {clipboard && (
+            <div style={{ marginTop: 24, padding: '8px 16px', background: 'var(--info-light)', borderRadius: 6, fontSize: 12, color: 'var(--accent)', textAlign: 'center', maxWidth: 320 }}>
+              {clipboard.type === 'step'
+                ? 'Click any dashed zone to paste the step, or use "Paste below" in a step\'s ⋮ menu'
+                : 'Click the dashed branch column to add a copy of this branch'}
+            </div>
+          )}
         </div>
-        {active.length > 0 && (
+
+        {/* Validation panel */}
+        {activeWarnings.length > 0 && (
           <div className="validation-panel">
             <div className="validation-header">
-              <h4>⚠️ Validation Issues ({active.length})</h4>
+              <h4>⚠️ Validation Issues ({activeWarnings.length})</h4>
               <p>Resolve all issues before activating</p>
             </div>
             <div className="validation-list">
-              {active.map((w, i) => {
+              {activeWarnings.map((w, i) => {
                 const idx = WARNINGS.indexOf(w);
                 return (
                   <div key={i} className="validation-issue">
@@ -509,6 +923,8 @@ function CanvasView({ flow, clonedName, onBack }) {
           </div>
         )}
       </div>
+
+      {toast && <Toast msg={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }
@@ -573,8 +989,11 @@ function App() {
   const [view, setView] = useState('list');
 
   function handleConfirm({ name, activate }) {
-    const newFlow = { ...cloneTarget, id: Date.now().toString(), name, status: activate ? 'active' : 'inactive',
-      successful_runs: 0, failed_runs: 0, action_credits: 0, updated: 'Just now' };
+    const newFlow = {
+      ...cloneTarget, id: Date.now().toString(), name,
+      status: activate ? 'active' : 'inactive',
+      successful_runs: 0, failed_runs: 0, action_credits: 0, updated: 'Just now',
+    };
     setFlows(f => [newFlow, ...f]);
     setCanvas({ flow: cloneTarget, name });
     setCloneTarget(null);
@@ -588,12 +1007,8 @@ function App() {
       <div className="topbar">
         <div className="topbar-left">
           <ZendeskLogo />
-          <button className="topbar-admin-btn">
-            Admin center <ChevronDown />
-          </button>
-          <button className="topbar-admin-btn" style={{ fontWeight: 400, color: '#5C6970' }}>
-            acme-corp <ChevronDown />
-          </button>
+          <button className="topbar-admin-btn">Admin center <ChevronDown /></button>
+          <button className="topbar-admin-btn" style={{ fontWeight: 400, color: '#5C6970' }}>acme-corp <ChevronDown /></button>
         </div>
         <div className="topbar-right">
           <div className="search-wrap">
@@ -604,12 +1019,6 @@ function App() {
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M10.7982 2.26062C10.6925 1.90814 10.3681 1.66675 10.0001 1.66675C9.63208 1.66675 9.30766 1.90814 9.20191 2.26062C8.60241 4.2588 7.82538 5.68376 6.75457 6.75457C5.68376 7.82538 4.2588 8.60241 2.26062 9.20191C1.90814 9.30766 1.66675 9.63208 1.66675 10.0001C1.66675 10.3681 1.90814 10.6925 2.26062 10.7982C4.2588 11.3977 5.68376 12.1747 6.75457 13.2456C7.82538 14.3164 8.60241 15.7413 9.20191 17.7395C9.30766 18.092 9.63208 18.3334 10.0001 18.3334C10.3681 18.3334 10.6925 18.092 10.7982 17.7395C11.3977 15.7413 12.1747 14.3164 13.2456 13.2456C14.3164 12.1747 15.7413 11.3977 17.7395 10.7982C18.092 10.6925 18.3334 10.3681 18.3334 10.0001C18.3334 9.63208 18.092 9.30766 17.7395 9.20191C15.7413 8.60241 14.3164 7.82538 13.2456 6.75457C12.1747 5.68376 11.3977 4.2588 10.7982 2.26062Z" fill="url(#sparkle)"/>
               <defs><linearGradient id="sparkle" x1="-2.5" y1="-2.5" x2="22.5" y2="22.5" gradientUnits="userSpaceOnUse"><stop offset="0.3" stopColor="#9256B1"/><stop offset="1" stopColor="#4F6BBF"/></linearGradient></defs>
-            </svg>
-          </button>
-          <button className="topbar-icon-btn">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="10" r="7" stroke="#706F6E" strokeWidth="1.5"/>
-              <circle cx="10" cy="10" r="3" stroke="#706F6E" strokeWidth="1.5"/>
             </svg>
           </button>
           <div className="avatar" style={{ marginLeft: 8 }}>R</div>
@@ -624,32 +1033,21 @@ function App() {
           <div className="icon-rail">
             {[
               { id: 'home', path: 'M11.4163 2.87911C10.5632 2.29258 9.43683 2.29258 8.58367 2.87911L3.58367 6.31661C2.90529 6.78299 2.5 7.55347 2.5 8.37671V15C2.5 16.3807 3.61929 17.5 5 17.5H7.08333C7.54357 17.5 7.91667 17.1269 7.91667 16.6666V13.75C7.91667 12.5994 8.84942 11.6666 10 11.6666C11.1506 11.6666 12.0833 12.5994 12.0833 13.75V16.6666C12.0833 17.1269 12.4564 17.5 12.9167 17.5H15C16.3807 17.5 17.5 16.3807 17.5 15V8.37671C17.5 7.55347 17.0947 6.78299 16.4163 6.31661L11.4163 2.87911Z' },
-              { id: 'sparkle-nav', path: 'M9.9945 4.07296C9.94684 3.65203 9.59101 3.33385 9.16734 3.33342C8.74376 3.33298 8.38717 3.65043 8.33867 4.07126C8.11269 6.03045 7.53087 7.37449 6.61923 8.28614C5.70759 9.19775 4.36354 9.77958 2.40435 10.0056C1.98352 10.0541 1.66607 10.4107 1.6665 10.8342C1.66694 11.2579 1.98512 11.6137 2.40605 11.6614C4.3321 11.8796 5.70675 12.4613 6.64157 13.3792C7.5713 14.2922 8.16416 15.6342 8.33642 17.5738C8.37467 18.0042 8.73542 18.3339 9.16742 18.3334C9.5995 18.3329 9.95951 18.0023 9.99675 17.5719C10.1618 15.6652 10.7542 14.2928 11.69 13.3569C12.6259 12.4211 13.9983 11.8287 15.905 11.6637C16.3354 11.6264 16.666 11.2664 16.6665 10.8343C16.667 10.4023 16.3373 10.0416 15.9069 10.0033C13.9673 9.83108 12.6253 9.23825 11.7123 8.30848C10.7944 7.37367 10.2127 5.99901 9.9945 4.07296Z' },
-              { id: 'building', path: 'M16.6667 15.8333V5C16.6667 3.61929 15.5475 2.5 14.1667 2.5H5.83341C4.45271 2.5 3.33341 3.61929 3.33341 5V15.8333H2.50008C2.03985 15.8333 1.66675 16.2064 1.66675 16.6667C1.66675 17.1269 2.03985 17.5 2.50008 17.5H17.5001C17.9603 17.5 18.3334 17.1269 18.3334 16.6667C18.3334 16.2064 17.9603 15.8333 17.5001 15.8333H16.6667Z', fillRule: 'evenodd', clipRule: 'evenodd' },
-              { id: 'people', path: 'M2.91577 5.83333C2.91577 3.99238 4.40815 2.5 6.2491 2.5C8.09005 2.5 9.58242 3.99238 9.58242 5.83333C9.58242 7.67428 8.09005 9.16667 6.2491 9.16667C4.40815 9.16667 2.91577 7.67428 2.91577 5.83333ZM10.4158 5.83333C10.4158 3.99238 11.9082 2.5 13.7491 2.5C15.5901 2.5 17.0824 3.99238 17.0824 5.83333C17.0824 7.67428 15.5901 9.16667 13.7491 9.16667C11.9082 9.16667 10.4158 7.67428 10.4158 5.83333Z' },
               { id: 'grid', active: true, path: 'M2.50195 4.99963C2.50195 3.62007 3.62031 2.50171 4.99987 2.50171H6.66654C8.0461 2.50171 9.16445 3.62007 9.16445 4.99963V6.66629C9.16445 8.04586 8.0461 9.16425 6.66654 9.16425H4.99987C3.62031 9.16425 2.50195 8.04586 2.50195 6.66629V4.99963ZM2.50195 13.333C2.50195 11.9534 3.62031 10.8351 4.99987 10.8351H6.66654C8.0461 10.8351 9.16445 11.9534 9.16445 13.333V14.9997C9.16445 16.3792 8.0461 17.4976 6.66654 17.4976H4.99987C3.62031 17.4976 2.50195 16.3792 2.50195 14.9997V13.333ZM10.8353 4.99963C10.8353 3.62007 11.9536 2.50171 13.3332 2.50171H14.9999C16.3795 2.50171 17.4978 3.62007 17.4978 4.99963V6.66629C17.4978 8.04586 16.3795 9.16425 14.9999 9.16425H13.3332C11.9536 9.16425 10.8353 8.04586 10.8353 6.66629V4.99963Z' },
-            ].map(({ id, active, path, fillRule, clipRule }) => (
+            ].map(({ id, active, path }) => (
               <button key={id} className={`icon-rail-btn${active ? ' active' : ''}`}>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  {fillRule ? <path fillRule={fillRule} clipRule={clipRule} d={path}/> : <path d={path}/>}
-                </svg>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d={path}/></svg>
               </button>
             ))}
           </div>
 
           {/* Nav flyout */}
           <div className="nav-flyout">
-            <div className="nav-flyout-header">
-              <h2>Apps and integrations</h2>
-            </div>
+            <div className="nav-flyout-header"><h2>Apps and integrations</h2></div>
             <nav>
               <div className="nav-group">
                 <div className="nav-group-label">Actions</div>
-                {[
-                  { label: 'Action flows', active: true },
-                  { label: 'Custom actions' },
-                  { label: 'Run history' },
-                ].map(({ label, active }) => (
+                {[{ label: 'Action flows', active: true }, { label: 'Custom actions' }, { label: 'Run history' }].map(({ label, active }) => (
                   <div key={label} className={`nav-item${active ? ' active' : ''}`}>{label}</div>
                 ))}
               </div>
@@ -672,8 +1070,7 @@ function App() {
                     <div>
                       <h1 className="page-title">Action flows</h1>
                       <p className="page-description">
-                        Enhance team productivity with action flows that automate processes and sync data across Zendesk and external systems.
-                        Actions executed when flows run count toward your plan limit, with some exceptions.{' '}
+                        Enhance team productivity with action flows that automate processes and sync data across Zendesk and external systems.{' '}
                         <a href="#">Learn about limits and add-ons</a>
                       </p>
                     </div>
@@ -698,7 +1095,6 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
-
 <div id="root"></div>
 </body>
 </html>
