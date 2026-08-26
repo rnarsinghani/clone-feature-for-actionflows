@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Action Builder — Adoption · Aug 2025 – Aug 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-0:      #f5f5f4;
+    --surface-1:      #ffffff;
+    --surface-2:      #f0f0ee;
+    --border:         #e2e2df;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #8a8986;
+    --series-1:       #2a78d6;
+    --series-2:       #eb6834;
+    --series-3:       #1baf7a;
+    --series-4:       #eda100;
+    --series-5:       #e87ba4;
+    --series-6:       #4a3aa7;
+    --gap-fill:       #e2e2df;
+    --gap-border:     #c8c8c4;
+    --tech-accent:    #2a78d6;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    padding: 32px 24px 56px;
+  }
+  .viz-root { max-width: 1160px; margin: 0 auto; }
+
+  /* ── Sections ── */
+  .section-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-muted);
+    margin: 32px 0 12px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Header ── */
+  .report-header { margin-bottom: 24px; }
+  .report-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .report-header p  { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+  .ga-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #fff0f6; border: 1px solid #f5a8c8;
+    color: #b0366e; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ── Stat tiles ── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .stat-tile {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .stat-tile .label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-tile .value { font-size: 28px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
+  .stat-tile .sub   { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .stat-tile .delta { font-size: 12px; font-weight: 600; margin-top: 4px; color: var(--series-3); }
+  .stat-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 8px; }
+
+  /* ── Chart grids ── */
+  .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-grid-1 { margin-bottom: 16px; }
+  .chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  .chart-card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 20px 14px;
+  }
+  .chart-card h2 { font-size: 13px; font-weight: 700; }
+  .chart-card p  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; margin-bottom: 14px; line-height: 1.5; }
+  .chart-card.tech { border-color: var(--tech-accent); border-width: 1.5px; }
+
+  .chart-wrap { position: relative; }
+
+  /* ── Legend ── */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
+  .legend-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 16px; height: 2px; border-radius: 1px; flex-shrink: 0; }
+
+  /* ── Tech spotlight ── */
+  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .tech-tile {
+    background: #f0f6ff; border: 1px solid #c2d9f5;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .tech-tile .label { font-size: 11px; font-weight: 600; color: #4a6ea8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tech-tile .value { font-size: 24px; font-weight: 700; color: var(--series-1); margin-top: 4px; }
+  .tech-tile .sub   { font-size: 12px; color: #4a6ea8; margin-top: 2px; }
+
+  /* ── Footer ── */
+  .report-footer { margin-top: 28px; font-size: 11px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION A: OVERVIEW                                 -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="report-header">
+    <h1>Action Builder — Adoption Analysis
+      <span class="ga-pill">🚀 GA: May 2026</span>
+    </h1>
+    <p>Global (AMER + EMEA) · v2 Definition · Penetrated = ≥1 execution/6 months · Adopted = ≥100 exec/wk in ≥3 of 4 weeks · Aug 2025 – Aug 2026</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Penetrated</div>
+      <div class="value">1,898</div>
+      <div class="sub">of 72,472 eligible CRMs</div>
+      <div class="delta">↑ +1,790 since GA (May 2026)</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Penetration Rate</div>
+      <div class="value" style="color:var(--series-1)">2.62%</div>
+      <div class="sub">Aug 23, 2026</div>
+      <div class="delta">↑ +2.48pp since GA</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Adopted (v2)</div>
+      <div class="value">736</div>
+      <div class="sub">≥100 exec/wk · ≥3 of 4 weeks</div>
+      <div class="delta">↑ 59.8% of activated accounts</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Untouched Gap</div>
+      <div class="value" style="color:var(--series-2)">70,574</div>
+      <div class="sub">never ran a flow (97.4%)</div>
+      <div class="delta">Target: reduce to &lt;90%</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION B: 12-MONTH TREND                           -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">B · 12-Month Penetration Trend</div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Overall Penetration Rate — Aug 2025 to Aug 2026</h2>
+      <p>Near-zero for 9 months (EAP). GA in May 2026 drove an 8× spike. Steady growth since.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartOverall"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>New Penetrated Accounts Per Month</h2>
+      <p>Pre-GA: avg 12/month. Post-GA: avg 330/month. Current pace: ~250/month.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartNew"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION C: MARKET SEGMENT ANALYSIS                  -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">C · Market Segment Analysis (1.Digital · 2.Corporate · 3.Enterprise)</div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Enterprise penetration</div>
+      <div class="value" style="color:var(--series-1)">7.14%</div>
+      <div class="sub">449 of 6,285 accounts</div>
+      <div class="delta">↑ was 3.39% on Aug 1</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Corporate penetration</div>
+      <div class="value" style="color:var(--series-2)">4.80%</div>
+      <div class="sub">1,167 of 24,326 accounts</div>
+      <div class="delta">↑ was 4.19% on Aug 1</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Digital (SMB) penetration</div>
+      <div class="value" style="color:var(--series-3)">0.67%</div>
+      <div class="sub">282 of 41,861 accounts</div>
+      <div class="delta">↑ was 0.54% on Aug 1</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Biggest gap</div>
+      <div class="value" style="color:#999">Digital</div>
+      <div class="sub">41,579 SMB accounts untouched</div>
+      <div class="delta">99.33% of segment unreached</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Penetration Rate by Segment — 12 Months</h2>
+      <p>All segments flat pre-GA, then Enterprise accelerated fastest. Digital remains structurally below 1%.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartSegment"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-line" style="background:var(--series-1)"></div> Enterprise</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--series-2)"></div> Corporate</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--series-3)"></div> Digital</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h2>Segment Gap — Penetrated vs Untouched (Aug 2026)</h2>
+      <p>The grey bar is the gap. Digital has 41.6K untouched accounts — by far the largest opportunity.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartGap"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> Penetrated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gap-fill);border:1px solid var(--gap-border)"></div> Not yet penetrated</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid-1">
+    <div class="chart-card">
+      <h2>Post-GA Funnel by Segment — May to Aug 2026 (Penetrated · Activated · Adopted)</h2>
+      <p>Grouped by segment for each month. Enterprise converts best; Digital adopts slowly due to lower volume thresholds being harder to hit.</p>
+      <div class="chart-wrap" style="height:240px"><canvas id="chartFunnelSeg"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> Enterprise — Penetrated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1);opacity:0.5"></div> Enterprise — Adopted</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div> Corporate — Penetrated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2);opacity:0.5"></div> Corporate — Adopted</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div> Digital — Penetrated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3);opacity:0.5"></div> Digital — Adopted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION D: BUSINESS SECTOR (INDUSTRY) ANALYSIS      -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">D · Business Sector Analysis — Industry Breakdown (Aug 2026)</div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Penetration Rate by Industry</h2>
+      <p>Transportation & Government lead. Technology is #3 — large base dilutes rate. Life Sciences lags severely.</p>
+      <div class="chart-wrap" style="height:340px"><canvas id="chartIndustryPen"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Adopted Accounts by Industry</h2>
+      <p>Technology leads in absolute count (155), followed by Retail/CPG (138) and Financial Services (85).</p>
+      <div class="chart-wrap" style="height:340px"><canvas id="chartIndustryAdopt"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-grid-1">
+    <div class="chart-card">
+      <h2>Industry Funnel — Eligible · Penetrated · Activated · Adopted</h2>
+      <p>Sorted by adopted count. Bar length = eligible base size. Shows which industries get deepest value once they try.</p>
+      <div class="chart-wrap" style="height:360px"><canvas id="chartIndustryFunnel"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> Penetrated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div> Activated</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div> Adopted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION E: TECH COMPANIES SPOTLIGHT                 -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">E · Technology Companies Spotlight</div>
+
+  <div class="tech-grid">
+    <div class="tech-tile">
+      <div class="label">Eligible Tech Accounts</div>
+      <div class="value">14,926</div>
+      <div class="sub">Largest industry by CRM count</div>
+    </div>
+    <div class="tech-tile">
+      <div class="label">Tech Penetration Rate</div>
+      <div class="value">2.43%</div>
+      <div class="sub">362 of 14,926 accounts</div>
+    </div>
+    <div class="tech-tile">
+      <div class="label">Tech Adopted</div>
+      <div class="value">155</div>
+      <div class="sub">#1 industry by adopted count</div>
+    </div>
+    <div class="tech-tile">
+      <div class="label">Tech Adoption Rate</div>
+      <div class="value">66.2%</div>
+      <div class="sub">of activated Tech accounts</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card tech">
+      <h2>Technology vs All Other Industries — Funnel Comparison</h2>
+      <p>Tech has highest absolute adopted count but sits mid-table on penetration rate (2.43%). 97.6% of Tech accounts haven't tried Action Builder.</p>
+      <div class="chart-wrap" style="height:240px"><canvas id="chartTechVsOther"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> Technology</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gap-fill);border:1px solid var(--gap-border)"></div> All other industries</div>
+      </div>
+    </div>
+    <div class="chart-card tech">
+      <h2>Top Step Types Used by Tech Companies</h2>
+      <p>Jira + Slack dominate Tech. AI steps (Claude, taskagents) heavily used — 28 accounts use AI in flows.</p>
+      <div class="chart-wrap" style="height:240px"><canvas id="chartTechSteps"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION F: WHERE IS THE GAP                         -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">F · Where Is the Gap?</div>
+
+  <div class="stat-row">
+    <div class="stat-tile" style="border-left:3px solid var(--series-2)">
+      <div class="label">Gap #1 — Digital SMB</div>
+      <div class="value" style="color:var(--series-2)">41,579</div>
+      <div class="sub">untouched SMB accounts · 0.67% penetration</div>
+      <div class="delta">Needs: templates + AI builder</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-1)">
+      <div class="label">Gap #2 — Tech companies</div>
+      <div class="value" style="color:var(--series-1)">14,564</div>
+      <div class="sub">Tech accounts not penetrated · 97.6%</div>
+      <div class="delta">Needs: Jira/Slack deeper coverage</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-5)">
+      <div class="label">Gap #3 — Activation drop</div>
+      <div class="value" style="color:var(--series-5)">64.8%</div>
+      <div class="sub">activation rate (↓ from 82% in May)</div>
+      <div class="delta">Needs: onboarding + success flows</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-4)">
+      <div class="label">Gap #4 — Life Sciences</div>
+      <div class="value" style="color:var(--series-4)">36.4%</div>
+      <div class="sub">adoption rate · lowest of any sector</div>
+      <div class="delta">Needs: healthcare-specific templates</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION G: EXECUTION VOLUME                         -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">G · Total Action Executions — Volume Trend</div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Total Executions (Jul 2026)</div>
+      <div class="value">193.7M</div>
+      <div class="sub">Peak month · AMER + EMEA</div>
+      <div class="delta">↑ from 40K in Apr (pre-GA)</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Aug 2026 (partial)</div>
+      <div class="value">146.2M</div>
+      <div class="sub">Through Aug 23 · ~197M projected</div>
+      <div class="delta">On pace with Jul</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Active Executing Accounts</div>
+      <div class="value">2,621</div>
+      <div class="sub">Aug 2026 · AMER (1,638) + EMEA (983)</div>
+      <div class="delta">↑ from 13 in Aug 2025</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Total since GA (May–Aug)</div>
+      <div class="value">~635M</div>
+      <div class="sub">Cumulative executions post-launch</div>
+      <div class="delta">↑ 2,636× vs Apr 2026</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Monthly Execution Volume — Aug 2025 to Aug 2026</h2>
+      <p>Near-zero pre-GA (Aug 2025–Apr 2026). Exploded 2,636× in May 2026 at GA. Plateauing at ~190–195M/month. Log scale used to show pre-GA activity.</p>
+      <div class="chart-wrap" style="height:280px"><canvas id="chartExecVolume"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Active Executing Accounts Per Month</h2>
+      <p>Accounts that ran at least one flow in the month. Growing steadily — +22% from May to Aug 2026.</p>
+      <div class="chart-wrap" style="height:280px"><canvas id="chartExecAccounts"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-grid-1">
+    <div class="chart-card">
+      <h2>What's Driving Executions — Invocation Source Breakdown (Last 6 Months · AMER)</h2>
+      <p>Domain events (ticket.created, tags changed, etc.) drive 96.5% of all executions. Copilot and AI Agent sources are small but growing.</p>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartInvocSource"></canvas></div>
+      <div class="legend" style="margin-top:12px">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> Domain Events (tickets/users/objects)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div> Custom Agents (Task Registry)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div> Advanced AI Agents</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-4)"></div> Agent Copilot</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-5)"></div> Other</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION H: TRIGGER EVENT TRAFFIC                    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">H · Trigger Event Traffic — What's Firing Flows</div>
+
+  <div class="stat-row-3">
+    <div class="stat-tile">
+      <div class="label">#1 Trigger (ticket.created)</div>
+      <div class="value">1,237</div>
+      <div class="sub">accounts · 85,640 flows configured</div>
+      <div class="delta">Most-used trigger by wide margin</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Run on Demand (Copilot/AI)</div>
+      <div class="value">640</div>
+      <div class="sub">accounts · 1,304 invocable flows</div>
+      <div class="delta">#2 trigger · AI-invoked flows</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Scheduled Triggers</div>
+      <div class="value">247</div>
+      <div class="sub">accounts · 410 scheduled flows</div>
+      <div class="delta">Daily/hourly batch automation</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Top Trigger Events — Accounts Using (AMER, last 3 months)</h2>
+      <p>ticket.created dominates. Run-on-demand (Copilot) is #2 — showing strong AI integration. Scheduled triggers at #7.</p>
+      <div class="chart-wrap" style="height:340px"><canvas id="chartTriggerAccounts"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Top Trigger Events — Flows Configured</h2>
+      <p>ticket.created has 85K flows — 65× more than any other. This reflects many accounts building multiple routing/triage flows on a single trigger.</p>
+      <div class="chart-wrap" style="height:340px"><canvas id="chartTriggerFlows"></canvas></div>
+    </div>
+  </div>
+
+  <div class="report-footer">
+    Generated Aug 25, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
+    Industry + trigger data: Aug 2026 · Segment/trend data: Aug 23 snapshot ·
+    Execution volumes: AMER + EMEA combined · Invocation source: AMER only (last 6 months) ·
+    Note: Dashboard still runs v1 — expect ~half the adopted counts shown there.
+  </div>
+
+</div>
+
+<script>
+const MONTHS = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26'];
+const GA_IDX = 9;
+const BLUE='#2a78d6', ORANGE='#eb6834', AQUA='#1baf7a', YELLOW='#eda100', MAGENTA='#e87ba4', VIOLET='#4a3aa7';
+const GRAY='#e2e2df', GRAY_B='#c8c8c4';
+
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+Chart.defaults.color = '#52514e';
+
+const gaLinePlugin = {
+  id: 'gaLine',
+  afterDraw(chart) {
+    const meta = chart.getDatasetMeta(0);
+    if (!meta.data[GA_IDX]) return;
+    const x = meta.data[GA_IDX].x;
+    const ctx = chart.ctx;
+    const { top, bottom } = chart.chartArea;
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom);
+    ctx.strokeStyle = '#e87ba4'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,3]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#e87ba4'; ctx.font = '600 10px -apple-system,sans-serif';
+    ctx.textAlign = 'center'; ctx.fillText('GA', x, top - 4);
+    ctx.restore();
+  }
+};
+
+const TIP = {
+  backgroundColor:'#fff', borderColor:'#e2e2df', borderWidth:1,
+  titleColor:'#0b0b0b', bodyColor:'#52514e'
+};
+
+// ── B1: Overall trend ──
+new Chart(document.getElementById('chartOverall'), {
+  type: 'line', plugins: [gaLinePlugin],
+  data: {
+    labels: MONTHS,
+    datasets: [{
+      label: 'Penetration rate',
+      data: [0.02,0.04,0.06,0.08,0.09,0.10,0.12,0.14,0.14,1.32,1.79,2.26,2.62],
+      borderColor: BLUE, backgroundColor: BLUE+'18', fill: true, tension: 0.35,
+      borderWidth: 2, pointRadius: 4, pointHoverRadius: 6,
+      pointBackgroundColor: BLUE, pointBorderColor:'#fff', pointBorderWidth:1.5
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label:c=>` ${c.parsed.y.toFixed(2)}%`}} },
+    scales:{
+      x:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'}, beginAtZero:true, suggestedMax:3,
+         ticks:{font:{size:11}, callback:v=>v+'%'}}
+    }
+  }
+});
+
+// ── B2: New per month ──
+const rawP = [17,28,48,62,68,73,92,104,108,984,1318,1646,1898];
+const newP = rawP.map((v,i)=>i===0?0:v-rawP[i-1]);
+new Chart(document.getElementById('chartNew'), {
+  type:'bar',
+  data:{labels:MONTHS, datasets:[{
+    label:'New penetrated',
+    data:newP,
+    backgroundColor: newP.map((_,i)=>i>=GA_IDX?BLUE+'cc':GRAY),
+    borderColor:     newP.map((_,i)=>i>=GA_IDX?BLUE:GRAY_B),
+    borderWidth:1.5, borderRadius:3, borderSkipped:false
+  }]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false}, tooltip:{...TIP,callbacks:{label:c=>`+${c.parsed.y.toLocaleString()} new accounts`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'}, beginAtZero:true, ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── C1: Segment lines ──
+new Chart(document.getElementById('chartSegment'), {
+  type:'line', plugins:[gaLinePlugin],
+  data:{labels:MONTHS, datasets:[
+    {label:'Enterprise',
+     data:[0.08,0.09,0.20,0.22,0.22,0.24,0.31,0.35,0.39,4.04,5.06,6.27,7.14],
+     borderColor:BLUE,backgroundColor:'transparent',tension:0.35,borderWidth:2,
+     pointRadius:3,pointHoverRadius:5,pointBackgroundColor:BLUE,pointBorderColor:'#fff',pointBorderWidth:1.5},
+    {label:'Corporate',
+     data:[0.04,0.08,0.13,0.17,0.19,0.20,0.24,0.27,0.29,2.49,3.37,4.19,4.80],
+     borderColor:ORANGE,backgroundColor:'transparent',tension:0.35,borderWidth:2,
+     pointRadius:3,pointHoverRadius:5,pointBackgroundColor:ORANGE,pointBorderColor:'#fff',pointBorderWidth:1.5},
+    {label:'Digital',
+     data:[0.00,0.00,0.00,0.01,0.01,0.01,0.02,0.02,0.02,0.27,0.42,0.54,0.67],
+     borderColor:AQUA,backgroundColor:'transparent',tension:0.35,borderWidth:2,
+     pointRadius:3,pointHoverRadius:5,pointBackgroundColor:AQUA,pointBorderColor:'#fff',pointBorderWidth:1.5}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(2)}%`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'},beginAtZero:true,ticks:{font:{size:11},callback:v=>v+'%'}}
+    }
+  }
+});
+
+// ── C2: Gap horizontal ──
+new Chart(document.getElementById('chartGap'), {
+  type:'bar',
+  data:{labels:['Enterprise','Corporate','Digital (SMB)'], datasets:[
+    {label:'Penetrated',data:[449,1167,282],backgroundColor:BLUE+'cc',borderColor:BLUE,borderWidth:1.5,borderRadius:3,stack:'s'},
+    {label:'Not yet penetrated',data:[5836,23159,41579],backgroundColor:GRAY,borderColor:GRAY_B,borderWidth:1,borderRadius:3,stack:'s'}
+  ]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>{
+      const tot=[6285,24326,41861]; const pct=(c.parsed.x/tot[c.dataIndex]*100).toFixed(1);
+      return ` ${c.dataset.label}: ${c.parsed.x.toLocaleString()} (${pct}%)`;
+    }}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},stacked:true,ticks:{font:{size:11},callback:v=>v>999?(v/1000).toFixed(0)+'k':v}},
+      y:{grid:{display:false},stacked:true,ticks:{font:{size:12,weight:'600'}}}
+    }
+  }
+});
+
+// ── C3: Segment funnel grouped ──
+new Chart(document.getElementById('chartFunnelSeg'), {
+  type:'bar',
+  data:{
+    labels:['May 2026','Jun 2026','Jul 2026','Aug 2026'],
+    datasets:[
+      {label:'Enterprise — Penetrated',data:[259,321,396,449],backgroundColor:BLUE+'cc',borderColor:BLUE,borderWidth:1.5,borderRadius:2,stack:'ent'},
+      {label:'Enterprise — Adopted',   data:[86,121,139,223],backgroundColor:BLUE+'55',borderColor:BLUE,borderWidth:1,borderRadius:2,stack:'ent_a'},
+      {label:'Corporate — Penetrated', data:[605,812,1021,1167],backgroundColor:ORANGE+'cc',borderColor:ORANGE,borderWidth:1.5,borderRadius:2,stack:'cor'},
+      {label:'Corporate — Adopted',    data:[153,168,183,459],backgroundColor:ORANGE+'55',borderColor:ORANGE,borderWidth:1,borderRadius:2,stack:'cor_a'},
+      {label:'Digital — Penetrated',   data:[120,185,229,282],backgroundColor:AQUA+'cc',borderColor:AQUA,borderWidth:1.5,borderRadius:2,stack:'dig'},
+      {label:'Digital — Adopted',      data:[35,47,54,54],backgroundColor:AQUA+'55',borderColor:AQUA,borderWidth:1,borderRadius:2,stack:'dig_a'},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'},beginAtZero:true,ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── D1: Industry penetration rate (horizontal) ──
+const industries = ['Transportation','Government','Financial Services','Healthcare','Media & Ent.','Energy','Technology','Retail / CPG','Construction','Telecom','Manufacturing','Hospitality','Education','Consumer Svcs','Non-Profits','Digital unclass.','Life Sciences'];
+const indusPenRate = [4.2,4.0,3.2,3.1,3.1,2.7,2.43,2.7,2.3,2.2,2.2,2.0,1.9,1.8,1.9,1.8,2.4];
+// sort descending
+const sorted = industries.map((n,i)=>({n,r:indusPenRate[i]})).sort((a,b)=>b.r-a.r);
+
+new Chart(document.getElementById('chartIndustryPen'), {
+  type:'bar',
+  data:{labels:sorted.map(x=>x.n), datasets:[{
+    label:'Penetration rate (%)',
+    data:sorted.map(x=>x.r),
+    backgroundColor:sorted.map(x=>x.n.includes('Tech')?BLUE+'cc':BLUE+'66'),
+    borderColor:sorted.map(x=>x.n.includes('Tech')?BLUE:BLUE+'99'),
+    borderWidth:sorted.map(x=>x.n.includes('Tech')?2:1),
+    borderRadius:3, borderSkipped:false
+  }]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.x.toFixed(2)}% penetration`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11},callback:v=>v+'%'},suggestedMax:5},
+      y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── D2: Industry adopted count ──
+const industryAdopt = [
+  {n:'Technology',v:155},{n:'Retail / CPG',v:138},{n:'Financial Svcs',v:85},
+  {n:'Corporate Svcs',v:67},{n:'Manufacturing',v:46},{n:'Transport',v:37},
+  {n:'Healthcare',v:35},{n:'Media & Ent.',v:28},{n:'Hospitality',v:27},
+  {n:'Education',v:20},{n:'Consumer Svcs',v:13},{n:'Energy',v:11},
+  {n:'Telecom',v:11},{n:'Non-Profits',v:8},{n:'Government',v:7},
+  {n:'Construction',v:6},{n:'Life Sciences',v:4}
+];
+
+new Chart(document.getElementById('chartIndustryAdopt'), {
+  type:'bar',
+  data:{labels:industryAdopt.map(x=>x.n), datasets:[{
+    label:'Adopted accounts',
+    data:industryAdopt.map(x=>x.v),
+    backgroundColor:industryAdopt.map(x=>x.n.includes('Tech')?BLUE+'cc':AQUA+'99'),
+    borderColor:industryAdopt.map(x=>x.n.includes('Tech')?BLUE:AQUA),
+    borderWidth:industryAdopt.map(x=>x.n.includes('Tech')?2:1),
+    borderRadius:3, borderSkipped:false
+  }]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.x} adopted accounts`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── D3: Industry funnel full ──
+const indFull = [
+  {n:'Technology',         pen:362, act:234, ado:155},
+  {n:'Retail / CPG',       pen:302, act:216, ado:138},
+  {n:'Financial Svcs',     pen:218, act:144, ado:85},
+  {n:'Corporate Svcs',     pen:212, act:126, ado:67},
+  {n:'Manufacturing',      pen:112, act:79,  ado:46},
+  {n:'Healthcare',         pen:87,  act:58,  ado:35},
+  {n:'Transport & Logs',   pen:74,  act:55,  ado:37},
+  {n:'Media & Ent.',       pen:64,  act:43,  ado:28},
+  {n:'Hospitality',        pen:57,  act:39,  ado:27},
+  {n:'Education',          pen:55,  act:30,  ado:20},
+].sort((a,b)=>b.ado-a.ado);
+
+new Chart(document.getElementById('chartIndustryFunnel'), {
+  type:'bar',
+  data:{labels:indFull.map(x=>x.n), datasets:[
+    {label:'Penetrated',data:indFull.map(x=>x.pen),backgroundColor:BLUE+'cc',borderColor:BLUE,borderWidth:1.5,borderRadius:2},
+    {label:'Activated', data:indFull.map(x=>x.act),backgroundColor:ORANGE+'cc',borderColor:ORANGE,borderWidth:1.5,borderRadius:2},
+    {label:'Adopted',   data:indFull.map(x=>x.ado),backgroundColor:AQUA+'cc',borderColor:AQUA,borderWidth:1.5,borderRadius:2}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'},beginAtZero:true,ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── E1: Tech vs others ──
+new Chart(document.getElementById('chartTechVsOther'), {
+  type:'bar',
+  data:{labels:['Eligible','Penetrated','Activated','Adopted'], datasets:[
+    {label:'Technology',data:[14926,362,234,155],backgroundColor:BLUE+'cc',borderColor:BLUE,borderWidth:1.5,borderRadius:3},
+    {label:'All other industries',data:[57546,1536,996,581],backgroundColor:GRAY,borderColor:GRAY_B,borderWidth:1,borderRadius:3}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'},beginAtZero:true,type:'logarithmic',
+         ticks:{font:{size:10},callback:v=>v>=1000?(v/1000)+'k':v}}
+    }
+  }
+});
+
+// ── E2: Tech step types ──
+new Chart(document.getElementById('chartTechSteps'), {
+  type:'bar',
+  data:{
+    labels:['Update Ticket','Get Ticket','Add Tags','Get User','Slack Post','Task Agent (AI)','Jira Create','Custom Code','Org Lookup','Remove Tags'],
+    datasets:[{
+      label:'Accounts using',
+      data:[102,99,64,60,14,28,6,98,22,22],
+      backgroundColor:[BLUE+'99',BLUE+'99',BLUE+'99',BLUE+'99',ORANGE+'cc',VIOLET+'cc',BLUE+'cc',YELLOW+'99',BLUE+'99',BLUE+'99'],
+      borderColor:[BLUE,BLUE,BLUE,BLUE,ORANGE,VIOLET,BLUE,YELLOW,BLUE,BLUE],
+      borderWidth:1.5, borderRadius:3, borderSkipped:false
+    }]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.x} Tech accounts`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:10}}},
+      y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── G1: Monthly execution volume (log scale) ──
+const execMonths = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26*'];
+const execTotal  = [2936,18206,11262,5155,3176,1496,6538,29943,40693,107355035,188492038,193726521,146215126];
+const execAccts  = [13,32,46,39,40,29,68,111,124,1924,2291,2547,2621];
+
+new Chart(document.getElementById('chartExecVolume'), {
+  type:'bar', plugins:[gaLinePlugin],
+  data:{labels:execMonths, datasets:[{
+    label:'Total executions',
+    data:execTotal,
+    backgroundColor:execTotal.map((_,i)=>i>=GA_IDX?BLUE+'cc':GRAY),
+    borderColor:execTotal.map((_,i)=>i>=GA_IDX?BLUE:GRAY_B),
+    borderWidth:1.5, borderRadius:3, borderSkipped:false
+  }]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{
+      label:c=>{
+        const v=c.parsed.y;
+        return v>=1e6?` ${(v/1e6).toFixed(1)}M executions`:` ${v.toLocaleString()} executions`;
+      }
+    }}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{type:'logarithmic',grid:{color:'#f0f0ee'},
+        ticks:{font:{size:10},callback:v=>{
+          if(v>=1e8) return (v/1e6).toFixed(0)+'M';
+          if(v>=1e6) return (v/1e6).toFixed(1)+'M';
+          if(v>=1e3) return (v/1e3).toFixed(0)+'K';
+          return v;
+        }}
+      }
+    }
+  }
+});
+
+// ── G2: Active executing accounts ──
+new Chart(document.getElementById('chartExecAccounts'), {
+  type:'line', plugins:[gaLinePlugin],
+  data:{labels:execMonths, datasets:[{
+    label:'Active accounts',
+    data:execAccts,
+    borderColor:ORANGE, backgroundColor:ORANGE+'18', fill:true, tension:0.35,
+    borderWidth:2, pointRadius:4, pointHoverRadius:6,
+    pointBackgroundColor:ORANGE, pointBorderColor:'#fff', pointBorderWidth:1.5
+  }]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.y.toLocaleString()} accounts`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{color:'#f0f0ee'},beginAtZero:true,ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── G3: Invocation source ──
+const sources = ['Domain Events\n(Tickets/Users/Objects)','Custom Agents\n(Task Registry)','Advanced AI Agents','Agent Copilot','Test Runs','SaaS Management','AI Agents API','Scheduled','Other'];
+const sourceCounts = [85048839,1966621,171870,69581,124302,71204,47119,10616,1103];
+const sourceColors = [BLUE+'cc',ORANGE+'cc',AQUA+'cc',YELLOW+'cc',GRAY,GRAY,GRAY,MAGENTA+'cc',GRAY];
+const sourceBorder = [BLUE,ORANGE,AQUA,YELLOW,GRAY_B,GRAY_B,GRAY_B,MAGENTA,GRAY_B];
+
+new Chart(document.getElementById('chartInvocSource'), {
+  type:'bar',
+  data:{labels:sources, datasets:[{
+    label:'Executions',
+    data:sourceCounts,
+    backgroundColor:sourceColors,
+    borderColor:sourceBorder,
+    borderWidth:1.5, borderRadius:3, borderSkipped:false
+  }]},
+  options:{responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{
+      label:c=>{
+        const v=c.parsed.y, tot=sourceCounts.reduce((a,b)=>a+b,0);
+        const pct=(v/tot*100).toFixed(1);
+        return v>=1e6?` ${(v/1e6).toFixed(1)}M execs (${pct}%)`:` ${v.toLocaleString()} execs (${pct}%)`;
+      }
+    }}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:9},maxRotation:0}},
+      y:{type:'logarithmic',grid:{color:'#f0f0ee'},
+        ticks:{font:{size:10},callback:v=>v>=1e6?(v/1e6).toFixed(0)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':v}}
+    }
+  }
+});
+
+// ── H1: Trigger events by accounts ──
+const trigLabels=[
+  'Ticket Created','Run on Demand (Copilot/AI)','Custom Field Changed',
+  'Tags Changed','Comment Added','Status Changed','Scheduled',
+  'Form Changed','Custom Status Changed','Agent Assignment Changed',
+  'CSAT Received','Priority Changed','Attachment Added','Group Assignment','User Created'
+];
+const trigAccounts=[1237,640,432,351,349,267,247,55,52,51,48,48,48,44,40];
+const trigFlows=[85640,1304,811,778,498,358,410,62,91,59,61,51,65,51,47];
+
+new Chart(document.getElementById('chartTriggerAccounts'), {
+  type:'bar',
+  data:{labels:trigLabels, datasets:[{
+    label:'Accounts using',
+    data:trigAccounts,
+    backgroundColor:trigLabels.map(t=>{
+      if(t.includes('Created')&&!t.includes('Custom')&&!t.includes('User')) return BLUE+'cc';
+      if(t.includes('Demand')) return VIOLET+'cc';
+      if(t.includes('Scheduled')) return YELLOW+'cc';
+      return AQUA+'66';
+    }),
+    borderColor:trigLabels.map(t=>{
+      if(t.includes('Created')&&!t.includes('Custom')&&!t.includes('User')) return BLUE;
+      if(t.includes('Demand')) return VIOLET;
+      if(t.includes('Scheduled')) return YELLOW;
+      return AQUA;
+    }),
+    borderWidth:1.5, borderRadius:3, borderSkipped:false
+  }]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.x.toLocaleString()} accounts`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11}}},
+      y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── H2: Trigger events by flows ──
+new Chart(document.getElementById('chartTriggerFlows'), {
+  type:'bar',
+  data:{labels:trigLabels, datasets:[{
+    label:'Flows configured',
+    data:trigFlows,
+    backgroundColor:trigLabels.map(t=>{
+      if(t.includes('Created')&&!t.includes('Custom')&&!t.includes('User')) return ORANGE+'cc';
+      if(t.includes('Demand')) return VIOLET+'cc';
+      if(t.includes('Scheduled')) return YELLOW+'cc';
+      return ORANGE+'55';
+    }),
+    borderColor:trigLabels.map(t=>{
+      if(t.includes('Created')&&!t.includes('Custom')&&!t.includes('User')) return ORANGE;
+      if(t.includes('Demand')) return VIOLET;
+      if(t.includes('Scheduled')) return YELLOW;
+      return ORANGE;
+    }),
+    borderWidth:1.5, borderRadius:3, borderSkipped:false
+  }]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:c=>` ${c.parsed.x.toLocaleString()} flows`}}},
+    scales:{
+      x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11},callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}},
+      y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+</script>
+</body>
+</html>
