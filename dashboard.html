@@ -506,6 +506,80 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION I: EXTERNAL ACTIONS CONTRIBUTION            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">I · External & Third-Party Actions — Contribution to Total Executions</div>
+
+  <div class="stat-row">
+    <div class="stat-tile" style="border-left:4px solid var(--series-1)">
+      <div class="label">1P — Native Zendesk</div>
+      <div class="value" style="color:var(--series-1)">88.1%</div>
+      <div class="sub">Tickets, users, orgs, AI agents, custom code</div>
+      <div class="delta">73M of 83M Jul executions (AMER)</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-2)">
+      <div class="label">2P — Custom API Actions</div>
+      <div class="value" style="color:var(--series-2)">11.4%</div>
+      <div class="sub">Customer-built API integrations (any external API)</div>
+      <div class="delta">9.5M of 83M · growing month-over-month</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-3)">
+      <div class="label">3P — Native 3rd-Party Connectors</div>
+      <div class="value" style="color:var(--series-3)">0.45%</div>
+      <div class="sub">Intune, Claude, Slack, Google Sheets, Jira</div>
+      <div class="delta">373K of 83M · highest: Intune (264K/mo)</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-4)">
+      <div class="label">External Total (2P + 3P)</div>
+      <div class="value" style="color:var(--series-4)">11.9%</div>
+      <div class="sub">~9.85M external executions per month</div>
+      <div class="delta">↑ from 11.8% in May · steady share</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+
+    <div class="chart-card">
+      <h2>Execution Mix by Action Type — Monthly (AMER)</h2>
+      <p>1P dominates but Custom API (2P) is a consistent 10–11%. Third-party native connectors (3P) are small in volume but growing fastest — up 3× from May to Aug.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartExecMix"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> 1P — Native Zendesk</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div> 2P — Custom API actions</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div> 3P — Native 3rd-party connectors</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h2>Current Execution Mix — Aug 2026 (AMER)</h2>
+      <p>88% native Zendesk, 11% custom API, 0.5% native 3rd-party connectors. The large custom API share (2P) shows customers are extending beyond built-in connectors to integrate any external system.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartExecDonut"></canvas></div>
+    </div>
+
+  </div>
+
+  <div class="chart-grid-2">
+
+    <div class="chart-card">
+      <h2>Top Native 3rd-Party Connectors by Executions (AMER, last 30 days)</h2>
+      <p>Intune leads by a wide margin — ITAM device management flows dominate 3P usage. AI connectors (Claude) are #2–3 and growing fast. Slack and Google Sheets follow.</p>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart3PTop"></canvas></div>
+    </div>
+
+    <div class="chart-card">
+      <h2>Custom API Actions (2P) — Volume Growth by Month</h2>
+      <p>
+        2P = customer-built Custom Actions calling any external API. These run at massive volume — the top single account runs 1.16M executions/month from one custom action. This shows customers are deeply integrating proprietary systems that have no native connector.
+      </p>
+      <div class="chart-wrap" style="height:180px"><canvas id="chart2PGrowth"></canvas></div>
+      <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border:1px solid #f5e09a;border-radius:6px;font-size:12px;color:#7a5c0a;line-height:1.5">
+        <strong>What drives 2P volume:</strong> Customers connecting to internal systems (CRMs, ORMs, proprietary APIs) that have no native connector. Single accounts generate millions of executions — Britânia (37M COs), ButterflyMX (24M), Flair Airlines (9.6M) all rely heavily on custom API steps.
+      </div>
+    </div>
+
+  </div>
+
   <div class="report-footer">
     Generated Aug 25, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
     Industry + trigger data: Aug 2026 · Segment/trend data: Aug 23 snapshot ·
@@ -1073,6 +1147,168 @@ new Chart(document.getElementById('chartTriggerFlows'), {
     scales:{
       x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11},callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}},
       y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── I1: Stacked bar — monthly execution mix by category (AMER) ──
+const mixMonths = ['May \'26','Jun \'26','Jul \'26','Aug \'26*'];
+new Chart(document.getElementById('chartExecMix'), {
+  type: 'bar',
+  data: {
+    labels: mixMonths,
+    datasets: [
+      {
+        label: '1P — Native Zendesk',
+        data: [28984560, 71965468, 73076206, 60314234],
+        backgroundColor: BLUE+'cc', borderColor: BLUE, borderWidth: 1.5,
+        borderRadius: 2, stack: 's'
+      },
+      {
+        label: '2P — Custom API actions',
+        data: [3740304, 7899767, 9480041, 7495736],
+        backgroundColor: ORANGE+'cc', borderColor: ORANGE, borderWidth: 1.5,
+        borderRadius: 2, stack: 's'
+      },
+      {
+        label: '3P — Native 3rd-party connectors',
+        data: [148405, 391258, 373015, 449769],
+        backgroundColor: AQUA+'cc', borderColor: AQUA, borderWidth: 1.5,
+        borderRadius: 2, stack: 's'
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const v = c.parsed.y;
+          const tot = [32873269, 80256493, 82929262, 68259739];
+          const pct = (v / tot[c.dataIndex] * 100).toFixed(1);
+          const fmt = v >= 1e6 ? (v/1e6).toFixed(1)+'M' : (v/1e3).toFixed(0)+'K';
+          return ` ${c.dataset.label}: ${fmt} (${pct}%)`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, stacked: true, ticks: { font: { size: 11 } } },
+      y: {
+        grid: { color: '#f0f0ee' }, stacked: true,
+        ticks: { font: { size: 10 }, callback: v => v >= 1e6 ? (v/1e6).toFixed(0)+'M' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : v }
+      }
+    }
+  }
+});
+
+// ── I2: Donut — current mix Aug 2026 ──
+new Chart(document.getElementById('chartExecDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['1P — Native Zendesk (88.3%)', '2P — Custom API (11.0%)', '3P — Native 3rd-party (0.7%)'],
+    datasets: [{
+      data: [60314234, 7495736, 449769],
+      backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
+      borderColor: [BLUE, ORANGE, AQUA],
+      borderWidth: 2,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '62%',
+    plugins: {
+      legend: {
+        display: true, position: 'bottom',
+        labels: { font: { size: 11 }, padding: 14, boxWidth: 12 }
+      },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const v = c.raw;
+          const fmt = v >= 1e6 ? (v/1e6).toFixed(1)+'M' : (v/1e3).toFixed(0)+'K';
+          return ` ${fmt} executions`;
+        }
+      }}
+    }
+  }
+});
+
+// ── I3: Top 3P connectors ──
+const top3P = [
+  { n: 'Intune (device lookup)',     v: 264578, grp: 'IT Management' },
+  { n: 'Claude (send prompt)',        v: 74514,  grp: 'AI' },
+  { n: 'Claude (summarize text)',     v: 53233,  grp: 'AI' },
+  { n: 'Google Sheets (append row)', v: 29630,  grp: 'Productivity' },
+  { n: 'Slack (DM)',                  v: 20722,  grp: 'Messaging' },
+  { n: 'Slack (find user)',           v: 16678,  grp: 'Messaging' },
+  { n: 'Slack (fetch message)',       v: 15564,  grp: 'Messaging' },
+  { n: 'Slack (post message)',        v: 9333,   grp: 'Messaging' },
+  { n: 'Jamf (fetch computers)',      v: 6614,   grp: 'IT Management' },
+  { n: 'MS Teams (DM)',               v: 4400,   grp: 'Messaging' },
+  { n: 'Gmail (send email)',          v: 3203,   grp: 'Productivity' },
+  { n: 'OpenAI (send prompt)',        v: 972,    grp: 'AI' },
+  { n: 'Claude (sentiment)',          v: 811,    grp: 'AI' },
+  { n: 'MS Teams (post channel)',     v: 757,    grp: 'Messaging' }
+];
+
+const grpColor = g => g === 'IT Management' ? BLUE+'cc' : g === 'AI' ? VIOLET+'cc' : g === 'Messaging' ? ORANGE+'cc' : AQUA+'cc';
+const grpBorder = g => g === 'IT Management' ? BLUE : g === 'AI' ? VIOLET : g === 'Messaging' ? ORANGE : AQUA;
+
+new Chart(document.getElementById('chart3PTop'), {
+  type: 'bar',
+  data: {
+    labels: top3P.map(x => x.n),
+    datasets: [{
+      label: 'Executions (last 30d)',
+      data: top3P.map(x => x.v),
+      backgroundColor: top3P.map(x => grpColor(x.grp)),
+      borderColor:     top3P.map(x => grpBorder(x.grp)),
+      borderWidth: 1.5, borderRadius: 3, borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => ` ${c.parsed.x.toLocaleString()} executions · ${top3P[c.dataIndex].grp}`
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ── I4: 2P Custom API growth line ──
+new Chart(document.getElementById('chart2PGrowth'), {
+  type: 'line',
+  data: {
+    labels: mixMonths,
+    datasets: [{
+      label: 'Custom API executions (2P)',
+      data: [3740304, 7899767, 9480041, 7495736],
+      borderColor: ORANGE, backgroundColor: ORANGE+'18', fill: true, tension: 0.35,
+      borderWidth: 2, pointRadius: 5, pointHoverRadius: 7,
+      pointBackgroundColor: ORANGE, pointBorderColor: '#fff', pointBorderWidth: 1.5
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => ` ${(c.parsed.y/1e6).toFixed(1)}M custom API executions`
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, callback: v => (v/1e6).toFixed(0)+'M' }, beginAtZero: true }
     }
   }
 });
