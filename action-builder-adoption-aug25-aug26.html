@@ -99,6 +99,18 @@
 
   /* ── Footer ── */
   .report-footer { margin-top: 28px; font-size: 11px; color: var(--text-muted); }
+
+  /* ── EAP table ── */
+  .eap-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+  .eap-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 8px 10px; border-bottom: 1.5px solid var(--border); text-align: left; }
+  .eap-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+  .eap-table tr:last-child td { border-bottom: none; }
+  .eap-table tr:hover td { background: var(--surface-2); }
+  .eap-table tr.eap-new td { background: #f0f6ff; }
+  .eap-table tr.eap-new:hover td { background: #e4eeff; }
+  .region-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; }
+  .region-tag.amer { background: #fff3e8; color: #c45a1a; }
+  .region-tag.emea { background: #e8f4ff; color: #1a5fa8; }
 </style>
 </head>
 <body>
@@ -138,76 +150,6 @@
       <div class="value" style="color:var(--series-2)">70,574</div>
       <div class="sub">never ran a flow (97.4%)</div>
       <div class="delta">Target: reduce to &lt;90%</div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- SECTION Z: RETENTION STORY — THE KEY INSIGHT        -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="section-label" style="background:linear-gradient(90deg,#eaf2ff,transparent);padding:8px 12px;border-radius:6px;border-bottom:none;margin-bottom:14px">
-    ⭐ Key Insight — The Product Retains Well. The Gap Is Getting Customers to Try It.
-  </div>
-
-  <div class="stat-row" style="margin-bottom:12px">
-    <div class="stat-tile" style="border-left:4px solid var(--series-3)">
-      <div class="label">Penetrated → Adopted</div>
-      <div class="value" style="color:var(--series-3)">38.8%</div>
-      <div class="sub">of accounts that try → fully adopt</div>
-      <div class="delta">736 of 1,898 penetrated CRMs</div>
-    </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-1)">
-      <div class="label">Enterprise: Try → Adopt</div>
-      <div class="value" style="color:var(--series-1)">49.7%</div>
-      <div class="sub">1 in 2 Enterprise accounts that try → adopt</div>
-      <div class="delta">223 of 449 Enterprise CRMs</div>
-    </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-2)">
-      <div class="label">Activated → Adopted</div>
-      <div class="value" style="color:var(--series-2)">59.8%</div>
-      <div class="sub">of weekly-active accounts → fully adopted</div>
-      <div class="delta">736 of 1,230 activated CRMs</div>
-    </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-5)">
-      <div class="label">The Real Problem</div>
-      <div class="value" style="color:var(--series-5)">97.4%</div>
-      <div class="sub">of eligible accounts have NEVER tried</div>
-      <div class="delta">Fix discovery → adoption follows</div>
-    </div>
-  </div>
-
-  <div class="chart-grid-2" style="margin-bottom:16px">
-
-    <div class="chart-card" style="border-top:3px solid var(--series-3)">
-      <h2>Funnel Conversion — Once Accounts Try, They Adopt</h2>
-      <p>64.8% of penetrated accounts become weekly users. 59.8% of those reach full adoption. The funnel is healthy — the problem is the 97.4% who haven't entered it yet.</p>
-      <div class="chart-wrap" style="height:220px"><canvas id="chartRetentionFunnel"></canvas></div>
-      <div style="margin-top:12px;padding:10px 12px;background:#f0faf5;border-radius:6px;border:1px solid #b8e8d0;font-size:12px;color:#1a6b45;line-height:1.6">
-        <strong>Reading this chart:</strong> Start from 1,898 penetrated accounts (100%).
-        64.8% become Activated (weekly use). 59.8% of those reach Adopted (≥100 exec/week in ≥3 of 4 weeks).
-        The drop-off is manageable — <strong>the opportunity is expanding the top of the funnel.</strong>
-      </div>
-    </div>
-
-    <div class="chart-card" style="border-top:3px solid var(--series-1)">
-      <h2>Penetrated → Adopted Conversion by Segment</h2>
-      <p>Enterprise converts best: nearly 1 in 2 accounts that try become Adopted. Corporate at 39%. Digital lower but growing.</p>
-      <div class="chart-wrap" style="height:220px"><canvas id="chartSegConversion"></canvas></div>
-      <div style="margin-top:12px;padding:10px 12px;background:#f0f5ff;border-radius:6px;border:1px solid #b8cff0;font-size:12px;color:#1a3d7a;line-height:1.6">
-        <strong>What this means:</strong> Enterprise accounts that discover Action Builder almost always embed it.
-        The investment in enterprise discovery (templates, SE workflows, onboarding) has the highest ROI.
-      </div>
-    </div>
-
-  </div>
-
-  <div class="chart-grid-1" style="margin-bottom:16px">
-    <div class="chart-card" style="border-top:3px solid var(--series-4)">
-      <h2>Penetration vs Adoption Rate — The Two-Speed Problem</h2>
-      <p>
-        Each bar pair shows a segment's penetration rate (left, grey = the problem) vs its adoption rate among those who tried (right, coloured = the strength).
-        Adoption rates are 8–10× higher than penetration rates across all segments — the product works, it's just not being discovered.
-      </p>
-      <div class="chart-wrap" style="height:180px"><canvas id="chartTwoSpeed"></canvas></div>
     </div>
   </div>
 
@@ -507,84 +449,107 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
-  <!-- SECTION I: EXTERNAL ACTIONS CONTRIBUTION            -->
+  <!-- SECTION I: EAP SIGNUPS                              -->
   <!-- ═══════════════════════════════════════════════════ -->
-  <div class="section-label">I · External & Third-Party Actions — Contribution to Total Executions</div>
+  <div class="section-label">I · Action Flows EAP — Signup Momentum (as of Aug 26, 2026)</div>
 
   <div class="stat-row">
-    <div class="stat-tile" style="border-left:4px solid var(--series-1)">
-      <div class="label">1P — Native Zendesk</div>
-      <div class="value" style="color:var(--series-1)">88.1%</div>
-      <div class="sub">Tickets, users, orgs, AI agents, custom code</div>
-      <div class="delta">73M of 83M Jul executions (AMER)</div>
+    <div class="stat-tile">
+      <div class="label">Total EAP Opt-ins</div>
+      <div class="value">565</div>
+      <div class="sub">AMER + EMEA · all account types</div>
+      <div class="delta">↑ +165 since Aug 20 (2× week-on-week)</div>
     </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-2)">
-      <div class="label">2P — Custom API Actions</div>
-      <div class="value" style="color:var(--series-2)">11.4%</div>
-      <div class="sub">Customer-built API integrations (any external API)</div>
-      <div class="delta">9.5M of 83M · growing month-over-month</div>
+    <div class="stat-tile">
+      <div class="label">Paying Customers</div>
+      <div class="value" style="color:var(--series-1)">224</div>
+      <div class="sub">39.6% of all opt-ins are paying</div>
+      <div class="delta">↑ +71 new paying accounts this week</div>
     </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-3)">
-      <div class="label">3P — Native 3rd-Party Connectors</div>
-      <div class="value" style="color:var(--series-3)">0.45%</div>
-      <div class="sub">Intune, Claude, Slack, Google Sheets, Jira</div>
-      <div class="delta">373K of 83M · highest: Intune (264K/mo)</div>
+    <div class="stat-tile">
+      <div class="label">AMER Paying</div>
+      <div class="value" style="color:var(--series-2)">131</div>
+      <div class="sub">of 369 total AMER opt-ins</div>
+      <div class="delta">58% of all paying EAP signups</div>
     </div>
-    <div class="stat-tile" style="border-left:4px solid var(--series-4)">
-      <div class="label">External Total (2P + 3P)</div>
-      <div class="value" style="color:var(--series-4)">11.9%</div>
-      <div class="sub">~9.85M external executions per month</div>
-      <div class="delta">↑ from 11.8% in May · steady share</div>
+    <div class="stat-tile">
+      <div class="label">EMEA Paying</div>
+      <div class="value" style="color:var(--series-3)">93</div>
+      <div class="sub">of 196 total EMEA opt-ins</div>
+      <div class="delta">47% paying rate vs 36% in AMER</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
-
     <div class="chart-card">
-      <h2>Execution Mix by Action Type — Monthly (AMER)</h2>
-      <p>1P dominates but Custom API (2P) is a consistent 10–11%. Third-party native connectors (3P) are small in volume but growing fastest — up 3× from May to Aug.</p>
-      <div class="chart-wrap" style="height:260px"><canvas id="chartExecMix"></canvas></div>
+      <h2>Daily EAP Signup Volume — Aug 10–26, 2026</h2>
+      <p>Two clear waves: Aug 20–21 (broad EAP invitation, +166 opt-ins in 2 days) and Aug 24–26 (ongoing, +173 new). Paying instances track ~35% of total daily volume.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartEapDaily"></canvas></div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div> 1P — Native Zendesk</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div> 2P — Custom API actions</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div> 3P — Native 3rd-party connectors</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--series-1)"></div>All opt-ins</div>
+        <div class="legend-item"><div class="legend-line" style="background:var(--series-3)"></div>Paying instances only</div>
       </div>
     </div>
-
     <div class="chart-card">
-      <h2>Current Execution Mix — Aug 2026 (AMER)</h2>
-      <p>88% native Zendesk, 11% custom API, 0.5% native 3rd-party connectors. The large custom API share (2P) shows customers are extending beyond built-in connectors to integrate any external system.</p>
-      <div class="chart-wrap" style="height:260px"><canvas id="chartExecDonut"></canvas></div>
+      <h2>EAP Opt-ins by Account Type</h2>
+      <p>224 paying customers (39.6%) have accepted EAP terms. Internal test accounts (31%) and sandboxes (16%) make up the remainder — real customer demand is strong.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartEapType"></canvas></div>
     </div>
-
   </div>
 
-  <div class="chart-grid-2">
-
-    <div class="chart-card">
-      <h2>Top Native 3rd-Party Connectors by Executions (AMER, last 30 days)</h2>
-      <p>Intune leads by a wide margin — ITAM device management flows dominate 3P usage. AI connectors (Claude) are #2–3 and growing fast. Slack and Google Sheets follow.</p>
-      <div class="chart-wrap" style="height:280px"><canvas id="chart3PTop"></canvas></div>
-    </div>
-
-    <div class="chart-card">
-      <h2>Custom API Actions (2P) — Volume Growth by Month</h2>
-      <p>
-        2P = customer-built Custom Actions calling any external API. These run at massive volume — the top single account runs 1.16M executions/month from one custom action. This shows customers are deeply integrating proprietary systems that have no native connector.
-      </p>
-      <div class="chart-wrap" style="height:180px"><canvas id="chart2PGrowth"></canvas></div>
-      <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border:1px solid #f5e09a;border-radius:6px;font-size:12px;color:#7a5c0a;line-height:1.5">
-        <strong>What drives 2P volume:</strong> Customers connecting to internal systems (CRMs, ORMs, proprietary APIs) that have no native connector. Single accounts generate millions of executions — Britânia (37M COs), ButterflyMX (24M), Flair Airlines (9.6M) all rely heavily on custom API steps.
-      </div>
-    </div>
-
+  <div class="chart-card" style="margin-bottom:16px">
+    <h2>Recent Paying Customer EAP Signups — Aug 24–26, 2026</h2>
+    <p>30 most recent paying accounts to accept EAP terms. Highlighted rows (blue) signed up today (Aug 26). Mix of fintech, retail, health, industrial, and SaaS verticals across 15+ countries.</p>
+    <table class="eap-table">
+      <thead>
+        <tr>
+          <th>Signed Up (UTC)</th>
+          <th>Company</th>
+          <th>Subdomain</th>
+          <th>Region</th>
+          <th>CSM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="eap-new"><td>Aug 26, 11:55</td><td>Superlogica</td><td>condominios</td><td><span class="region-tag amer">AMER</span></td><td>Fiorella Jiménez</td></tr>
+        <tr class="eap-new"><td>Aug 26, 10:59</td><td>Turck GmbH</td><td>turck</td><td><span class="region-tag emea">EMEA</span></td><td>Ana Romasiuk</td></tr>
+        <tr class="eap-new"><td>Aug 26, 09:45</td><td>Hilti Aktiengesellschaft</td><td>fieldwirelabs</td><td><span class="region-tag emea">EMEA</span></td><td>Juan Carlos Esparza</td></tr>
+        <tr class="eap-new"><td>Aug 26, 08:46</td><td>ABBYY INC</td><td>abbyy</td><td><span class="region-tag emea">EMEA</span></td><td>Francesca Pezzano</td></tr>
+        <tr class="eap-new"><td>Aug 26, 02:12</td><td>Maven Clinic</td><td>mavenclinic</td><td><span class="region-tag amer">AMER</span></td><td>Billy Caldwell</td></tr>
+        <tr><td>Aug 25, 23:13</td><td>Everlab</td><td>everlab</td><td><span class="region-tag amer">AMER</span></td><td>Krithiga Karunanithi</td></tr>
+        <tr><td>Aug 25, 22:35</td><td>Hero Seguros</td><td>heroassist</td><td><span class="region-tag amer">AMER</span></td><td>Fernando Saldana</td></tr>
+        <tr><td>Aug 25, 21:10</td><td>Doozy Solutions</td><td>doozysolutions</td><td><span class="region-tag amer">AMER</span></td><td>Cindy Hwang</td></tr>
+        <tr><td>Aug 25, 19:28</td><td>Skelt Beauty Brands</td><td>skeltcreamy</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
+        <tr><td>Aug 25, 16:54</td><td>CIS</td><td>cis2118</td><td><span class="region-tag amer">AMER</span></td><td>Lauren Beato</td></tr>
+        <tr><td>Aug 25, 16:18</td><td>blau direkt GmbH</td><td>blaudirekt</td><td><span class="region-tag emea">EMEA</span></td><td>Kenneth Buckley</td></tr>
+        <tr><td>Aug 25, 14:59</td><td>GetYourGuide Deutschland GmbH</td><td>getyourguidesupport</td><td><span class="region-tag emea">EMEA</span></td><td>Helin Bierly</td></tr>
+        <tr><td>Aug 25, 14:06</td><td>Starbucks Coffee Japan</td><td>starbucks-jp</td><td><span class="region-tag amer">AMER</span></td><td>Tetsuya Otaki</td></tr>
+        <tr><td>Aug 25, 13:14</td><td>Yaskawa America</td><td>yaskawaamerica-68610</td><td><span class="region-tag amer">AMER</span></td><td>Samuel Maraima</td></tr>
+        <tr><td>Aug 25, 13:04</td><td>Alti International Operations</td><td>investglobal</td><td><span class="region-tag emea">EMEA</span></td><td>Mohamed Temraoui</td></tr>
+        <tr><td>Aug 25, 11:09</td><td>EVENTIM Benelux</td><td>paylogic</td><td><span class="region-tag emea">EMEA</span></td><td>Hadrien Role</td></tr>
+        <tr><td>Aug 25, 11:08</td><td>Marley Spoon</td><td>marleyspoon</td><td><span class="region-tag amer">AMER</span></td><td>Tuan Vu</td></tr>
+        <tr><td>Aug 25, 10:58</td><td>Hércules Motores Elétricos</td><td>grupomueller</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
+        <tr><td>Aug 25, 10:30</td><td>91App HK Limited</td><td>91app-hk</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
+        <tr><td>Aug 25, 09:49</td><td>VertiGIS Ltd</td><td>vertigis</td><td><span class="region-tag emea">EMEA</span></td><td>Ana Romasiuk</td></tr>
+        <tr><td>Aug 25, 09:11</td><td>Liantis</td><td>onlinesupportadmb</td><td><span class="region-tag emea">EMEA</span></td><td>Alex Snellenberg</td></tr>
+        <tr><td>Aug 25, 08:55</td><td>Photobox Limited</td><td>albelli-photobox</td><td><span class="region-tag emea">EMEA</span></td><td>Tessa Jacobs</td></tr>
+        <tr><td>Aug 25, 08:08</td><td>ProfitFlow B.V.</td><td>opusflowzendesk</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr><td>Aug 25, 07:47</td><td>Districash</td><td>districash</td><td><span class="region-tag emea">EMEA</span></td><td>Oran Sugrue</td></tr>
+        <tr><td>Aug 25, 06:55</td><td>Empower GmbH</td><td>empowersuite</td><td><span class="region-tag emea">EMEA</span></td><td>Cecilia Michelli</td></tr>
+        <tr><td>Aug 25, 06:18</td><td>G-Xchange Inc. (GCash)</td><td>gcash</td><td><span class="region-tag amer">AMER</span></td><td>Adam Zhong</td></tr>
+        <tr><td>Aug 25, 05:48</td><td>Deichmann SE</td><td>deichmannse</td><td><span class="region-tag emea">EMEA</span></td><td>Catie Hoffmann</td></tr>
+        <tr><td>Aug 24, 23:00</td><td>Kantoko Health</td><td>kantoko</td><td><span class="region-tag amer">AMER</span></td><td>Gerome Deloso</td></tr>
+        <tr><td>Aug 24, 22:19</td><td>Imaging Healthcare</td><td>imaginghealthcare</td><td><span class="region-tag amer">AMER</span></td><td>Ian Cabrera</td></tr>
+        <tr><td>Aug 24, 20:48</td><td>AxisCare</td><td>axiscare</td><td><span class="region-tag amer">AMER</span></td><td>Kenny Madden</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="report-footer">
-    Generated Aug 25, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
+    Generated Aug 26, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
     Industry + trigger data: Aug 2026 · Segment/trend data: Aug 23 snapshot ·
-    Execution volumes: AMER + EMEA combined · Invocation source: AMER only (last 6 months) ·
-    Note: Dashboard still runs v1 — expect ~half the adopted counts shown there.
+    Execution volumes: AMER + EMEA combined · EAP signups: live query Aug 26, 2026 ·
+    Invocation source: AMER only (last 6 months)
   </div>
 
 </div>
@@ -620,134 +585,6 @@ const TIP = {
   backgroundColor:'#fff', borderColor:'#e2e2df', borderWidth:1,
   titleColor:'#0b0b0b', bodyColor:'#52514e'
 };
-
-// ── Z1: Retention funnel ──
-new Chart(document.getElementById('chartRetentionFunnel'), {
-  type: 'bar',
-  data: {
-    labels: ['Eligible\n(Paid accounts)', 'Penetrated\n(Tried it)', 'Activated\n(Weekly use)', 'Adopted\n(≥100 exec/wk × 3 weeks)'],
-    datasets: [{
-      label: 'CRM accounts',
-      data: [72472, 1898, 1230, 736],
-      backgroundColor: [GRAY, BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
-      borderColor:     [GRAY_B, BLUE, ORANGE, AQUA],
-      borderWidth: 1.5,
-      borderRadius: 4,
-      borderSkipped: false
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { display: false },
-      tooltip: { ...TIP, callbacks: {
-        label: c => {
-          const vals = [72472, 1898, 1230, 736];
-          const pcts = ['100%', '2.62% of eligible', '64.8% of penetrated', '59.8% of activated'];
-          return ` ${c.parsed.y.toLocaleString()} accounts (${pcts[c.dataIndex]})`;
-        }
-      }}
-    },
-    scales: {
-      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, maxRotation: 0 } },
-      y: {
-        type: 'logarithmic',
-        grid: { color: '#f0f0ee' },
-        ticks: { font: { size: 10 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v }
-      }
-    }
-  }
-});
-
-// ── Z2: Penetrated → Adopted conversion by segment ──
-new Chart(document.getElementById('chartSegConversion'), {
-  type: 'bar',
-  data: {
-    labels: ['Enterprise', 'Corporate', 'Digital (SMB)'],
-    datasets: [
-      {
-        label: 'Penetrated',
-        data: [449, 1167, 282],
-        backgroundColor: [BLUE+'44', ORANGE+'44', AQUA+'44'],
-        borderColor: [BLUE, ORANGE, AQUA],
-        borderWidth: 1.5, borderRadius: 3, stack: 'total'
-      },
-      {
-        label: 'Adopted',
-        data: [223, 459, 54],
-        backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
-        borderColor: [BLUE, ORANGE, AQUA],
-        borderWidth: 1.5, borderRadius: 3, stack: 'adopted'
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { display: false },
-      tooltip: { ...TIP, callbacks: {
-        title: ts => ts[0].label,
-        label: c => {
-          const pen = [449, 1167, 282]; const ado = [223, 459, 54];
-          if (c.datasetIndex === 0) return ` Penetrated: ${c.parsed.y} (100% baseline)`;
-          const pct = (ado[c.dataIndex]/pen[c.dataIndex]*100).toFixed(1);
-          return ` Adopted: ${c.parsed.y} (${pct}% of penetrated)`;
-        }
-      }}
-    },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } },
-      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
-    }
-  }
-});
-
-// ── Z3: Two-speed problem — penetration rate vs adoption rate ──
-new Chart(document.getElementById('chartTwoSpeed'), {
-  type: 'bar',
-  data: {
-    labels: ['Enterprise', 'Corporate', 'Digital (SMB)'],
-    datasets: [
-      {
-        label: 'Penetration rate (% of eligible who tried)',
-        data: [7.14, 4.80, 0.67],
-        backgroundColor: [GRAY, GRAY, GRAY],
-        borderColor: [GRAY_B, GRAY_B, GRAY_B],
-        borderWidth: 1.5, borderRadius: 3
-      },
-      {
-        label: 'Adoption rate (% of penetrated who adopted)',
-        data: [49.7, 39.3, 19.1],
-        backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
-        borderColor: [BLUE, ORANGE, AQUA],
-        borderWidth: 1.5, borderRadius: 3
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: {
-        display: true, position: 'bottom',
-        labels: { font: { size: 11 }, boxWidth: 12, padding: 16 }
-      },
-      tooltip: { ...TIP, callbacks: {
-        label: c => ` ${c.dataset.label}: ${c.parsed.y}%`
-      }}
-    },
-    scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 12, weight: '600' } } },
-      y: {
-        grid: { color: '#f0f0ee' },
-        ticks: { font: { size: 11 }, callback: v => v + '%' },
-        beginAtZero: true, suggestedMax: 60
-      }
-    }
-  }
-});
 
 // ── B1: Overall trend ──
 new Chart(document.getElementById('chartOverall'), {
@@ -1151,164 +988,80 @@ new Chart(document.getElementById('chartTriggerFlows'), {
   }
 });
 
-// ── I1: Stacked bar — monthly execution mix by category (AMER) ──
-const mixMonths = ['May \'26','Jun \'26','Jul \'26','Aug \'26*'];
-new Chart(document.getElementById('chartExecMix'), {
-  type: 'bar',
+// ── I: EAP Daily Signup Trend ──
+const eapDays = ['Aug 10','Aug 11','Aug 12','Aug 13','Aug 14','Aug 15','Aug 16','Aug 17','Aug 18','Aug 19','Aug 20','Aug 21','Aug 22','Aug 23','Aug 24','Aug 25','Aug 26*'];
+const eapAll    = [25, 14,  5,  5, 30,  2,  2,  7,  6, 12, 57, 109,  5, 10, 76, 70, 27];
+const eapPaying = [ 5,  4,  1,  1,  0,  0,  0,  2,  1,  3, 15,  30,  3,  5, 35, 25,  5];
+
+new Chart(document.getElementById('chartEapDaily'), {
+  type: 'line',
   data: {
-    labels: mixMonths,
+    labels: eapDays,
     datasets: [
       {
-        label: '1P — Native Zendesk',
-        data: [28984560, 71965468, 73076206, 60314234],
-        backgroundColor: BLUE+'cc', borderColor: BLUE, borderWidth: 1.5,
-        borderRadius: 2, stack: 's'
+        label: 'All opt-ins',
+        data: eapAll,
+        borderColor: BLUE,
+        backgroundColor: BLUE + '18',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointHoverRadius: 5
       },
       {
-        label: '2P — Custom API actions',
-        data: [3740304, 7899767, 9480041, 7495736],
-        backgroundColor: ORANGE+'cc', borderColor: ORANGE, borderWidth: 1.5,
-        borderRadius: 2, stack: 's'
-      },
-      {
-        label: '3P — Native 3rd-party connectors',
-        data: [148405, 391258, 373015, 449769],
-        backgroundColor: AQUA+'cc', borderColor: AQUA, borderWidth: 1.5,
-        borderRadius: 2, stack: 's'
+        label: 'Paying instances',
+        data: eapPaying,
+        borderColor: AQUA,
+        backgroundColor: AQUA + '18',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointHoverRadius: 5
       }
     ]
   },
   options: {
-    responsive: true, maintainAspectRatio: false,
+    responsive: true,
+    maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
-      tooltip: { ...TIP, callbacks: {
-        label: c => {
-          const v = c.parsed.y;
-          const tot = [32873269, 80256493, 82929262, 68259739];
-          const pct = (v / tot[c.dataIndex] * 100).toFixed(1);
-          const fmt = v >= 1e6 ? (v/1e6).toFixed(1)+'M' : (v/1e3).toFixed(0)+'K';
-          return ` ${c.dataset.label}: ${fmt} (${pct}%)`;
-        }
-      }}
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}` } }
     },
     scales: {
-      x: { grid: { color: '#f0f0ee' }, stacked: true, ticks: { font: { size: 11 } } },
-      y: {
-        grid: { color: '#f0f0ee' }, stacked: true,
-        ticks: { font: { size: 10 }, callback: v => v >= 1e6 ? (v/1e6).toFixed(0)+'M' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : v }
-      }
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
     }
   }
 });
 
-// ── I2: Donut — current mix Aug 2026 ──
-new Chart(document.getElementById('chartExecDonut'), {
-  type: 'doughnut',
-  data: {
-    labels: ['1P — Native Zendesk (88.3%)', '2P — Custom API (11.0%)', '3P — Native 3rd-party (0.7%)'],
-    datasets: [{
-      data: [60314234, 7495736, 449769],
-      backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
-      borderColor: [BLUE, ORANGE, AQUA],
-      borderWidth: 2,
-      hoverOffset: 8
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '62%',
-    plugins: {
-      legend: {
-        display: true, position: 'bottom',
-        labels: { font: { size: 11 }, padding: 14, boxWidth: 12 }
-      },
-      tooltip: { ...TIP, callbacks: {
-        label: c => {
-          const v = c.raw;
-          const fmt = v >= 1e6 ? (v/1e6).toFixed(1)+'M' : (v/1e3).toFixed(0)+'K';
-          return ` ${fmt} executions`;
-        }
-      }}
-    }
-  }
-});
-
-// ── I3: Top 3P connectors ──
-const top3P = [
-  { n: 'Intune (device lookup)',     v: 264578, grp: 'IT Management' },
-  { n: 'Claude (send prompt)',        v: 74514,  grp: 'AI' },
-  { n: 'Claude (summarize text)',     v: 53233,  grp: 'AI' },
-  { n: 'Google Sheets (append row)', v: 29630,  grp: 'Productivity' },
-  { n: 'Slack (DM)',                  v: 20722,  grp: 'Messaging' },
-  { n: 'Slack (find user)',           v: 16678,  grp: 'Messaging' },
-  { n: 'Slack (fetch message)',       v: 15564,  grp: 'Messaging' },
-  { n: 'Slack (post message)',        v: 9333,   grp: 'Messaging' },
-  { n: 'Jamf (fetch computers)',      v: 6614,   grp: 'IT Management' },
-  { n: 'MS Teams (DM)',               v: 4400,   grp: 'Messaging' },
-  { n: 'Gmail (send email)',          v: 3203,   grp: 'Productivity' },
-  { n: 'OpenAI (send prompt)',        v: 972,    grp: 'AI' },
-  { n: 'Claude (sentiment)',          v: 811,    grp: 'AI' },
-  { n: 'MS Teams (post channel)',     v: 757,    grp: 'Messaging' }
-];
-
-const grpColor = g => g === 'IT Management' ? BLUE+'cc' : g === 'AI' ? VIOLET+'cc' : g === 'Messaging' ? ORANGE+'cc' : AQUA+'cc';
-const grpBorder = g => g === 'IT Management' ? BLUE : g === 'AI' ? VIOLET : g === 'Messaging' ? ORANGE : AQUA;
-
-new Chart(document.getElementById('chart3PTop'), {
+// ── I2: EAP by account type ──
+new Chart(document.getElementById('chartEapType'), {
   type: 'bar',
   data: {
-    labels: top3P.map(x => x.n),
+    labels: ['Paying Instance', 'Internal Instance', 'Sandbox', 'Other Edgecase', 'Active Trial'],
     datasets: [{
-      label: 'Executions (last 30d)',
-      data: top3P.map(x => x.v),
-      backgroundColor: top3P.map(x => grpColor(x.grp)),
-      borderColor:     top3P.map(x => grpBorder(x.grp)),
-      borderWidth: 1.5, borderRadius: 3, borderSkipped: false
+      label: 'Opt-ins',
+      data: [224, 175, 90, 62, 14],
+      backgroundColor: [AQUA+'cc', BLUE+'55', ORANGE+'55', YELLOW+'55', MAGENTA+'55'],
+      borderColor:     [AQUA,       BLUE,       ORANGE,       YELLOW,       MAGENTA],
+      borderWidth: 1.5, borderRadius: 4, borderSkipped: false
     }]
   },
   options: {
-    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
-      tooltip: { ...TIP, callbacks: {
-        label: c => ` ${c.parsed.x.toLocaleString()} executions · ${top3P[c.dataIndex].grp}`
-      }}
-    },
-    scales: {
-      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v } },
-      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
-    }
-  }
-});
-
-// ── I4: 2P Custom API growth line ──
-new Chart(document.getElementById('chart2PGrowth'), {
-  type: 'line',
-  data: {
-    labels: mixMonths,
-    datasets: [{
-      label: 'Custom API executions (2P)',
-      data: [3740304, 7899767, 9480041, 7495736],
-      borderColor: ORANGE, backgroundColor: ORANGE+'18', fill: true, tension: 0.35,
-      borderWidth: 2, pointRadius: 5, pointHoverRadius: 7,
-      pointBackgroundColor: ORANGE, pointBorderColor: '#fff', pointBorderWidth: 1.5
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { display: false },
-      tooltip: { ...TIP, callbacks: {
-        label: c => ` ${(c.parsed.y/1e6).toFixed(1)}M custom API executions`
-      }}
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/565*100)}%)` } }
     },
     scales: {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } } },
-      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, callback: v => (v/1e6).toFixed(0)+'M' }, beginAtZero: true }
+      y: { grid: { display: false }, ticks: { font: { size: 11 } } }
     }
   }
 });
