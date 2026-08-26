@@ -142,6 +142,76 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION Z: RETENTION STORY — THE KEY INSIGHT        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label" style="background:linear-gradient(90deg,#eaf2ff,transparent);padding:8px 12px;border-radius:6px;border-bottom:none;margin-bottom:14px">
+    ⭐ Key Insight — The Product Retains Well. The Gap Is Getting Customers to Try It.
+  </div>
+
+  <div class="stat-row" style="margin-bottom:12px">
+    <div class="stat-tile" style="border-left:4px solid var(--series-3)">
+      <div class="label">Penetrated → Adopted</div>
+      <div class="value" style="color:var(--series-3)">38.8%</div>
+      <div class="sub">of accounts that try → fully adopt</div>
+      <div class="delta">736 of 1,898 penetrated CRMs</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-1)">
+      <div class="label">Enterprise: Try → Adopt</div>
+      <div class="value" style="color:var(--series-1)">49.7%</div>
+      <div class="sub">1 in 2 Enterprise accounts that try → adopt</div>
+      <div class="delta">223 of 449 Enterprise CRMs</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-2)">
+      <div class="label">Activated → Adopted</div>
+      <div class="value" style="color:var(--series-2)">59.8%</div>
+      <div class="sub">of weekly-active accounts → fully adopted</div>
+      <div class="delta">736 of 1,230 activated CRMs</div>
+    </div>
+    <div class="stat-tile" style="border-left:4px solid var(--series-5)">
+      <div class="label">The Real Problem</div>
+      <div class="value" style="color:var(--series-5)">97.4%</div>
+      <div class="sub">of eligible accounts have NEVER tried</div>
+      <div class="delta">Fix discovery → adoption follows</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2" style="margin-bottom:16px">
+
+    <div class="chart-card" style="border-top:3px solid var(--series-3)">
+      <h2>Funnel Conversion — Once Accounts Try, They Adopt</h2>
+      <p>64.8% of penetrated accounts become weekly users. 59.8% of those reach full adoption. The funnel is healthy — the problem is the 97.4% who haven't entered it yet.</p>
+      <div class="chart-wrap" style="height:220px"><canvas id="chartRetentionFunnel"></canvas></div>
+      <div style="margin-top:12px;padding:10px 12px;background:#f0faf5;border-radius:6px;border:1px solid #b8e8d0;font-size:12px;color:#1a6b45;line-height:1.6">
+        <strong>Reading this chart:</strong> Start from 1,898 penetrated accounts (100%).
+        64.8% become Activated (weekly use). 59.8% of those reach Adopted (≥100 exec/week in ≥3 of 4 weeks).
+        The drop-off is manageable — <strong>the opportunity is expanding the top of the funnel.</strong>
+      </div>
+    </div>
+
+    <div class="chart-card" style="border-top:3px solid var(--series-1)">
+      <h2>Penetrated → Adopted Conversion by Segment</h2>
+      <p>Enterprise converts best: nearly 1 in 2 accounts that try become Adopted. Corporate at 39%. Digital lower but growing.</p>
+      <div class="chart-wrap" style="height:220px"><canvas id="chartSegConversion"></canvas></div>
+      <div style="margin-top:12px;padding:10px 12px;background:#f0f5ff;border-radius:6px;border:1px solid #b8cff0;font-size:12px;color:#1a3d7a;line-height:1.6">
+        <strong>What this means:</strong> Enterprise accounts that discover Action Builder almost always embed it.
+        The investment in enterprise discovery (templates, SE workflows, onboarding) has the highest ROI.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="chart-grid-1" style="margin-bottom:16px">
+    <div class="chart-card" style="border-top:3px solid var(--series-4)">
+      <h2>Penetration vs Adoption Rate — The Two-Speed Problem</h2>
+      <p>
+        Each bar pair shows a segment's penetration rate (left, grey = the problem) vs its adoption rate among those who tried (right, coloured = the strength).
+        Adoption rates are 8–10× higher than penetration rates across all segments — the product works, it's just not being discovered.
+      </p>
+      <div class="chart-wrap" style="height:180px"><canvas id="chartTwoSpeed"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
   <!-- SECTION B: 12-MONTH TREND                           -->
   <!-- ═══════════════════════════════════════════════════ -->
   <div class="section-label">B · 12-Month Penetration Trend</div>
@@ -476,6 +546,134 @@ const TIP = {
   backgroundColor:'#fff', borderColor:'#e2e2df', borderWidth:1,
   titleColor:'#0b0b0b', bodyColor:'#52514e'
 };
+
+// ── Z1: Retention funnel ──
+new Chart(document.getElementById('chartRetentionFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['Eligible\n(Paid accounts)', 'Penetrated\n(Tried it)', 'Activated\n(Weekly use)', 'Adopted\n(≥100 exec/wk × 3 weeks)'],
+    datasets: [{
+      label: 'CRM accounts',
+      data: [72472, 1898, 1230, 736],
+      backgroundColor: [GRAY, BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
+      borderColor:     [GRAY_B, BLUE, ORANGE, AQUA],
+      borderWidth: 1.5,
+      borderRadius: 4,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const vals = [72472, 1898, 1230, 736];
+          const pcts = ['100%', '2.62% of eligible', '64.8% of penetrated', '59.8% of activated'];
+          return ` ${c.parsed.y.toLocaleString()} accounts (${pcts[c.dataIndex]})`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 }, maxRotation: 0 } },
+      y: {
+        type: 'logarithmic',
+        grid: { color: '#f0f0ee' },
+        ticks: { font: { size: 10 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v }
+      }
+    }
+  }
+});
+
+// ── Z2: Penetrated → Adopted conversion by segment ──
+new Chart(document.getElementById('chartSegConversion'), {
+  type: 'bar',
+  data: {
+    labels: ['Enterprise', 'Corporate', 'Digital (SMB)'],
+    datasets: [
+      {
+        label: 'Penetrated',
+        data: [449, 1167, 282],
+        backgroundColor: [BLUE+'44', ORANGE+'44', AQUA+'44'],
+        borderColor: [BLUE, ORANGE, AQUA],
+        borderWidth: 1.5, borderRadius: 3, stack: 'total'
+      },
+      {
+        label: 'Adopted',
+        data: [223, 459, 54],
+        backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
+        borderColor: [BLUE, ORANGE, AQUA],
+        borderWidth: 1.5, borderRadius: 3, stack: 'adopted'
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        title: ts => ts[0].label,
+        label: c => {
+          const pen = [449, 1167, 282]; const ado = [223, 459, 54];
+          if (c.datasetIndex === 0) return ` Penetrated: ${c.parsed.y} (100% baseline)`;
+          const pct = (ado[c.dataIndex]/pen[c.dataIndex]*100).toFixed(1);
+          return ` Adopted: ${c.parsed.y} (${pct}% of penetrated)`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+
+// ── Z3: Two-speed problem — penetration rate vs adoption rate ──
+new Chart(document.getElementById('chartTwoSpeed'), {
+  type: 'bar',
+  data: {
+    labels: ['Enterprise', 'Corporate', 'Digital (SMB)'],
+    datasets: [
+      {
+        label: 'Penetration rate (% of eligible who tried)',
+        data: [7.14, 4.80, 0.67],
+        backgroundColor: [GRAY, GRAY, GRAY],
+        borderColor: [GRAY_B, GRAY_B, GRAY_B],
+        borderWidth: 1.5, borderRadius: 3
+      },
+      {
+        label: 'Adoption rate (% of penetrated who adopted)',
+        data: [49.7, 39.3, 19.1],
+        backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
+        borderColor: [BLUE, ORANGE, AQUA],
+        borderWidth: 1.5, borderRadius: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: {
+        display: true, position: 'bottom',
+        labels: { font: { size: 11 }, boxWidth: 12, padding: 16 }
+      },
+      tooltip: { ...TIP, callbacks: {
+        label: c => ` ${c.dataset.label}: ${c.parsed.y}%`
+      }}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 12, weight: '600' } } },
+      y: {
+        grid: { color: '#f0f0ee' },
+        ticks: { font: { size: 11 }, callback: v => v + '%' },
+        beginAtZero: true, suggestedMax: 60
+      }
+    }
+  }
+});
 
 // ── B1: Overall trend ──
 new Chart(document.getElementById('chartOverall'), {
