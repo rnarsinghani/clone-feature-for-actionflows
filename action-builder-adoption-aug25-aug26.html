@@ -689,8 +689,8 @@
     </div>
     <div class="stat-tile">
       <div class="label">1P — Zendesk Native</div>
-      <div class="value" style="color:var(--series-1)">71.3%</div>
-      <div class="sub">210.7M execs · tickets, users, tasks, orgs</div>
+      <div class="value" style="color:var(--series-1)">71.0%</div>
+      <div class="sub">209.9M execs · tickets, users, tasks, orgs</div>
       <div class="delta">Free — no action credits consumed</div>
     </div>
     <div class="stat-tile">
@@ -701,28 +701,28 @@
     </div>
     <div class="stat-tile">
       <div class="label">3P — Connectors</div>
-      <div class="value" style="color:var(--series-3)">0.65%</div>
-      <div class="sub">1.91M execs · pre-built third-party</div>
-      <div class="delta">AI actions = 682K (35.7% of all 3P)</div>
+      <div class="value" style="color:var(--series-3)">0.91%</div>
+      <div class="sub">2.69M execs · Intune #1 (29%) · AI = 25%</div>
+      <div class="delta">↑ Intune (Microsoft MDM) reclassified from 1P → 3P</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Execution Mix — 1P / 2P / 3P (Global, last 90 days)</h2>
-      <p>Zendesk-native (1P) dominates at 71%, free since Aug 13. Custom API (2P) at 28% signals customers building bespoke integrations. 3P connectors remain a small but growing slice at 0.65%.</p>
+      <p>Zendesk-native (1P) at 71.0%, free since Aug 13. Custom API (2P) at 28%. 3P at 0.91% — updated to include Microsoft Intune (reclassified from 1P: it connects to an external Microsoft MDM service, not a Zendesk-native action).</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartExecMix"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>Top 10 Third-Party Connectors — Executions (last 90 days)</h2>
-      <p>Google Sheets #1 (556K). Slack #2 (417K). AI connectors (OpenAI + Claude + Gemini) collectively at 682K — 36% of all 3P usage. Jira ranks #13 despite high customer demand.</p>
+      <p>Intune (Microsoft MDM) is now #1 at 781K — 29% of all 3P. Google Sheets #2 (556K). AI connectors (OpenAI + Claude + Gemini) = 682K combined, 25% of 3P. Intune was previously miscategorised as 1P.</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartTop3P"></canvas></div>
     </div>
   </div>
 
   <div class="chart-card" style="margin-bottom:16px">
     <h2>AMER vs EMEA — Execution Mix by Category (last 90 days)</h2>
-    <p>EMEA's 2P share (33%) is nearly double AMER's (21%), suggesting EMEA enterprise customers build more custom API integrations to fill connector gaps. AMER leads in 3P connector adoption (0.84% vs 0.50%).</p>
+    <p>EMEA's 2P share (33%) is nearly double AMER's (21%). With Intune reclassified as 3P, AMER 3P jumps to 1.3% (vs EMEA 0.6%) — Intune is primarily used by AMER ITAM customers (602K AMER vs 179K EMEA).</p>
     <div class="chart-wrap" style="height:220px"><canvas id="chartRegionMix"></canvas></div>
     <div class="legend" style="margin-top:10px">
       <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>1P — Zendesk Native</div>
@@ -1495,7 +1495,7 @@ new Chart(document.getElementById('chartExecMix'), {
   data: {
     labels: ['1P — Zendesk Native', '2P — Custom API', '3P — Connectors'],
     datasets: [{
-      data: [210.7, 82.8, 1.9],
+      data: [209.9, 82.8, 2.69],
       backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
       borderColor: [BLUE, ORANGE, AQUA],
       borderWidth: 2,
@@ -1508,7 +1508,7 @@ new Chart(document.getElementById('chartExecMix'), {
     plugins: {
       legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 14, usePointStyle: true } },
       tooltip: { ...TIP, callbacks: {
-        label: c => ` ${c.label}: ${c.parsed.toFixed(1)}M (${(c.parsed / 295.4 * 100).toFixed(1)}%)`
+        label: c => ` ${c.label}: ${c.parsed.toFixed(2)}M (${(c.parsed / 295.4 * 100).toFixed(1)}%)`
       }}
     },
     cutout: '60%'
@@ -1519,12 +1519,12 @@ new Chart(document.getElementById('chartExecMix'), {
 new Chart(document.getElementById('chartTop3P'), {
   type: 'bar',
   data: {
-    labels: ['Google Sheets','Slack','OpenAI','Claude (AI)','Okta','Teams','Gemini (AI)','Jamf','Confluence','Workday'],
+    labels: ['Intune (Microsoft MDM)','Google Sheets','Slack','OpenAI','Claude (AI)','Okta','Teams','Gemini (AI)','Jamf','Confluence'],
     datasets: [{
       label: 'Executions',
-      data: [555524, 416702, 350651, 281012, 82648, 67890, 50784, 44912, 13945, 8805],
-      backgroundColor: [AQUA+'bb',AQUA+'99',VIOLET+'bb',VIOLET+'99',BLUE+'66',BLUE+'55',VIOLET+'77',ORANGE+'66',ORANGE+'55',YELLOW+'66'],
-      borderColor:     [AQUA,     AQUA,     VIOLET,     VIOLET,    BLUE,     BLUE,     VIOLET,     ORANGE,    ORANGE,    YELLOW],
+      data: [781076, 555524, 416702, 350651, 281012, 82648, 67890, 50784, 44912, 13945],
+      backgroundColor: [BLUE+'dd',AQUA+'bb',AQUA+'99',VIOLET+'bb',VIOLET+'99',BLUE+'66',BLUE+'55',VIOLET+'77',ORANGE+'66',ORANGE+'55'],
+      borderColor:     [BLUE,    AQUA,     AQUA,     VIOLET,     VIOLET,    BLUE,     BLUE,     VIOLET,     ORANGE,    ORANGE],
       borderWidth: 1.5, borderRadius: 3, borderSkipped: false
     }]
   },
@@ -1552,7 +1552,7 @@ new Chart(document.getElementById('chartRegionMix'), {
     datasets: [
       {
         label: '1P — Zendesk Native',
-        data: [100.1, 110.6],
+        data: [99.5, 110.4],
         backgroundColor: BLUE+'cc', borderColor: BLUE,
         borderWidth: 1.5, borderRadius: 3
       },
@@ -1563,8 +1563,8 @@ new Chart(document.getElementById('chartRegionMix'), {
         borderWidth: 1.5, borderRadius: 3
       },
       {
-        label: '3P — Connectors',
-        data: [1.1, 0.8],
+        label: '3P — Connectors (incl. Intune)',
+        data: [1.7, 1.0],
         backgroundColor: AQUA+'cc', borderColor: AQUA,
         borderWidth: 1.5, borderRadius: 3
       }
