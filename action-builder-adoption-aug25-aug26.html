@@ -678,9 +678,9 @@
   <!-- ═══════════════════════════════════════════════════ -->
   <!-- SECTION J: 1P / 2P / 3P EXECUTION MIX               -->
   <!-- ═══════════════════════════════════════════════════ -->
-  <div class="section-label">J · Action Execution Mix — 1P vs 2P vs 3P (last 90 days, AMER + EMEA)</div>
+  <div class="section-label">J · Action Execution Mix — 1P / 2P / 3P / MCP (last 90 days, AMER + EMEA)</div>
 
-  <div class="stat-row">
+  <div class="stat-row" style="grid-template-columns:repeat(5,1fr)">
     <div class="stat-tile">
       <div class="label">Total Executions (90d)</div>
       <div class="value">295.5M</div>
@@ -696,21 +696,27 @@
     <div class="stat-tile">
       <div class="label">2P — Custom API</div>
       <div class="value" style="color:var(--series-2)">28.0%</div>
-      <div class="sub">82.8M execs · custom_api + MCP connections</div>
-      <div class="delta">EMEA 33% vs AMER 21% — 2× gap</div>
+      <div class="sub">82.8M execs · customer-built HTTP/API actions only</div>
+      <div class="delta">EMEA 33% vs AMER 21% — 2× gap · MCP now separate</div>
     </div>
     <div class="stat-tile">
       <div class="label">3P — Connectors</div>
       <div class="value" style="color:var(--series-3)">0.91%</div>
       <div class="sub">2.69M execs · Intune #1 (29%) · AI = 25%</div>
-      <div class="delta">↑ Intune (Microsoft MDM) reclassified from 1P → 3P</div>
+      <div class="delta">Zendesk-built connectors to named external services</div>
+    </div>
+    <div class="stat-tile" style="border-color:var(--series-5); border-width:1.5px">
+      <div class="label">MCP — Model Context Protocol</div>
+      <div class="value" style="color:var(--series-5)">7,404</div>
+      <div class="sub">executions · 57 accounts · 81 distinct MCP servers</div>
+      <div class="delta">↑ Emerging: customer-built AI tool servers · AMER 43 accts / EMEA 14</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Execution Mix — 1P / 2P / 3P (Global, last 90 days)</h2>
-      <p>Zendesk-native (1P) at 71.0%, free since Aug 13. Custom API (2P) at 28%. 3P at 0.91% — updated to include Microsoft Intune (reclassified from 1P: it connects to an external Microsoft MDM service, not a Zendesk-native action).</p>
+      <p>Four categories: 1P Zendesk-native (71.0%, free), 2P Custom API (28.0%, customer-built), 3P named connectors (0.91%), and MCP — a new emerging category for customer-built AI tool servers (7,404 execs · 57 accounts · too small to see in this chart, but growing fast).</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartExecMix"></canvas></div>
     </div>
     <div class="chart-card">
@@ -722,7 +728,7 @@
 
   <div class="chart-card" style="margin-bottom:16px">
     <h2>AMER vs EMEA — Execution Mix by Category (last 90 days)</h2>
-    <p>EMEA's 2P share (33%) is nearly double AMER's (21%). With Intune reclassified as 3P, AMER 3P jumps to 1.3% (vs EMEA 0.6%) — Intune is primarily used by AMER ITAM customers (602K AMER vs 179K EMEA).</p>
+    <p>2P Custom API: EMEA 33% vs AMER 21%. MCP is AMER-heavy (43 accounts vs 14 EMEA) — early AI-native builders concentrated in AMER. MCP bars near-zero at this scale but 57 accounts signal real adoption.</p>
     <div class="chart-wrap" style="height:220px"><canvas id="chartRegionMix"></canvas></div>
     <div class="legend" style="margin-top:10px">
       <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>1P — Zendesk Native</div>
@@ -1493,7 +1499,7 @@ new Chart(document.getElementById('chartCopilotTopAccounts'), {
 new Chart(document.getElementById('chartExecMix'), {
   type: 'doughnut',
   data: {
-    labels: ['1P — Zendesk Native', '2P — Custom API', '3P — Connectors'],
+    labels: ['1P — Zendesk Native', '2P — Custom API', '3P — Connectors', 'MCP — Model Context Protocol'],
     datasets: [{
       data: [209.9, 82.8, 2.69],
       backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
@@ -1566,6 +1572,12 @@ new Chart(document.getElementById('chartRegionMix'), {
         label: '3P — Connectors (incl. Intune)',
         data: [1.7, 1.0],
         backgroundColor: AQUA+'cc', borderColor: AQUA,
+        borderWidth: 1.5, borderRadius: 3
+      },
+      {
+        label: 'MCP — Model Context Protocol',
+        data: [0.006, 0.001],
+        backgroundColor: MAGENTA+'cc', borderColor: MAGENTA,
         borderWidth: 1.5, borderRadius: 3
       }
     ]
