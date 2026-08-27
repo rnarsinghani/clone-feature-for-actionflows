@@ -545,11 +545,66 @@
     </table>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION J: 1P / 2P / 3P EXECUTION MIX               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label">J · Action Execution Mix — 1P vs 2P vs 3P (last 90 days, AMER + EMEA)</div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Total Executions (90d)</div>
+      <div class="value">295.5M</div>
+      <div class="sub">AMER 128.7M · EMEA 166.8M</div>
+      <div class="delta">Native Zendesk actions free since Aug 13, 2026</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">1P — Zendesk Native</div>
+      <div class="value" style="color:var(--series-1)">71.3%</div>
+      <div class="sub">210.7M execs · tickets, users, tasks, orgs</div>
+      <div class="delta">Free — no action credits consumed</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">2P — Custom API</div>
+      <div class="value" style="color:var(--series-2)">28.0%</div>
+      <div class="sub">82.8M execs · custom_api + MCP connections</div>
+      <div class="delta">EMEA 33% vs AMER 21% — 2× gap</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">3P — Connectors</div>
+      <div class="value" style="color:var(--series-3)">0.65%</div>
+      <div class="sub">1.91M execs · pre-built third-party</div>
+      <div class="delta">AI actions = 682K (35.7% of all 3P)</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>Execution Mix — 1P / 2P / 3P (Global, last 90 days)</h2>
+      <p>Zendesk-native (1P) dominates at 71%, free since Aug 13. Custom API (2P) at 28% signals customers building bespoke integrations. 3P connectors remain a small but growing slice at 0.65%.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartExecMix"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Top 10 Third-Party Connectors — Executions (last 90 days)</h2>
+      <p>Google Sheets #1 (556K). Slack #2 (417K). AI connectors (OpenAI + Claude + Gemini) collectively at 682K — 36% of all 3P usage. Jira ranks #13 despite high customer demand.</p>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartTop3P"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-bottom:16px">
+    <h2>AMER vs EMEA — Execution Mix by Category (last 90 days)</h2>
+    <p>EMEA's 2P share (33%) is nearly double AMER's (21%), suggesting EMEA enterprise customers build more custom API integrations to fill connector gaps. AMER leads in 3P connector adoption (0.84% vs 0.50%).</p>
+    <div class="chart-wrap" style="height:220px"><canvas id="chartRegionMix"></canvas></div>
+    <div class="legend" style="margin-top:10px">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>1P — Zendesk Native</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div>2P — Custom API</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div>3P — Connectors</div>
+    </div>
+  </div>
+
   <div class="report-footer">
-    Generated Aug 26, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
-    Industry + trigger data: Aug 2026 · Segment/trend data: Aug 23 snapshot ·
-    Execution volumes: AMER + EMEA combined · EAP signups: live query Aug 26, 2026 ·
-    Invocation source: AMER only (last 6 months)
+    Generated Aug 27, 2026 · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
+    Segment/trend data: Aug 23 snapshot · EAP signups: Aug 26, 2026 ·
+    1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only
   </div>
 
 </div>
@@ -1033,6 +1088,104 @@ new Chart(document.getElementById('chartEapDaily'), {
     scales: {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 } } },
       y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+
+// ── J1: Execution Mix Donut ──
+new Chart(document.getElementById('chartExecMix'), {
+  type: 'doughnut',
+  data: {
+    labels: ['1P — Zendesk Native', '2P — Custom API', '3P — Connectors'],
+    datasets: [{
+      data: [210.7, 82.8, 1.9],
+      backgroundColor: [BLUE+'cc', ORANGE+'cc', AQUA+'cc'],
+      borderColor: [BLUE, ORANGE, AQUA],
+      borderWidth: 2,
+      hoverOffset: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 14, usePointStyle: true } },
+      tooltip: { ...TIP, callbacks: {
+        label: c => ` ${c.label}: ${c.parsed.toFixed(1)}M (${(c.parsed / 295.4 * 100).toFixed(1)}%)`
+      }}
+    },
+    cutout: '60%'
+  }
+});
+
+// ── J2: Top 10 3P connectors ──
+new Chart(document.getElementById('chartTop3P'), {
+  type: 'bar',
+  data: {
+    labels: ['Google Sheets','Slack','OpenAI','Claude (AI)','Okta','Teams','Gemini (AI)','Jamf','Confluence','Workday'],
+    datasets: [{
+      label: 'Executions',
+      data: [555524, 416702, 350651, 281012, 82648, 67890, 50784, 44912, 13945, 8805],
+      backgroundColor: [AQUA+'bb',AQUA+'99',VIOLET+'bb',VIOLET+'99',BLUE+'66',BLUE+'55',VIOLET+'77',ORANGE+'66',ORANGE+'55',YELLOW+'66'],
+      borderColor:     [AQUA,     AQUA,     VIOLET,     VIOLET,    BLUE,     BLUE,     VIOLET,     ORANGE,    ORANGE,    YELLOW],
+      borderWidth: 1.5, borderRadius: 3, borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x.toLocaleString()} executions` } }
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ── J3: AMER vs EMEA mix ──
+new Chart(document.getElementById('chartRegionMix'), {
+  type: 'bar',
+  data: {
+    labels: ['AMER (128.7M total)', 'EMEA (166.8M total)'],
+    datasets: [
+      {
+        label: '1P — Zendesk Native',
+        data: [100.1, 110.6],
+        backgroundColor: BLUE+'cc', borderColor: BLUE,
+        borderWidth: 1.5, borderRadius: 3
+      },
+      {
+        label: '2P — Custom API',
+        data: [27.5, 55.3],
+        backgroundColor: ORANGE+'cc', borderColor: ORANGE,
+        borderWidth: 1.5, borderRadius: 3
+      },
+      {
+        label: '3P — Connectors',
+        data: [1.1, 0.8],
+        backgroundColor: AQUA+'cc', borderColor: AQUA,
+        borderWidth: 1.5, borderRadius: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => ` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}M execs`
+      }}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 12 } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 }, callback: v => v + 'M' }, beginAtZero: true }
     }
   }
 });
