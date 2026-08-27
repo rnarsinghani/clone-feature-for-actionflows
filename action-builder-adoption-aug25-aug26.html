@@ -100,6 +100,16 @@
   /* ── Footer ── */
   .report-footer { margin-top: 28px; font-size: 11px; color: var(--text-muted); }
 
+  /* ── Use case badges ── */
+  .uc-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+  .uc-ai    { background: #f0e8ff; color: #6b21a8; }
+  .uc-sla   { background: #fff0f0; color: #b91c1c; }
+  .uc-sync  { background: #e8f4ff; color: #1a5fa8; }
+  .uc-auto  { background: #e8fff4; color: #065f46; }
+  .uc-appr  { background: #fffbe8; color: #92400e; }
+  .uc-data  { background: #f5f0ff; color: #4c1d95; }
+  .uc-rept  { background: #f0f9ff; color: #0c4a6e; }
+
   /* ── EAP table ── */
   .eap-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
   .eap-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 8px 10px; border-bottom: 1.5px solid var(--border); text-align: left; }
@@ -598,6 +608,71 @@
     <h2>Top Accounts by Admin Copilot Flow Executions (last 30 days)</h2>
     <p>10 accounts account for the majority of all Copilot flow executions. Liberty Group (stanlib, EMEA) and CMS Distribution (EMEA) lead by volume — both on Copilot-generated flows running autonomously at scale.</p>
     <div class="chart-wrap" style="height:260px"><canvas id="chartCopilotTopAccounts"></canvas></div>
+  </div>
+
+  <!-- Use case breakdown + customer detail table -->
+  <div class="section-label" style="margin-top:28px">I · Admin Copilot — What Customers Are Building (last 30 days)</div>
+
+  <div class="chart-grid-2" style="margin-bottom:16px">
+    <div class="chart-card">
+      <h2>Use Case Categories — Accounts Using Copilot-Generated Flows</h2>
+      <p>Ticket automation and ops dominate. AI agent orchestration is #2 — customers are using Copilot to build flows that invoke Claude, OpenAI, and Gemini as sub-agents.</p>
+      <div class="chart-wrap" style="height:240px"><canvas id="chartUseCases"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Copilot Flow Execution Volume by Use Case Category</h2>
+      <p>SLA management flows run at 50K+ execs (stanlib leads globally). Ticket automation accounts for the most volume after SLA. AI flows are growing fastest — 7 customers in 30 days.</p>
+      <div class="chart-wrap" style="height:240px"><canvas id="chartUseCaseExecs"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-bottom:16px">
+    <h2>Customers Using Admin Copilot Flows — Active in Production (last 30 days)</h2>
+    <p>29 paying accounts have Copilot-generated flows running in production. Sorted by execution volume. Use case descriptions are taken directly from the flow's own description field — written by the customer when saving.</p>
+    <table class="eap-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Region</th>
+          <th>Flows</th>
+          <th>Executions</th>
+          <th>Success%</th>
+          <th>Use Case Category</th>
+          <th>What They Built</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Liberty Group</strong> <span style="color:var(--text-muted);font-size:11px">stanlib</span></td><td><span class="region-tag emea">EMEA</span></td><td>3</td><td>50,022</td><td style="color:var(--series-3)">mixed</td><td><span class="uc-badge uc-sla">SLA & Escalation</span></td><td>SLA breach risk alerting (&lt;2h) + 48hr side conversation follow-up reminder + agent context notes on new tickets</td></tr>
+        <tr><td><strong>Corsair</strong> <span style="color:var(--text-muted);font-size:11px">corsair</span></td><td><span class="region-tag emea">EMEA</span></td><td>3</td><td>16,100</td><td style="color:var(--series-2)">10–50%</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>Disposable email detection on ticket create + auto-assign TrakRacer tickets by scanning description for agent name</td></tr>
+        <tr><td><strong>RODE Microphones</strong> <span style="color:var(--text-muted);font-size:11px">rode</span></td><td><span class="region-tag amer">AMER</span></td><td>3</td><td>12,190</td><td style="color:var(--series-4)">50%</td><td><span class="uc-badge uc-data">Data Enrichment</span></td><td>Detects RØDE serial numbers (2 letters + 7 digits) in customer comments and saves to a custom field automatically</td></tr>
+        <tr><td><strong>CMS Distribution</strong> <span style="color:var(--text-muted);font-size:11px">cmsdistribution</span></td><td><span class="region-tag emea">EMEA</span></td><td>1</td><td>11,728</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-sync">External Sync</span></td><td>Looks up warranty and DrayTek product details from ticket fields and pastes them as a structured internal note</td></tr>
+        <tr><td><strong>Merkle (dentsu)</strong> <span style="color:var(--text-muted);font-size:11px">dentsuconnect</span></td><td><span class="region-tag amer">AMER</span></td><td>17</td><td>8,611</td><td style="color:var(--series-4)">~50%</td><td><span class="uc-badge uc-sync">External Sync</span></td><td>17 flows syncing Jira "Additional Information" fields across 10+ internal product teams (Connect, Data, Identity, Taxonomy…)</td></tr>
+        <tr><td><strong>Babbel</strong> <span style="color:var(--text-muted);font-size:11px">babbel</span></td><td><span class="region-tag emea">EMEA</span></td><td>5</td><td>4,052</td><td style="color:var(--series-3)">~99%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>Fires webhook to hide chat composer in bot-handled tickets across 8 languages (DE/FR/ES/IT/PT/SV/PL/UK) on AI Agent solve</td></tr>
+        <tr><td><strong>Phorest</strong> <span style="color:var(--text-muted);font-size:11px">phorest</span></td><td><span class="region-tag emea">EMEA</span></td><td>2</td><td>4,040</td><td style="color:var(--series-3)">~99%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>OpenAI classifies contact category from messaging transcript + Slack DM to requester on IT Helpdesk ticket comments</td></tr>
+        <tr><td><strong>BeatStars</strong> <span style="color:var(--text-muted);font-size:11px">beatstars</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>3,602</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-sync">External Sync</span></td><td>Syncs Linear issue status into Zendesk — when Linear posts an internal note, extracts issue ID + status, updates ticket fields</td></tr>
+        <tr><td><strong>UFP Technologies</strong> <span style="color:var(--text-muted);font-size:11px">ufpt</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>2,662</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-appr">Approval Workflow</span></td><td>When the 'escalation' tag is added to a ticket, automatically sends an approval request to the IT Infrastructure group</td></tr>
+        <tr><td><strong>Five Guys</strong> <span style="color:var(--text-muted);font-size:11px">fiveguyshelp</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>2,616</td><td style="color:var(--series-2)">29% ⚠️</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>Applies task lists (Activate/Deactivate Menu Items; Activate/Deactivate Store) on delivery ticket creation — impacted by attach_task_list P1 bug</td></tr>
+        <tr><td><strong>Pay.com.au</strong> <span style="color:var(--text-muted);font-size:11px">payrewards</span></td><td><span class="region-tag amer">AMER</span></td><td>4</td><td>2,012</td><td style="color:var(--series-2)">13–100%</td><td><span class="uc-badge uc-sla">SLA & Escalation</span></td><td>Ticket spike detector — checks if 2+ tickets share same intent in last 20 min, fetches summaries and posts recap to Slack #zendesk_reports</td></tr>
+        <tr><td><strong>CharterUP</strong> <span style="color:var(--text-muted);font-size:11px">charteruphelp</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>1,950</td><td style="color:var(--series-4)">49%</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>SMS reply ↔ original ticket linking: fetches comments on SMS ticket, extracts original ticket ID, stamps both tickets with IDs</td></tr>
+        <tr><td><strong>Checkmate</strong> <span style="color:var(--text-muted);font-size:11px">itsacheckmate</span></td><td><span class="region-tag amer">AMER</span></td><td>3</td><td>1,508</td><td style="color:var(--series-4)">50%/19%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>AI agent orchestration: routes to Location Identification Agent, then Online/Offline Agent based on location confirmation state</td></tr>
+        <tr><td><strong>Locusview</strong> <span style="color:var(--text-muted);font-size:11px">locusview</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>1,130</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>When a customer replies with a thank-you on a solved ticket, keeps ticket in solved status instead of reopening it</td></tr>
+        <tr><td><strong>weavix</strong> <span style="color:var(--text-muted);font-size:11px">weavix</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>780</td><td style="color:var(--series-4)">48%</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>When a comment is added, looks up the commenter, skips end users and assignee, then adds internal commenters as ticket followers</td></tr>
+        <tr><td><strong>BestEgg</strong> <span style="color:var(--text-muted);font-size:11px">bestegg</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>762</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-data">Data Enrichment</span></td><td>On ticket creation from email response form, copies requester email and description into custom fields and tags ticket accordingly</td></tr>
+        <tr><td><strong>MailChannels</strong> <span style="color:var(--text-muted);font-size:11px">mailchannels</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>592</td><td style="color:var(--series-4)">49%</td><td><span class="uc-badge uc-sla">SLA & Escalation</span></td><td>Scans subject and description for urgency keywords → sets Severity 1, adds urgent tag, posts Slack alert to #support-escalations</td></tr>
+        <tr><td><strong>Imaging Healthcare</strong> <span style="color:var(--text-muted);font-size:11px">imaginghealthcare</span></td><td><span class="region-tag amer">AMER</span></td><td>10</td><td>506</td><td style="color:var(--series-4)">50%</td><td><span class="uc-badge uc-appr">Approval Workflow</span></td><td>10-flow employee onboarding lifecycle: tracks Identity/Equipment/VPN/Badge/Hardware provisioning % across parent + child tickets</td></tr>
+        <tr><td><strong>Compliance Detection</strong> <span style="color:var(--text-muted);font-size:11px">ncinosupportteam</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>465</td><td style="color:var(--series-2)">20%</td><td><span class="uc-badge uc-auto">Ticket Automation</span></td><td>When a comment contains 'breach' or 'PII', adds a private note guiding the agent and linking to the Compliance Incident Response Guide</td></tr>
+        <tr><td><strong>Door</strong> <span style="color:var(--text-muted);font-size:11px">latchaccess</span></td><td><span class="region-tag amer">AMER</span></td><td>6</td><td>332</td><td style="color:var(--series-4)">~47%</td><td><span class="uc-badge uc-appr">Approval Workflow</span></td><td>Merges duplicate account deletion request tickets, phone call tickets (24h window), and tracks escalation internal notes</td></tr>
+        <tr><td><strong>Hilti</strong> <span style="color:var(--text-muted);font-size:11px">fieldwirelabs</span></td><td><span class="region-tag emea">EMEA</span></td><td>1</td><td>330</td><td style="color:var(--series-4)">50%</td><td><span class="uc-badge uc-sync">External Sync</span></td><td>Parses SAP Billing subscription event emails (JSON payload), adds a human-readable summary as an internal note with Bruno prompt</td></tr>
+        <tr><td><strong>Intuitive Learning</strong> <span style="color:var(--text-muted);font-size:11px">cognexo</span></td><td><span class="region-tag emea">EMEA</span></td><td>2</td><td>262</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>Runs AI agent to review "what went wrong" on any status change, updates field — adds internal note only on Initial Solve or Solved</td></tr>
+        <tr><td><strong>Flatiron Health</strong> <span style="color:var(--text-muted);font-size:11px">flatironlifesciences</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>130</td><td style="color:var(--series-3)">100%</td><td><span class="uc-badge uc-data">Data Enrichment</span></td><td>When 'working doc' comment with a docs.google.com URL is added, extracts URL, populates Working Doc Link field, DMs the assignee</td></tr>
+        <tr><td><strong>Stonegate Group</strong> <span style="color:var(--text-muted);font-size:11px">stonegategroup</span></td><td><span class="region-tag emea">EMEA</span></td><td>2</td><td>129</td><td style="color:var(--series-2)">12%</td><td><span class="uc-badge uc-appr">Approval Workflow</span></td><td>Supplier onboarding: merges forms, checks alignment, sends to Procurement or Property approval team, routes on outcome + applies task list</td></tr>
+        <tr><td><strong>OneVision Resources</strong> <span style="color:var(--text-muted);font-size:11px">curiontechnology</span></td><td><span class="region-tag amer">AMER</span></td><td>2</td><td>169</td><td style="color:var(--series-2)">37%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>Sends external comment to Claude for analysis, posts suggested next steps as an internal note — includes error handling if Claude fails</td></tr>
+        <tr><td><strong>Everlab</strong> <span style="color:var(--text-muted);font-size:11px">everlab</span></td><td><span class="region-tag amer">AMER</span></td><td>3</td><td>71</td><td style="color:var(--series-2)">32%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>Uses Claude to assess if appointment confirmation tickets are passive automated notifications → auto-solves if yes</td></tr>
+        <tr><td><strong>Zyxel</strong> <span style="color:var(--text-muted);font-size:11px">zyxeleurope</span></td><td><span class="region-tag emea">EMEA</span></td><td>3</td><td>22</td><td style="color:var(--series-2)">39%</td><td><span class="uc-badge uc-ai">AI Orchestration</span></td><td>AI supervisor triggered by 'ask_ai' tag — routes to OpenAI (technical vs. sales), posts response as internal note</td></tr>
+        <tr><td><strong>fvwireless.com</strong> <span style="color:var(--text-muted);font-size:11px">fvwireless</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>32</td><td style="color:var(--series-2)">28%</td><td><span class="uc-badge uc-rept">Analytics</span></td><td>When ticket receives a bad CSAT rating, fetches full rating details, looks up requester + assignee, logs new item to Monday.com CSAT Tracker</td></tr>
+        <tr><td><strong>Nanometrics</strong> <span style="color:var(--text-muted);font-size:11px">sms-nanometrics</span></td><td><span class="region-tag amer">AMER</span></td><td>1</td><td>24</td><td style="color:var(--series-2)">42%</td><td><span class="uc-badge uc-rept">Analytics</span></td><td>When Sentiment Level changes to positive/negative, fetches full comment thread, sends executive summary to Gemini, appends row to Google Sheet</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
@@ -1144,6 +1219,36 @@ new Chart(document.getElementById('chartEapDaily'), {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 10 } } },
       y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
     }
+  }
+});
+
+// ── Use Case Category charts ──
+const ucLabels = ['Ticket Automation & Ops','AI Agent Orchestration','External Tool Sync','SLA & Escalation','Approval Workflows','Data Enrichment','Analytics & Reporting'];
+const ucAccounts = [11, 7, 6, 5, 4, 3, 3];
+const ucExecs    = [19000, 8400, 24800, 54400, 4200, 13200, 600];
+
+new Chart(document.getElementById('chartUseCases'), {
+  type:'bar',
+  data:{ labels: ucLabels, datasets:[{ label:'Accounts', data: ucAccounts,
+    backgroundColor:[AQUA+'bb',VIOLET+'bb',BLUE+'bb',ORANGE+'bb',YELLOW+'bb',MAGENTA+'66',BLUE+'44'],
+    borderColor:    [AQUA,     VIOLET,     BLUE,     ORANGE,     YELLOW,     MAGENTA,    BLUE],
+    borderWidth:1.5, borderRadius:4, borderSkipped:false }]},
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label: c=>` ${c.parsed.x} paying accounts`}} },
+    scales:{ x:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}}}, y:{grid:{display:false}, ticks:{font:{size:10}}} }
+  }
+});
+
+new Chart(document.getElementById('chartUseCaseExecs'), {
+  type:'bar',
+  data:{ labels: ucLabels, datasets:[{ label:'Executions', data: ucExecs,
+    backgroundColor:[AQUA+'bb',VIOLET+'bb',BLUE+'bb',ORANGE+'bb',YELLOW+'bb',MAGENTA+'66',BLUE+'44'],
+    borderColor:    [AQUA,     VIOLET,     BLUE,     ORANGE,     YELLOW,     MAGENTA,    BLUE],
+    borderWidth:1.5, borderRadius:4, borderSkipped:false }]},
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label: c=>` ${c.parsed.x.toLocaleString()} executions`}} },
+    scales:{ x:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}, callback: v=>v>=1000?(v/1000).toFixed(0)+'K':v}},
+             y:{grid:{display:false}, ticks:{font:{size:10}}} }
   }
 });
 
