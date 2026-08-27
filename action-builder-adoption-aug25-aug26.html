@@ -461,32 +461,32 @@
   <!-- ═══════════════════════════════════════════════════ -->
   <!-- SECTION I: EAP SIGNUPS                              -->
   <!-- ═══════════════════════════════════════════════════ -->
-  <div class="section-label">I · Action Flows EAP — Signup Momentum (as of Aug 27, 2026)</div>
+  <div class="section-label">I · Action Flows EAP — Signup Momentum (as of Aug 27, 2026 · excl. internal accounts)</div>
 
   <div class="stat-row">
     <div class="stat-tile">
       <div class="label">Total EAP Opt-ins</div>
-      <div class="value">458</div>
-      <div class="sub">AMER 297 · EMEA 161 · all account types</div>
-      <div class="delta">↑ +4 today · +202 since Aug 20</div>
+      <div class="value">311</div>
+      <div class="sub">AMER 186 · EMEA 125 · excl. internal Zendesk accounts</div>
+      <div class="delta">↑ 188 paying (60%) · 56 other edgecase · 50 sandbox</div>
     </div>
     <div class="stat-tile">
       <div class="label">Paying Customers</div>
-      <div class="value" style="color:var(--series-1)">171</div>
-      <div class="sub">37.3% of all opt-ins are paying</div>
-      <div class="delta">↑ +17 today · +123 this week</div>
+      <div class="value" style="color:var(--series-1)">188</div>
+      <div class="sub">60.5% of non-internal opt-ins are paying</div>
+      <div class="delta">↑ +17 today · AMER 110 · EMEA 78</div>
     </div>
     <div class="stat-tile">
       <div class="label">AMER Paying</div>
-      <div class="value" style="color:var(--series-2)">102</div>
-      <div class="sub">of 297 total AMER opt-ins (34.3%)</div>
-      <div class="delta">60% of all paying EAP signups</div>
+      <div class="value" style="color:var(--series-2)">110</div>
+      <div class="sub">of 186 AMER opt-ins (59.1%) · excl. internal</div>
+      <div class="delta">59% of all paying EAP signups</div>
     </div>
     <div class="stat-tile">
       <div class="label">EMEA Paying</div>
-      <div class="value" style="color:var(--series-3)">69</div>
-      <div class="sub">of 161 total EMEA opt-ins (42.9%)</div>
-      <div class="delta">EMEA paying rate 43% vs AMER 34%</div>
+      <div class="value" style="color:var(--series-3)">78</div>
+      <div class="sub">of 125 EMEA opt-ins (62.4%) · excl. internal</div>
+      <div class="delta">EMEA paying rate 62% vs AMER 59%</div>
     </div>
   </div>
 
@@ -502,7 +502,7 @@
     </div>
     <div class="chart-card">
       <h2>EAP Opt-ins by Account Type</h2>
-      <p>224 paying customers (39.6%) have accepted EAP terms. Internal test accounts (31%) and sandboxes (16%) make up the remainder — real customer demand is strong.</p>
+      <p>188 paying customers (60.5%) have accepted EAP terms. Sandboxes (16%) and other edgecase accounts (18%) make up the remainder. Internal Zendesk accounts excluded from all counts.</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartEapType"></canvas></div>
     </div>
   </div>
@@ -618,39 +618,39 @@
   <div class="stat-row">
     <div class="stat-tile">
       <div class="label">Total EAP Signups</div>
-      <div class="value">499</div>
-      <div class="sub">AMER 312 · EMEA 187 · all account types</div>
-      <div class="delta">271 (54.3%) already used Action Builder · 228 brand new</div>
+      <div class="value">311</div>
+      <div class="sub">AMER 186 · EMEA 125 · excl. internal accounts</div>
+      <div class="delta">187 (60.1%) already used Action Builder · 124 brand new</div>
     </div>
     <div class="stat-tile">
       <div class="label">Net-New to Action Builder</div>
-      <div class="value" style="color:var(--series-1)">228</div>
-      <div class="sub">45.7% of EAP signups had never run a flow before</div>
-      <div class="delta">AMER 151 · EMEA 77 — Admin Copilot is their entry point</div>
+      <div class="value" style="color:var(--series-1)">124</div>
+      <div class="sub">39.9% of non-internal EAP signups had never run a flow</div>
+      <div class="delta">AMER 76 · EMEA 48 — Admin Copilot is their entry point</div>
     </div>
     <div class="stat-tile">
       <div class="label">First-Timers Who Generated</div>
-      <div class="value" style="color:var(--series-4)">69</div>
-      <div class="sub">of 228 net-new accounts used Copilot to build a flow</div>
-      <div class="delta">29.7% conversion — 163 signed up but haven't built yet</div>
+      <div class="value" style="color:var(--series-4)">40</div>
+      <div class="sub">of 124 net-new accounts used Copilot to build a flow</div>
+      <div class="delta">32.3% conversion — 84 signed up but haven't built yet</div>
     </div>
     <div class="stat-tile">
       <div class="label">Net-New Activated in Prod</div>
-      <div class="value" style="color:var(--series-3)">35</div>
-      <div class="sub">accounts with flows live in production (15.1% of first-timers)</div>
-      <div class="delta">51% of those who generated got it live · AMER 24 · EMEA 11</div>
+      <div class="value" style="color:var(--series-3)">28</div>
+      <div class="sub">accounts with flows live in production (22.6% of first-timers)</div>
+      <div class="delta">70% of those who generated got it live · AMER 19 · EMEA 9</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>First-Timer Funnel — Net-New Accounts via Admin Copilot EAP</h2>
-      <p>228 accounts tried Action Builder for the first time because of Admin Copilot EAP. 35 have flows live in production — accounts that likely would never have penetrated Action Builder through the blank canvas. 163 signed up but haven't built yet — high-value outreach list.</p>
+      <p>124 external accounts tried Action Builder for the first time because of Admin Copilot EAP. 28 have flows live in production (70% activation rate among those who built). 84 signed up but haven't built yet — ready-made outreach list.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartNewCustFunnel"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>EAP Signups — New vs Existing Action Builder Users</h2>
-      <p>Nearly half (45.7%) of EAP signups are net-new to Action Builder. Admin Copilot EAP is both an engagement tool for existing users and an acquisition channel for new ones. EMEA has a higher proportion of existing users (58.8%) vs AMER (51.6%).</p>
+      <p>39.9% of EAP signups (excl. internal) are net-new to Action Builder. EMEA has a slightly higher proportion of existing users (61.6%) vs AMER (59.1%). Removing internal accounts reveals real customer conversion signal.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartNewVsExisting"></canvas></div>
       <div class="legend" style="margin-top:10px">
         <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>Net-new to Action Builder</div>
@@ -853,7 +853,7 @@
 
   <div class="report-footer">
     Updated Aug 27, 2026 (daily 10 AM IST) · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
-    EAP signups: fresh query Aug 27 · Segment/trend data: Aug 23 snapshot ·
+    EAP signups: fresh query Aug 27 · internal Zendesk accounts excluded · Segment/trend data: Aug 23 snapshot ·
     1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only
   </div>
 
@@ -1295,8 +1295,8 @@ new Chart(document.getElementById('chartTriggerFlows'), {
 
 // ── I: EAP Daily Signup Trend ──
 const eapDays = ['Aug 11','Aug 12','Aug 13','Aug 14','Aug 15','Aug 16','Aug 17','Aug 18','Aug 19','Aug 20','Aug 21','Aug 22','Aug 23','Aug 24','Aug 25','Aug 26','Aug 27*'];
-const eapAll    = [16,  2,  2, 29,  0,  0,  7,  1,  3, 75, 74,  4, 11, 58, 61, 56,  4];
-const eapPaying = [ 5,  0,  0,  0,  0,  0,  0,  0,  0, 29, 38,  2,  6, 33, 23, 19,  2];
+const eapAll    = [10,  1,  0,  0,  0,  0,  0,  0,  0, 43, 62,  4, 10, 48, 45, 34, 33];
+const eapPaying = [ 5,  0,  0,  0,  0,  0,  0,  0,  0, 29, 38,  2,  6, 33, 23, 19, 19];
 
 new Chart(document.getElementById('chartEapDaily'), {
   type: 'line',
@@ -1421,7 +1421,7 @@ new Chart(document.getElementById('chartNewCustFunnel'), {
     labels: ['Signed up (never used\nAction Builder before)', 'Used Copilot to\ngenerate a flow', 'Flow live in\nproduction'],
     datasets: [{
       label: 'Accounts',
-      data: [228, 69, 35],
+      data: [124, 40, 28],
       backgroundColor: [BLUE+'44', BLUE+'99', AQUA+'cc'],
       borderColor: [BLUE, BLUE, AQUA],
       borderWidth: 1.5, borderRadius: 4, borderSkipped: false
@@ -1440,7 +1440,7 @@ new Chart(document.getElementById('chartNewCustFunnel'), {
       }}
     },
     scales: {
-      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 260 },
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 140 },
       y: { grid: { display: false }, ticks: { font: { size: 10 } } }
     }
   }
@@ -1454,13 +1454,13 @@ new Chart(document.getElementById('chartNewVsExisting'), {
     datasets: [
       {
         label: 'Net-new to Action Builder',
-        data: [151, 77],
+        data: [76, 48],
         backgroundColor: BLUE+'cc', borderColor: BLUE,
         borderWidth: 1.5, borderRadius: 3
       },
       {
         label: 'Already using Action Builder',
-        data: [161, 110],
+        data: [110, 77],
         backgroundColor: ORANGE+'cc', borderColor: ORANGE,
         borderWidth: 1.5, borderRadius: 3
       }
@@ -1473,7 +1473,7 @@ new Chart(document.getElementById('chartNewVsExisting'), {
       legend: { display: false },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const totals = [312, 187];
+          const totals = [186, 125];
           return ` ${c.dataset.label}: ${c.parsed.y} (${Math.round(c.parsed.y/totals[c.dataIndex]*100)}%)`;
         }
       }}
@@ -1536,7 +1536,7 @@ new Chart(document.getElementById('chartEapFunnel'), {
       legend: { display: false },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const pcts = ['', ' (78% of all touched)', ' (66% of created)', ' (81% of created)'];
+          const pcts = ['', ' (32.3% of first-timers)', ' (22.6% of first-timers · 70% of who built)'];
           return ` ${c.parsed.x}${pcts[c.dataIndex]}`;
         }
       }}
@@ -1752,7 +1752,7 @@ new Chart(document.getElementById('chartEapType'), {
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
-      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/565*100)}%)` } }
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/311*100)}%)` } }
     },
     scales: {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } } },
