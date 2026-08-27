@@ -490,6 +490,47 @@
     </div>
   </div>
 
+  <!-- EAP → Flow creation + activation funnel -->
+  <div class="stat-row" style="grid-template-columns:repeat(4,1fr); margin-top:8px">
+    <div class="stat-tile" style="border-left:3px solid var(--series-4)">
+      <div class="label">Signed Up (excl. internal)</div>
+      <div class="value">312</div>
+      <div class="sub">AMER 186 · EMEA 126 · baseline</div>
+      <div class="delta">100% — starting point of the EAP funnel</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-2)">
+      <div class="label">Created ≥1 Flow After Signup</div>
+      <div class="value" style="color:var(--series-2)">174</div>
+      <div class="sub">55.8% of EAP signups built something</div>
+      <div class="delta">AMER 110 · EMEA 64</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-3)">
+      <div class="label">Flow Activated in Production</div>
+      <div class="value" style="color:var(--series-3)">189</div>
+      <div class="sub">60.6% have a live flow running</div>
+      <div class="delta">AMER 118 · EMEA 71</div>
+    </div>
+    <div class="stat-tile" style="border-left:3px solid var(--series-1)">
+      <div class="label">Created AND Activated</div>
+      <div class="value" style="color:var(--series-1)">145</div>
+      <div class="sub">46.5% — full journey: signed up → built → live</div>
+      <div class="delta">167 signed up but not yet active — priority outreach</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2" style="margin-top:12px">
+    <div class="chart-card">
+      <h2>EAP Funnel — Signed Up → Created → Activated (312 accounts)</h2>
+      <p>Nearly half (46.5%) completed the full journey in days. 189 have live flows — including 15 who activated flows that pre-dated EAP, showing the EAP also re-engaged dormant accounts. 167 are the priority outreach list.</p>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartEapFullFunnel"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>AMER vs EMEA — EAP Funnel Conversion</h2>
+      <p>AMER converts at 48.9% (created + activated / total) vs EMEA at 42.9%. Both regions show strong conversion once accounts engage. EMEA's slightly lower rate reflects more recently signed-up accounts still in the building phase.</p>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartEapRegionFunnel"></canvas></div>
+    </div>
+  </div>
+
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Daily EAP Signup Volume — Aug 10–26, 2026</h2>
@@ -1289,6 +1330,70 @@ new Chart(document.getElementById('chartTriggerFlows'), {
     scales:{
       x:{grid:{color:'#f0f0ee'},ticks:{font:{size:11},callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}},
       y:{grid:{display:false},ticks:{font:{size:10}}}
+    }
+  }
+});
+
+// ── EAP Full Funnel ──
+new Chart(document.getElementById('chartEapFullFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['Signed up (excl. internal)', 'Created ≥1 flow', 'Flow activated in prod', 'Created AND activated'],
+    datasets: [{
+      label: 'Accounts',
+      data: [312, 174, 189, 145],
+      backgroundColor: [BLUE+'33', ORANGE+'bb', AQUA+'bb', BLUE+'cc'],
+      borderColor:     [BLUE,      ORANGE,      AQUA,      BLUE],
+      borderWidth: 1.5, borderRadius: 4, borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const pcts = [' (100%)', ' (55.8%)', ' (60.6%)', ' (46.5%)'];
+          return ` ${c.parsed.x} accounts${pcts[c.dataIndex]}`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 340 },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ── EAP Region Funnel ──
+new Chart(document.getElementById('chartEapRegionFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['AMER (186)', 'EMEA (126)'],
+    datasets: [
+      { label: 'Created flow', data: [110, 64],
+        backgroundColor: ORANGE+'cc', borderColor: ORANGE, borderWidth: 1.5, borderRadius: 3 },
+      { label: 'Activated',   data: [118, 71],
+        backgroundColor: AQUA+'cc',   borderColor: AQUA,   borderWidth: 1.5, borderRadius: 3 },
+      { label: 'Created + Activated', data: [91, 54],
+        backgroundColor: BLUE+'cc',   borderColor: BLUE,   borderWidth: 1.5, borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12, usePointStyle: true } },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const totals = [186, 126];
+          return ` ${c.dataset.label}: ${c.parsed.y} (${Math.round(c.parsed.y/totals[c.dataIndex]*100)}%)`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 12 } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
     }
   }
 });
