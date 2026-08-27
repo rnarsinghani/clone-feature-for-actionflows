@@ -612,6 +612,53 @@
   </div>
 
   <!-- Use case breakdown + customer detail table -->
+  <!-- Net-new customer penetration via EAP -->
+  <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA)</div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Total EAP Signups</div>
+      <div class="value">499</div>
+      <div class="sub">AMER 312 · EMEA 187 · all account types</div>
+      <div class="delta">271 (54.3%) already used Action Builder · 228 brand new</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Net-New to Action Builder</div>
+      <div class="value" style="color:var(--series-1)">228</div>
+      <div class="sub">45.7% of EAP signups had never run a flow before</div>
+      <div class="delta">AMER 151 · EMEA 77 — Admin Copilot is their entry point</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">First-Timers Who Generated</div>
+      <div class="value" style="color:var(--series-4)">69</div>
+      <div class="sub">of 228 net-new accounts used Copilot to build a flow</div>
+      <div class="delta">29.7% conversion — 163 signed up but haven't built yet</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Net-New Activated in Prod</div>
+      <div class="value" style="color:var(--series-3)">35</div>
+      <div class="sub">accounts with flows live in production (15.1% of first-timers)</div>
+      <div class="delta">51% of those who generated got it live · AMER 24 · EMEA 11</div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <h2>First-Timer Funnel — Net-New Accounts via Admin Copilot EAP</h2>
+      <p>228 accounts tried Action Builder for the first time because of Admin Copilot EAP. 35 have flows live in production — accounts that likely would never have penetrated Action Builder through the blank canvas. 163 signed up but haven't built yet — high-value outreach list.</p>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartNewCustFunnel"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>EAP Signups — New vs Existing Action Builder Users</h2>
+      <p>Nearly half (45.7%) of EAP signups are net-new to Action Builder. Admin Copilot EAP is both an engagement tool for existing users and an acquisition channel for new ones. EMEA has a higher proportion of existing users (58.8%) vs AMER (51.6%).</p>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartNewVsExisting"></canvas></div>
+      <div class="legend" style="margin-top:10px">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>Net-new to Action Builder</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--series-2)"></div>Already using Action Builder</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-label" style="margin-top:28px">I · Admin Copilot — What Customers Are Building (last 30 days)</div>
 
   <div class="chart-grid-2" style="margin-bottom:16px">
@@ -1364,6 +1411,77 @@ new Chart(document.getElementById('chartStepsPerFlow'), {
     plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label:c=>` ${c.parsed.y} avg action steps/flow`}} },
     scales:{ x:{grid:{display:false}, ticks:{font:{size:13, weight:'600'}}},
              y:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}}, beginAtZero:true} }
+  }
+});
+
+// ── Net-new customer funnel ──
+new Chart(document.getElementById('chartNewCustFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['Signed up (never used\nAction Builder before)', 'Used Copilot to\ngenerate a flow', 'Flow live in\nproduction'],
+    datasets: [{
+      label: 'Accounts',
+      data: [228, 69, 35],
+      backgroundColor: [BLUE+'44', BLUE+'99', AQUA+'cc'],
+      borderColor: [BLUE, BLUE, AQUA],
+      borderWidth: 1.5, borderRadius: 4, borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const pcts = [' (45.7% of all EAP)', ' (29.7% of first-timers)', ' (15.1% of first-timers · 51% of who built)'];
+          return ` ${c.parsed.x} accounts${pcts[c.dataIndex]}`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 260 },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ── New vs Existing by region ──
+new Chart(document.getElementById('chartNewVsExisting'), {
+  type: 'bar',
+  data: {
+    labels: ['AMER (312 total)', 'EMEA (187 total)'],
+    datasets: [
+      {
+        label: 'Net-new to Action Builder',
+        data: [151, 77],
+        backgroundColor: BLUE+'cc', borderColor: BLUE,
+        borderWidth: 1.5, borderRadius: 3
+      },
+      {
+        label: 'Already using Action Builder',
+        data: [161, 110],
+        backgroundColor: ORANGE+'cc', borderColor: ORANGE,
+        borderWidth: 1.5, borderRadius: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...TIP, callbacks: {
+        label: c => {
+          const totals = [312, 187];
+          return ` ${c.dataset.label}: ${c.parsed.y} (${Math.round(c.parsed.y/totals[c.dataIndex]*100)}%)`;
+        }
+      }}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
   }
 });
 
