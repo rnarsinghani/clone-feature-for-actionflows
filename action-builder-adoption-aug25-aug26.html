@@ -466,27 +466,27 @@
   <div class="stat-row">
     <div class="stat-tile">
       <div class="label">Total EAP Opt-ins</div>
-      <div class="value">343</div>
-      <div class="sub">AMER 202 · EMEA 141 · excl. internal Zendesk accounts</div>
-      <div class="delta">↑ 210 paying (61%) · 62 other edgecase · 58 sandbox</div>
+      <div class="value">327</div>
+      <div class="sub">AMER 199 · EMEA 128 · excl. internal Zendesk accounts</div>
+      <div class="delta">530 total · 203 internal excluded · 50 sandbox · 58 other edgecase</div>
     </div>
     <div class="stat-tile">
       <div class="label">Paying Customers</div>
-      <div class="value" style="color:var(--series-1)">210</div>
-      <div class="sub">61.2% of non-internal opt-ins are paying</div>
-      <div class="delta">↑ +25 today · AMER 121 · EMEA 89</div>
+      <div class="value" style="color:var(--series-1)">203</div>
+      <div class="sub">62.1% of non-internal opt-ins are paying</div>
+      <div class="delta">AMER 121 · EMEA 82 · fresh count Aug 28</div>
     </div>
     <div class="stat-tile">
       <div class="label">AMER Paying</div>
       <div class="value" style="color:var(--series-2)">121</div>
-      <div class="sub">of 202 AMER opt-ins (59.9%) · excl. internal</div>
-      <div class="delta">58% of all paying EAP signups</div>
+      <div class="sub">of 199 AMER opt-ins (60.8%) · excl. internal</div>
+      <div class="delta">60% of all paying EAP signups</div>
     </div>
     <div class="stat-tile">
       <div class="label">EMEA Paying</div>
-      <div class="value" style="color:var(--series-3)">89</div>
-      <div class="sub">of 141 EMEA opt-ins (63.1%) · excl. internal</div>
-      <div class="delta">EMEA paying rate 63% vs AMER 60%</div>
+      <div class="value" style="color:var(--series-3)">82</div>
+      <div class="sub">of 128 EMEA opt-ins (64.1%) · excl. internal</div>
+      <div class="delta">EMEA paying rate 64% vs AMER 61%</div>
     </div>
   </div>
 
@@ -534,7 +534,7 @@
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Daily EAP Signup Volume — Aug 10–26, 2026</h2>
-      <p>Two clear waves: Aug 20–21 (broad EAP invitation, +166 opt-ins) and Aug 24–28 (ongoing, +219 new since Aug 24). Paying instances track ~61% of total daily volume.</p>
+      <p>Two clear waves: Aug 20–21 (broad EAP invitation, +166 opt-ins) and Aug 24–28 (ongoing). Paying instances track ~62% of non-internal daily volume. 530 total signups; 203 internal excluded.</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartEapDaily"></canvas></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-line" style="background:var(--series-1)"></div>All opt-ins</div>
@@ -543,7 +543,7 @@
     </div>
     <div class="chart-card">
       <h2>EAP Opt-ins by Account Type</h2>
-      <p>210 paying customers (61.2%) have accepted EAP terms. Sandboxes (17%) and other edgecase accounts (18%) make up the remainder. Internal Zendesk accounts excluded from all counts.</p>
+      <p>203 paying customers (62.1%) have accepted EAP terms. Other edgecase (18%) and sandbox (15%) make up the remainder. 203 internal Zendesk accounts excluded from all counts (530 total signups).</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartEapType"></canvas></div>
     </div>
   </div>
@@ -894,7 +894,7 @@
 
   <div class="report-footer">
     Updated Aug 28, 2026 (daily 10 AM IST) · Action Platform Analytics · v2 definition (ratified 2026-06-30) ·
-    EAP signups: fresh query Aug 28 · internal Zendesk accounts excluded · Segment/trend data: Aug 23 snapshot ·
+    EAP signups: fresh count Aug 28 (530 total · 327 excl. internal · 203 paying) · Segment/trend data: Aug 23 snapshot ·
     1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only
   </div>
 
@@ -1857,7 +1857,7 @@ new Chart(document.getElementById('chartEapType'), {
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
-      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/343*100)}%)` } }
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/327*100)}%)` } }
     },
     scales: {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } } },
