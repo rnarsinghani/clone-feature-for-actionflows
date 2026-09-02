@@ -652,6 +652,51 @@
     <div class="chart-wrap" style="height:260px"><canvas id="chartCopilotTopAccounts"></canvas></div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION I-C: MANUAL vs COPILOT FLOW CREATION          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-label" style="margin-top:28px">I · Flow Creation vs Activation by Method (last 365 days · excl. internal)</div>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="label">Manually Created (365d)</div>
+      <div class="value">28,569</div>
+      <div class="sub">AMER 16,910 · EMEA 11,659</div>
+      <div class="delta">flows built via Action Builder UI (not Copilot)</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Manual Activation Rate</div>
+      <div class="value" style="color:var(--series-3)">28.1%</div>
+      <div class="sub">8,020 of 28,569 went live (≥1 DONE exec)</div>
+      <div class="delta">~20,549 built but never activated — dormant/abandoned</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Copilot Generated</div>
+      <div class="value" style="color:var(--series-1)">428</div>
+      <div class="sub">AMER 307 · EMEA 121 · since Aug 20 EAP start</div>
+      <div class="delta">Copilot is ~8% of created volume in the window</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Copilot Activation Rate</div>
+      <div class="value" style="color:var(--series-2)">62.9%</div>
+      <div class="sub">269 of 428 went live (≥1 DONE exec)</div>
+      <div class="delta">rate matches manual (~63%) — not a leakier funnel</div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-bottom:16px">
+    <h2>Manual vs Copilot — Flows Created & Activated (last 365 days, excl. internal)</h2>
+    <p>Over a full year, ~28.6K flows were built manually vs 428 via Admin Copilot (Copilot started Aug 20, so its 365-day count equals its ~13-day count). Manual activation rate is 28.1% — most manually-built flows never go live. Copilot-generated flows activate at 62.9%, essentially the same rate as manual, so Copilot isn't a leakier funnel; it's just earlier-stage and lower-volume. The gap is volume, not conversion.</p>
+    <table class="eap-table">
+      <thead><tr><th>Method</th><th>Created (365d)</th><th>Activated</th><th>Activation rate</th></tr></thead>
+      <tbody>
+        <tr><td>Manual (Action Builder UI)</td><td>28,569</td><td>8,020</td><td>28.1%</td></tr>
+        <tr><td>Admin Copilot</td><td>428</td><td>269</td><td>62.9%</td></tr>
+        <tr class="eap-new"><td><strong>Total</strong></td><td><strong>28,997</strong></td><td><strong>8,289</strong></td><td><strong>28.6%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Use case breakdown + customer detail table -->
   <!-- Net-new customer penetration via EAP -->
   <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA)</div>
@@ -895,7 +940,8 @@
   <div class="report-footer">
     Updated Sep 1, 2026 · v2 definition (ratified 2026-06-30) ·
     EAP signups: Sep 1 (AMER + EMEA both fresh) · Segment/trend data: Aug 23 snapshot ·
-    1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only
+    1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only ·
+    Manual vs Copilot flow creation/activation (I-C): last 365 days, excl. internal, AMER + EMEA combined
   </div>
 
 </div>
