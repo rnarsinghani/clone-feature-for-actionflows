@@ -367,26 +367,26 @@
   <div class="stat-row">
     <div class="stat-tile">
       <div class="label">Total Executions (Jul 2026)</div>
-      <div class="value">193.7M</div>
-      <div class="sub">Peak month · AMER + EMEA</div>
+      <div class="value">91.4M</div>
+      <div class="sub">Peak month · AMER + EMEA · excl. internal &amp; test</div>
       <div class="delta">↑ from 40K in Apr (pre-GA)</div>
     </div>
     <div class="stat-tile">
       <div class="label">Aug 2026 (partial)</div>
-      <div class="value">146.2M</div>
-      <div class="sub">Through Aug 23 · ~197M projected</div>
+      <div class="value">100.4M</div>
+      <div class="sub">Through Aug 30 · excl. internal &amp; test</div>
       <div class="delta">On pace with Jul</div>
     </div>
     <div class="stat-tile">
       <div class="label">Active Executing Accounts</div>
-      <div class="value">2,621</div>
-      <div class="sub">Aug 2026 · AMER (1,638) + EMEA (983)</div>
-      <div class="delta">↑ from 13 in Aug 2025</div>
+      <div class="value">1,660</div>
+      <div class="sub">Aug 2026 · AMER (977) + EMEA (683) · excl. internal &amp; test</div>
+      <div class="delta">↑ from 17 in Aug 2025</div>
     </div>
     <div class="stat-tile">
-      <div class="label">Total since GA (May–Aug)</div>
-      <div class="value">~635M</div>
-      <div class="sub">Cumulative executions post-launch</div>
+      <div class="label">Total since GA (Oct 2025–Aug)</div>
+      <div class="value">~549M</div>
+      <div class="sub">Cumulative executions post-launch · excl. internal &amp; test</div>
       <div class="delta">↑ 2,636× vs Apr 2026</div>
     </div>
   </div>
@@ -394,12 +394,12 @@
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Monthly Execution Volume — Aug 2025 to Aug 2026</h2>
-      <p>Near-zero pre-GA (Aug 2025–Sep 2025). Exploded 2,636× in October 2025 at GA. Plateauing at ~190–195M/month. Log scale used to show pre-GA activity.</p>
+      <p>Near-zero pre-GA (Aug 2025–Sep 2025). Exploded ~3.8× in October 2025 at GA. Plateauing at ~87–100M/month (excl. internal &amp; test). Log scale used to show pre-GA activity.</p>
       <div class="chart-wrap" style="height:280px"><canvas id="chartExecVolume"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>Active Executing Accounts Per Month</h2>
-      <p>Accounts that ran at least one flow in the month. Growing steadily — +22% from May to Aug 2026.</p>
+      <p>Accounts that ran at least one flow in the month (excl. internal &amp; test). Growing steadily — +22% from May to Aug 2026.</p>
       <div class="chart-wrap" style="height:280px"><canvas id="chartExecAccounts"></canvas></div>
     </div>
   </div>
@@ -943,7 +943,7 @@
     1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only ·
     Manual vs Copilot flow creation/activation (I-C): last 365 days, excl. internal, AMER + EMEA combined ·
     Admin Copilot section (I-B): refreshed Sep 2 — accounts 181, flows 428, activation 62.9%, prod execs 713K (last 30 days, excl. internal) · Net-new penetration (I): refreshed Sep 2 — 422 signups, 186 net-new, 85 generated, 59 activated ·
-    Funnel tiles (Section A): refreshed Aug 30 — Penetrated 2,010 ($483.9M), Activated 1,296 ($370.9M), Adopted 872 ($277.5M, ≥400/28d), Penetration 2.78% ·
+    Funnel tiles (Section A): refreshed Aug 30 — Penetrated 2,010 ($483.9M), Activated 1,296 ($370.9M), Adopted 872 ($277.5M, ≥400/28d), Penetration 2.78% · Section G execution-volume: refreshed Aug 30 — excl. internal & test accounts (Jul 91.4M, Aug partial 100.4M, active 1,660, since GA ~549M) ·
     Adopted headline (Section A): ≥400 non-test actions in last 28 days (dashboard variant; v2 canonical + OKR target + trajectory recomputation flagged as follow-up)
   </div>
 
@@ -951,7 +951,7 @@
 
 <script>
 const MONTHS = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26'];
-const GA_IDX = 9;
+const GA_IDX = 2;
 const BLUE='#2a78d6', ORANGE='#eb6834', AQUA='#1baf7a', YELLOW='#eda100', MAGENTA='#e87ba4', VIOLET='#4a3aa7';
 const GRAY='#e2e2df', GRAY_B='#c8c8c4';
 
@@ -1228,8 +1228,8 @@ new Chart(document.getElementById('chartTechSteps'), {
 
 // ── G1: Monthly execution volume (log scale) ──
 const execMonths = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26*'];
-const execTotal  = [2936,18206,11262,5155,3176,1496,6538,29943,40693,107355035,188492038,193726521,146215126];
-const execAccts  = [13,32,46,39,40,29,68,111,124,1924,2291,2547,2621];
+const execTotal  = [2916,18110,11178,5102,3098,1438,6128,28718,39077,269217045,87935525,91426792,100419092];
+const execAccts  = [17,25,40,39,40,35,58,71,65,908,1211,1377,1660];
 
 new Chart(document.getElementById('chartExecVolume'), {
   type:'bar', plugins:[gaLinePlugin],
