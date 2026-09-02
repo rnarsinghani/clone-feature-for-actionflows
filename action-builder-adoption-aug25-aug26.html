@@ -699,44 +699,44 @@
 
   <!-- Use case breakdown + customer detail table -->
   <!-- Net-new customer penetration via EAP -->
-  <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA)</div>
+  <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA · as of Sep 2, 2026)</div>
 
   <div class="stat-row">
     <div class="stat-tile">
       <div class="label">Total EAP Signups</div>
-      <div class="value">311</div>
-      <div class="sub">AMER 186 · EMEA 125 · excl. internal accounts</div>
-      <div class="delta">187 (60.1%) already used Action Builder · 124 brand new</div>
+      <div class="value">422</div>
+      <div class="sub">AMER 264 · EMEA 158 · excl. internal accounts</div>
+      <div class="delta">236 (55.9%) already used Action Builder · 186 brand new</div>
     </div>
     <div class="stat-tile">
       <div class="label">Net-New to Action Builder</div>
-      <div class="value" style="color:var(--series-1)">124</div>
-      <div class="sub">39.9% of non-internal EAP signups had never run a flow</div>
-      <div class="delta">AMER 76 · EMEA 48 — Admin Copilot is their entry point</div>
+      <div class="value" style="color:var(--series-1)">186</div>
+      <div class="sub">44.1% of non-internal EAP signups had never run a flow</div>
+      <div class="delta">AMER 120 · EMEA 66 — Admin Copilot is their entry point</div>
     </div>
     <div class="stat-tile">
       <div class="label">First-Timers Who Generated</div>
-      <div class="value" style="color:var(--series-4)">40</div>
-      <div class="sub">of 124 net-new accounts used Copilot to build a flow</div>
-      <div class="delta">32.3% conversion — 84 signed up but haven't built yet</div>
+      <div class="value" style="color:var(--series-4)">85</div>
+      <div class="sub">of 186 net-new accounts used Copilot to build a flow</div>
+      <div class="delta">45.7% conversion — 101 signed up but haven't built yet</div>
     </div>
     <div class="stat-tile">
       <div class="label">Net-New Activated in Prod</div>
-      <div class="value" style="color:var(--series-3)">28</div>
-      <div class="sub">accounts with flows live in production (22.6% of first-timers)</div>
-      <div class="delta">70% of those who generated got it live · AMER 19 · EMEA 9</div>
+      <div class="value" style="color:var(--series-3)">59</div>
+      <div class="sub">accounts with flows live in production (31.7% of first-timers)</div>
+      <div class="delta">69% of those who generated got it live · AMER 42 · EMEA 17</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>First-Timer Funnel — Net-New Accounts via Admin Copilot EAP</h2>
-      <p>124 external accounts tried Action Builder for the first time because of Admin Copilot EAP. 28 have flows live in production (70% activation rate among those who built). 84 signed up but haven't built yet — ready-made outreach list.</p>
+      <p>186 external accounts tried Action Builder for the first time because of Admin Copilot EAP. 59 have flows live in production (69% activation rate among those who built). 101 signed up but haven't built yet — ready-made outreach list.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartNewCustFunnel"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>EAP Signups — New vs Existing Action Builder Users</h2>
-      <p>39.9% of EAP signups (excl. internal) are net-new to Action Builder. EMEA has a slightly higher proportion of existing users (61.6%) vs AMER (59.1%). Removing internal accounts reveals real customer conversion signal.</p>
+      <p>44.1% of EAP signups (excl. internal) are net-new to Action Builder. EMEA has a slightly higher proportion of existing users (58.2%) vs AMER (54.5%). Removing internal accounts reveals real customer conversion signal.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartNewVsExisting"></canvas></div>
       <div class="legend" style="margin-top:10px">
         <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>Net-new to Action Builder</div>
@@ -942,7 +942,7 @@
     EAP signups: Sep 2 (AMER + EMEA both fresh) · Segment/trend data: Aug 23 snapshot ·
     1P/2P/3P execution mix: last 90 days, AMER + EMEA combined, non-test invocations only ·
     Manual vs Copilot flow creation/activation (I-C): last 365 days, excl. internal, AMER + EMEA combined ·
-    Admin Copilot section (I-B): refreshed Sep 2 — accounts 181, flows 428, activation 62.9%, prod execs 713K (last 30 days, excl. internal) ·
+    Admin Copilot section (I-B): refreshed Sep 2 — accounts 181, flows 428, activation 62.9%, prod execs 713K (last 30 days, excl. internal) · Net-new penetration (I): refreshed Sep 2 — 422 signups, 186 net-new, 85 generated, 59 activated ·
     Adopted headline (Section A): ≥400 non-test actions in last 28 days (dashboard variant; v2 canonical + OKR target + trajectory recomputation flagged as follow-up)
   </div>
 
@@ -1574,7 +1574,7 @@ new Chart(document.getElementById('chartNewCustFunnel'), {
     labels: ['Signed up (never used\nAction Builder before)', 'Used Copilot to\ngenerate a flow', 'Flow live in\nproduction'],
     datasets: [{
       label: 'Accounts',
-      data: [124, 40, 28],
+      data: [186, 85, 59],
       backgroundColor: [BLUE+'44', BLUE+'99', AQUA+'cc'],
       borderColor: [BLUE, BLUE, AQUA],
       borderWidth: 1.5, borderRadius: 4, borderSkipped: false
@@ -1587,13 +1587,13 @@ new Chart(document.getElementById('chartNewCustFunnel'), {
       legend: { display: false },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const pcts = [' (45.7% of all EAP)', ' (29.7% of first-timers)', ' (15.1% of first-timers · 51% of who built)'];
+          const pcts = [' (44.1% of all EAP)', ' (45.7% of first-timers)', ' (31.7% of first-timers · 69% of who built)'];
           return ` ${c.parsed.x} accounts${pcts[c.dataIndex]}`;
         }
       }}
     },
     scales: {
-      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 140 },
+      x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } }, max: 210 },
       y: { grid: { display: false }, ticks: { font: { size: 10 } } }
     }
   }
@@ -1603,17 +1603,17 @@ new Chart(document.getElementById('chartNewCustFunnel'), {
 new Chart(document.getElementById('chartNewVsExisting'), {
   type: 'bar',
   data: {
-    labels: ['AMER (312 total)', 'EMEA (187 total)'],
+    labels: ['AMER (264 total)', 'EMEA (158 total)'],
     datasets: [
       {
         label: 'Net-new to Action Builder',
-        data: [76, 48],
+        data: [120, 66],
         backgroundColor: BLUE+'cc', borderColor: BLUE,
         borderWidth: 1.5, borderRadius: 3
       },
       {
         label: 'Already using Action Builder',
-        data: [110, 77],
+        data: [144, 92],
         backgroundColor: ORANGE+'cc', borderColor: ORANGE,
         borderWidth: 1.5, borderRadius: 3
       }
@@ -1626,7 +1626,7 @@ new Chart(document.getElementById('chartNewVsExisting'), {
       legend: { display: false },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const totals = [186, 125];
+          const totals = [264, 158];
           return ` ${c.dataset.label}: ${c.parsed.y} (${Math.round(c.parsed.y/totals[c.dataIndex]*100)}%)`;
         }
       }}
