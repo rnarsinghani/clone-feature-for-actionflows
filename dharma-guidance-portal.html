@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A public, India-only prototype showing curated Bhagavad Gita-inspired reflection examples for adults."
+      content="A local, Bhagavad Gita-informed reflection beta for adults in India."
     />
     <title>Dharma — wisdom for the life in front of you</title>
     <link rel="stylesheet" href="styles.css" />
@@ -30,24 +30,24 @@
         <a href="#care">Care & safety</a>
       </nav>
 
-      <a class="header-cta" href="#ask">Explore examples <span aria-hidden="true">↗</span></a>
+      <a class="header-cta" href="#ask">Begin a reflection <span aria-hidden="true">↗</span></a>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> Public prototype · India · adults 18+</p>
+          <p class="eyebrow"><span></span> Local reflection beta · India · adults 18+</p>
           <h1 id="hero-title">Wisdom for the life <em>in front of you.</em></h1>
           <p class="hero-intro">
-            Explore curated, Bhagavad Gita-inspired examples for relationships, wellbeing, health-adjacent concerns, and everyday choices. This concept preview does not read, assess, or answer personal questions.
+            Bring a personal question and receive a short, source-linked Gita-informed reflection. Your words are processed in this browser only; this rules-based beta is not medical, legal, crisis, or emergency support.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#ask">Explore example reflections <span aria-hidden="true">↓</span></a>
-            <a class="text-link" href="#care">Read the prototype scope <span aria-hidden="true">→</span></a>
+            <a class="button button-primary" href="#ask">Begin a private reflection <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#care">Read the safety scope <span aria-hidden="true">→</span></a>
           </div>
           <div class="trust-row" aria-label="Principles">
-            <span><i aria-hidden="true">✦</i> Curated examples, not personal advice</span>
-            <span><i aria-hidden="true">✦</i> No accounts or in-page analytics</span>
+            <span><i aria-hidden="true">✦</i> Text stays in this browser</span>
+            <span><i aria-hidden="true">✦</i> No accounts or chat history</span>
             <span><i aria-hidden="true">✦</i> Adults 18+ only</span>
           </div>
         </div>
@@ -65,17 +65,17 @@
           <div class="water-line water-line-two"></div>
           <div class="hero-note">
             <span class="quote-mark">“</span>
-            <p>Act with care; release the need to control every outcome.</p>
-            <cite>Gita-inspired reflection · 2.47</cite>
+            <p>Choose the next action with care; release the need to control every outcome.</p>
+            <cite>Gita-informed lens · 2.47–48</cite>
           </div>
         </div>
       </section>
 
       <section class="reflection-section" id="ask" aria-labelledby="ask-title">
         <div class="section-heading">
-          <p class="eyebrow"><span></span> Curated concept preview</p>
-          <h2 id="ask-title">Explore a topic through prepared examples.</h2>
-          <p>Please do not enter personal, health, or safety information in this public prototype.</p>
+          <p class="eyebrow"><span></span> One-turn local reflection</p>
+          <h2 id="ask-title">Bring the question that is in front of you.</h2>
+          <p>Choose a lens and share only what is necessary. Do not include names, addresses, contact details, medical records, passwords, or urgent details.</p>
         </div>
 
         <div class="reflection-layout">
@@ -106,33 +106,46 @@
               </div>
             </fieldset>
 
-            <div class="prototype-notice" role="note">
-              <strong>This is a demonstrator, not a personal advice service.</strong>
-              <p>Select a topic to view a prepared reflection. Nothing you type is needed, stored, or analysed because this public preview does not accept questions.</p>
+            <label class="question-label" for="question">What would you like to reflect on?</label>
+            <textarea id="question" name="question" maxlength="800" minlength="12" required autocomplete="off" spellcheck="false" aria-describedby="question-help question-count" placeholder="For example: How can I speak with more care during a difficult disagreement?"></textarea>
+            <div class="question-meta">
+              <p id="question-help">Use a general description. This page does not send your text to a server.</p>
+              <p id="question-count" aria-live="polite">0 / 800</p>
             </div>
+
+            <div class="consent-list" aria-label="Required acknowledgements">
+              <label class="consent-option"><input id="adult-attestation" type="checkbox" required /><span>I am 18 or older and currently in India.</span></label>
+              <label class="consent-option"><input id="scope-attestation" type="checkbox" required /><span>I understand this is a local, Gita-informed reflection—not medical, mental-health, legal, crisis, or emergency care.</span></label>
+            </div>
+
+            <div class="prototype-notice" role="note">
+              <strong>How this beta responds.</strong>
+              <p>It uses the lens you choose and a small set of reviewed, source-linked reflections. It is not a live AI conversation, does not make a religious ruling, and does not keep a chat history.</p>
+            </div>
+            <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
             <div class="form-foot">
-              <p id="privacy-note"><span aria-hidden="true">⌁</span> No personal input is collected in this prototype.</p>
-              <button class="button button-primary" type="submit">View an example <span aria-hidden="true">→</span></button>
+              <p id="privacy-note"><span aria-hidden="true">⌁</span> Your text is cleared after this local reflection.</p>
+              <button class="button button-primary" type="submit">Reflect with Dharma <span aria-hidden="true">→</span></button>
             </div>
           </form>
 
-          <aside class="prompt-panel" aria-label="Curated example topics">
-            <p class="panel-label">Explore an example</p>
-            <button class="prompt-chip" type="button" data-lens="relationship">Relationship conflict</button>
-            <button class="prompt-chip" type="button" data-lens="wellbeing">Everyday balance</button>
-            <button class="prompt-chip" type="button" data-lens="health">Care alongside health concerns</button>
-            <button class="prompt-chip" type="button" data-lens="purpose">An uncertain work decision</button>
+          <aside class="prompt-panel" aria-label="Low-risk prompt examples">
+            <p class="panel-label">Try an example</p>
+            <button class="prompt-chip" type="button" data-lens="relationship" data-prompt="How can I speak with more care during a difficult disagreement?">Speaking during conflict</button>
+            <button class="prompt-chip" type="button" data-lens="wellbeing" data-prompt="How can I create a more balanced rhythm for my day?">Creating balance</button>
+            <button class="prompt-chip" type="button" data-lens="health" data-prompt="How can I stay steady while I follow a qualified clinician's care plan?">Steadiness alongside care</button>
+            <button class="prompt-chip" type="button" data-lens="purpose" data-prompt="How can I approach an uncertain work decision with integrity?">An uncertain work decision</button>
           </aside>
         </div>
 
         <section class="answer" id="answer" aria-live="polite" hidden>
           <div class="answer-topline">
-            <p class="eyebrow"><span></span> A prepared example</p>
-            <button id="reset-reflection" class="reset-button" type="button">Choose another topic <span aria-hidden="true">↗</span></button>
+            <p class="eyebrow"><span></span><span id="answer-label">Gita-informed local reflection</span></p>
+            <button id="reset-reflection" class="reset-button" type="button">Clear &amp; start another reflection <span aria-hidden="true">↗</span></button>
           </div>
           <div class="answer-grid">
             <div class="answer-main">
-              <p class="answer-kicker" id="answer-kicker">For the relationship in front of you</p>
+              <p class="answer-kicker" id="answer-kicker">One Gita-informed lens</p>
               <h3 id="answer-title">Begin with steadiness, then speak with care.</h3>
               <div id="answer-body"></div>
               <div class="source-card" id="source-card">
@@ -142,41 +155,42 @@
                   <a id="source-citation" href="https://www.gitasupersite.iitk.ac.in/srimad?field_chapter_value=17&field_nsutra_value=15&language=dv" target="_blank" rel="noreferrer">Bhagavad Gita 17.15 · compare translations ↗</a>
                 </div>
               </div>
+              <div class="resource-list" id="resource-list" aria-label="Support resources" hidden></div>
             </div>
-            <aside class="practice-card">
+            <aside class="practice-card" id="practice-card">
               <p class="panel-label">One small practice</p>
               <h4 id="practice-title">Create a moment of space</h4>
               <p id="practice-body">Before responding, take three slow breaths. Name the need beneath the reaction — yours and theirs — before you choose your words.</p>
               <div class="practice-time"><span aria-hidden="true">◷</span> <span id="practice-time">2 minutes</span></div>
             </aside>
           </div>
-          <p class="answer-boundary" id="answer-boundary">This is prepared illustrative content. It is not generated from, or tailored to, personal information. Interpretations of the Bhagavad Gita differ.</p>
+          <p class="answer-boundary" id="answer-boundary">This is one Gita-informed interpretation from a local, rules-based beta. It is not a religious ruling or a substitute for qualified support.</p>
         </section>
       </section>
 
       <section class="wisdom-section" id="how-it-works" aria-labelledby="how-title">
         <div class="section-heading centered-heading">
-          <p class="eyebrow"><span></span> What this prototype demonstrates</p>
+          <p class="eyebrow"><span></span> How this reflection beta works</p>
           <h2 id="how-title">Not answers handed down. <em>A starting point for reflection.</em></h2>
         </div>
         <div class="step-grid">
           <article class="step-card">
             <span class="step-number">01</span>
             <div class="step-icon" aria-hidden="true">⌁</div>
-            <h3>Choose a topic</h3>
-            <p>Explore one of four pre-authored scenarios rather than sharing personal information with this public preview.</p>
+            <h3>Share only the essentials</h3>
+            <p>Choose a lens and write a general question. The page does not send it to a server or keep it as a chat.</p>
           </article>
           <article class="step-card highlighted-step">
             <span class="step-number">02</span>
             <div class="step-icon" aria-hidden="true">◒</div>
-            <h3>See a wise lens</h3>
-            <p>View a clearly labeled, Gita-inspired interpretation with a source link for further study.</p>
+            <h3>See a grounded lens</h3>
+            <p>Receive a short, reviewed reflection selected locally, with a Bhagavad Gita source link for further study.</p>
           </article>
           <article class="step-card">
             <span class="step-number">03</span>
             <div class="step-icon" aria-hidden="true">→</div>
-            <h3>Use it with care</h3>
-            <p>Treat the example as a conversation starter, never as medical, mental-health, legal, emergency, or religious authority.</p>
+            <h3>Safety comes first</h3>
+            <p>Urgent, abuse, health, child-safety, and legal cues receive support information instead of a spiritual answer.</p>
           </article>
         </div>
       </section>
@@ -196,7 +210,7 @@
           <p class="eyebrow light-eyebrow"><span></span> Our approach</p>
           <h2 id="approach-title">Ancient wisdom, held with modern care.</h2>
           <p>The Bhagavad Gita is not a book of shortcuts. It is a conversation about how to act when life is complex: with presence instead of panic, compassion instead of cruelty, and courage instead of avoidance.</p>
-          <p>Dharma translates those enduring ideas into plain language while honoring the many ways people understand and live this tradition. This public site is an early concept preview, not a personalized guidance service.</p>
+          <p>Dharma translates those enduring ideas into plain language while honoring the many ways people understand and live this tradition. This local beta selects from reviewed reflections; it does not diagnose, judge, or declare anyone's single “right” path.</p>
           <a class="text-link light-link" href="#care">See our care commitments <span aria-hidden="true">→</span></a>
         </div>
       </section>
@@ -204,23 +218,23 @@
       <section class="care-section" id="care" aria-labelledby="care-title">
         <div>
           <p class="eyebrow"><span></span> Safety and scope</p>
-          <h2 id="care-title">For adults in India, this prototype is not care, crisis, or professional advice.</h2>
+          <h2 id="care-title">For adults in India, this reflection is not care, crisis, or professional advice.</h2>
         </div>
         <div class="care-grid">
           <article>
             <span class="care-icon" aria-hidden="true">⊕</span>
             <h3>For health questions</h3>
-            <p>Do not use this prototype for symptoms, diagnosis, treatment, medication, diet, or health decisions. Contact a qualified clinician instead.</p>
+            <p>For symptoms, diagnosis, treatment, medication, diet, fasting, pregnancy, or mental-health concerns, it directs you to qualified human care rather than offering an interpretation.</p>
           </article>
           <article>
             <span class="care-icon" aria-hidden="true">◇</span>
             <h3>For urgent danger</h3>
-            <p>In India, call 112 for immediate danger or medical emergencies. For mental-health support, Tele-MANAS: 14416 or 1800-89-14416. Do not wait for this site.</p>
+            <p>In India, call 112 for immediate danger or medical emergencies. For mental-health support, Tele-MANAS: 14416 or 1800-89-14416. Do not wait for this page.</p>
           </article>
           <article>
             <span class="care-icon" aria-hidden="true">◌</span>
             <h3>Privacy and sources</h3>
-            <p>No personal input or in-page analytics are used here. Your host may retain standard request logs. References are for study; translations and interpretations differ.</p>
+            <p>Your question is processed locally and not sent by this page. No account, chat history, or in-page analytics is used; hosts may retain standard page-request logs. References are for study; interpretations differ.</p>
           </article>
         </div>
       </section>
@@ -228,8 +242,8 @@
 
     <footer class="site-footer">
       <a class="brand" href="#top" aria-label="Dharma home"><span class="brand-mark" aria-hidden="true">✦</span><span>Dharma</span></a>
-      <p>India-only public prototype for adults 18+. It presents curated examples, not personal guidance.</p>
-      <p class="footer-note">© <span id="year"></span> Dharma. No personal input, no in-page analytics.</p>
+      <p>India-only local reflection beta for adults 18+. It offers Gita-informed reflection, not personal care or a religious ruling.</p>
+      <p class="footer-note">© <span id="year"></span> Dharma. No chat history, no in-page analytics.</p>
     </footer>
 
     <script src="app.js"></script>
