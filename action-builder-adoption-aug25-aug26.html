@@ -366,40 +366,40 @@
 
   <div class="stat-row">
     <div class="stat-tile">
-      <div class="label">Total Executions (Jul 2026)</div>
-      <div class="value">91.4M</div>
-      <div class="sub">Peak month · AMER + EMEA · excl. internal &amp; test</div>
-      <div class="delta">↑ from 40K in Apr (pre-GA)</div>
+      <div class="label">Total Executions (Sep 2026)</div>
+      <div class="value">161.8M</div>
+      <div class="sub">Record month · AMER 100.8M + EMEA 61.0M · excl. internal &amp; test</div>
+      <div class="delta">↑ +57% vs Aug — Copilot-built flows scaling</div>
     </div>
     <div class="stat-tile">
-      <div class="label">Aug 2026 (partial)</div>
-      <div class="value">100.4M</div>
-      <div class="sub">Through Aug 30 · excl. internal &amp; test</div>
-      <div class="delta">On pace with Jul</div>
+      <div class="label">Aug 2026 (full month)</div>
+      <div class="value">102.9M</div>
+      <div class="sub">Through Aug 31 · excl. internal &amp; test</div>
+      <div class="delta">↑ +9.7% vs Jul</div>
     </div>
     <div class="stat-tile">
       <div class="label">Active Executing Accounts</div>
-      <div class="value">1,660</div>
-      <div class="sub">Aug 2026 · AMER (977) + EMEA (683) · excl. internal &amp; test</div>
-      <div class="delta">↑ from 17 in Aug 2025</div>
+      <div class="value">2,066</div>
+      <div class="sub">Sep 2026 · AMER (1,217) + EMEA (849) · excl. internal &amp; test</div>
+      <div class="delta">↑ +25% vs Aug (1,659) · from 17 in Aug 2025</div>
     </div>
     <div class="stat-tile">
-      <div class="label">Total since GA (Oct 2025–Aug)</div>
-      <div class="value">~549M</div>
+      <div class="label">Total since GA (Oct 2025–Sep)</div>
+      <div class="value">~711M</div>
       <div class="sub">Cumulative executions post-launch · excl. internal &amp; test</div>
-      <div class="delta">↑ 2,636× vs Apr 2026</div>
+      <div class="delta">↑ +161.8M in Sep alone</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Monthly Execution Volume — Aug 2025 to Aug 2026</h2>
-      <p>Near-zero pre-GA (Aug 2025–Sep 2025). Exploded ~3.8× in October 2025 at GA. Plateauing at ~87–100M/month (excl. internal &amp; test). Log scale used to show pre-GA activity.</p>
+      <p>Near-zero pre-GA (Aug 2025–Sep 2025). Exploded ~3.8× in October 2025 at GA. Now accelerating: 94M → 103M → 162M/month (Jul–Sep 2026), driven by Copilot-built flows running at scale. Log scale used to show pre-GA activity.</p>
       <div class="chart-wrap" style="height:280px"><canvas id="chartExecVolume"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>Active Executing Accounts Per Month</h2>
-      <p>Accounts that ran at least one flow in the month (excl. internal &amp; test). Growing steadily — +22% from May to Aug 2026.</p>
+      <p>Accounts that ran at least one flow in the month (excl. internal &amp; test). Growing steadily — +25% from Aug to Sep 2026 (1,659 → 2,066).</p>
       <div class="chart-wrap" style="height:280px"><canvas id="chartExecAccounts"></canvas></div>
     </div>
   </div>
@@ -520,21 +520,21 @@
 
   <div class="chart-grid-2" style="margin-top:12px">
     <div class="chart-card">
-      <h2>EAP Funnel — Signed Up → Created → Activated (846 accounts)</h2>
-      <p>32% completed the full journey in days. 468 have live flows — most are existing Action Builder users who signed up for Copilot, with flows that pre-dated the EAP. 578 are the priority outreach list.</p>
+      <h2>EAP Funnel — Signed Up → Created → Activated (859 accounts)</h2>
+      <p>29.7% of external signups have an executed Copilot flow. 558 Copilot flows are live in production today. 517 signed up but haven't built a Copilot flow yet — the priority outreach list.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartEapFullFunnel"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>AMER vs EMEA — EAP Funnel Conversion</h2>
-      <p>AMER completes the full journey at 33.5% vs EMEA at 29.0%. Both regions show strong activation once accounts engage — most signups arrive with existing live flows.</p>
+      <p>AMER converts 39.1% of signups to a Copilot-generated flow vs EMEA 38.8%; recent-execution rates are similar (AMER 24.7%, EMEA 26.4%). Both regions convert at the same rate once accounts engage.</p>
       <div class="chart-wrap" style="height:200px"><canvas id="chartEapRegionFunnel"></canvas></div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
-      <h2>Daily EAP Signup Volume — Aug 5–Sep 22, 2026</h2>
-      <p>Closed-EAP trickle (Aug 5-12), then the Open EAP spike from Aug 20. Waves: Aug 20-21 (+105), Aug 24-28 (+190), Sep 2-4 (+163), and Sep 7-11 (+228) after the Open EAP announcement; mid-September holds a steady ~35-48/day. Paying instances track ~55-65% of non-internal daily volume. 1,600 total signups; 473 internal excluded.</p>
+      <h2>Daily EAP Signup Volume — Aug 5–Sep 30, 2026</h2>
+      <p>Closed-EAP trickle (Aug 5-19), then the Open EAP spike from Aug 20. Waves: Aug 20-21 (+149), Aug 24-28 (+261), Sep 2-4 (+219), and Sep 7-11 (+318) after the Open EAP announcement; late September holds a steady ~30-60/day. Paying instances track ~40-55% of daily volume. 1,886 total signups; 852 paying (AMER 508 · EMEA 344).</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartEapDaily"></canvas></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-line" style="background:var(--series-1)"></div>All opt-ins</div>
@@ -543,14 +543,14 @@
     </div>
     <div class="chart-card">
       <h2>EAP Opt-ins by Account Type</h2>
-      <p>720 paying customers (63.9% of external) have accepted EAP terms. Sandbox (183), other/edgecase (126), and active trial (98) make up the remainder. 473 internal Zendesk accounts excluded from headline counts (1,600 total signups).</p>
+      <p>852 paying customers (45.2% of all opt-ins) have accepted EAP terms. Sandbox (247), active trial (148), and other/internal (639) make up the remainder of the 1,886 total opt-ins.</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartEapType"></canvas></div>
     </div>
   </div>
 
   <div class="chart-card" style="margin-bottom:16px">
-    <h2>Recent Paying Customer EAP Signups — Sep 21–Sep 22, 2026</h2>
-    <p>30 most recent paying accounts to accept EAP terms. Highlighted rows (blue) signed up today (Sep 22). Mix of fintech, retail, health, industrial, and SaaS verticals across 15+ countries.</p>
+    <h2>Recent Paying Customer EAP Signups — Sep 29–Sep 30, 2026</h2>
+    <p>30 most recent paying accounts to accept EAP terms. Highlighted rows (blue) signed up today (Sep 30). Mix of retail, fintech, tech, education, and industrial verticals across AMER, EMEA, LATAM and APAC.</p>
     <table class="eap-table">
       <thead>
         <tr>
@@ -562,36 +562,37 @@
         </tr>
       </thead>
                         <tbody>
-        <tr class="eap-new"><td>Sep 22, 23:36</td><td>Vista Group (NZ) Limited</td><td>vistacinema</td><td><span class="region-tag emea">APAC</span></td><td>Sofie Wetterbrandt</td></tr>
-        <tr class="eap-new"><td>Sep 22, 21:15</td><td>Skyline Construction</td><td>skyline-help</td><td><span class="region-tag amer">AMER</span></td><td>Alejandro Valdovinos</td></tr>
-        <tr class="eap-new"><td>Sep 22, 20:22</td><td>Conta Simples Solucoes de Pagamentos LTDA</td><td>contasimples</td><td><span class="region-tag amer">LATAM</span></td><td>Amanda Souza</td></tr>
-        <tr class="eap-new"><td>Sep 22, 18:16</td><td>Brilliant</td><td>brillianthome</td><td><span class="region-tag amer">AMER</span></td><td>Cindy Hwang</td></tr>
-        <tr class="eap-new"><td>Sep 22, 17:50</td><td>InVue Security Products, Inc.</td><td>invue</td><td><span class="region-tag amer">AMER</span></td><td>Juan Carlos Esparza</td></tr>
-        <tr class="eap-new"><td>Sep 22, 17:43</td><td>Jesta I.S.</td><td>jestaissupport</td><td><span class="region-tag amer">AMER</span></td><td>Rick Timms</td></tr>
-        <tr class="eap-new"><td>Sep 22, 16:35</td><td>FreedomPay</td><td>freedompay</td><td><span class="region-tag amer">AMER</span></td><td>Dara Ben-Judah</td></tr>
-        <tr class="eap-new"><td>Sep 22, 16:02</td><td>Osmose Solutions</td><td>osmose-solutions</td><td><span class="region-tag emea">EMEA</span></td><td>Afonso Dartemare</td></tr>
-        <tr class="eap-new"><td>Sep 22, 15:15</td><td>Universal Music Investments, Inc.</td><td>umgd2c</td><td><span class="region-tag amer">AMER</span></td><td>Rachel Edwards</td></tr>
-        <tr class="eap-new"><td>Sep 22, 14:42</td><td>Topicus Healthcare</td><td>viplive</td><td><span class="region-tag emea">EMEA</span></td><td>Jasmiina Laakso</td></tr>
-        <tr class="eap-new"><td>Sep 22, 13:53</td><td>Victoria Beckham Limited</td><td>victoriabeckham</td><td><span class="region-tag emea">EMEA</span></td><td>Giada Andriollo</td></tr>
-        <tr class="eap-new"><td>Sep 22, 12:46</td><td>Ticketsolve LTD</td><td>ticketsolve</td><td><span class="region-tag emea">EMEA</span></td><td>Hayley Draper</td></tr>
-        <tr class="eap-new"><td>Sep 22, 12:09</td><td>Quirion</td><td>quirionag</td><td><span class="region-tag emea">EMEA</span></td><td>Anna Auer</td></tr>
-        <tr class="eap-new"><td>Sep 22, 10:03</td><td>EA Technology</td><td>eatechnologyltdhelp</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
-        <tr class="eap-new"><td>Sep 22, 09:08</td><td>italki HK Limited</td><td>italki</td><td><span class="region-tag emea">APAC</span></td><td>Denise Tan</td></tr>
-        <tr class="eap-new"><td>Sep 22, 08:19</td><td>Next Holdings Ltd</td><td>nextstaging</td><td><span class="region-tag emea">EMEA</span></td><td>Alessandro Dutra</td></tr>
-        <tr class="eap-new"><td>Sep 22, 06:51</td><td>Twinkl Educational Publishing</td><td>twinkl</td><td><span class="region-tag emea">EMEA</span></td><td>Stephen O'Leary</td></tr>
-        <tr class="eap-new"><td>Sep 22, 02:40</td><td>BLUE GARAGE</td><td>jypkorea</td><td><span class="region-tag emea">APAC</span></td><td>—</td></tr>
-        <tr class="eap-new"><td>Sep 22, 01:25</td><td>Mulpha Signal Group</td><td>thesignalgroupsupport</td><td><span class="region-tag emea">APAC</span></td><td>—</td></tr>
-        <tr class="eap-new"><td>Sep 22, 01:15</td><td>A E Haigh Pty Ltd</td><td>haighs</td><td><span class="region-tag emea">APAC</span></td><td>Jessica Bayobo</td></tr>
-        <tr class="eap-new"><td>Sep 22, 00:08</td><td>Realestate.com.au Pty Ltd</td><td>mortgagechoice</td><td><span class="region-tag emea">APAC</span></td><td>Verity Dolan</td></tr>
-        <tr><td>Sep 21, 21:03</td><td>Hargrove Inc.</td><td>hargrovesupport</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
-        <tr><td>Sep 21, 20:17</td><td>Serko Limited</td><td>serko</td><td><span class="region-tag emea">APAC</span></td><td>Josh Ashman</td></tr>
-        <tr><td>Sep 21, 19:57</td><td>Klymit</td><td>klymit</td><td><span class="region-tag amer">AMER</span></td><td>Katie Davies</td></tr>
-        <tr><td>Sep 21, 18:17</td><td>Lasership, Inc. dba OnTrac Final Mile</td><td>ontrac-42642</td><td><span class="region-tag amer">AMER</span></td><td>Ryann Kleppe</td></tr>
-        <tr><td>Sep 21, 18:00</td><td>ClassPass</td><td>classpass</td><td><span class="region-tag amer">AMER</span></td><td>Leah Williams</td></tr>
-        <tr><td>Sep 21, 16:31</td><td>OfficeSpace Software</td><td>officespacesoftwaresupport</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
-        <tr><td>Sep 21, 16:24</td><td>Lynx Finhealth, Inc.</td><td>lynxfh</td><td><span class="region-tag amer">AMER</span></td><td>Alicia Rodriguez</td></tr>
-        <tr><td>Sep 21, 15:57</td><td>Roadpost</td><td>roadpost</td><td><span class="region-tag amer">AMER</span></td><td>Katie Davies</td></tr>
-        <tr><td>Sep 21, 15:44</td><td>Contour Aviation</td><td>contouraviation</td><td><span class="region-tag amer">AMER</span></td><td>Kristina Warden</td></tr>
+        <tr class="eap-new"><td>Sep 30, 16:09</td><td>Beppo AG</td><td>mybeppo</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 15:55</td><td>iPowerResale</td><td>ipowerresale</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 15:49</td><td>Levi Strauss &amp; Co.</td><td>levi</td><td><span class="region-tag amer">AMER</span></td><td>Carris Rhodes</td></tr>
+        <tr class="eap-new"><td>Sep 30, 15:39</td><td>ASAAS</td><td>asaas7379</td><td><span class="region-tag emea">LATAM</span></td><td>Gabriela Galvão</td></tr>
+        <tr class="eap-new"><td>Sep 30, 15:38</td><td>44 Pro Gloves</td><td>44procustom</td><td><span class="region-tag amer">AMER</span></td><td>Caroline Kirkcaldy</td></tr>
+        <tr class="eap-new"><td>Sep 30, 14:26</td><td>Work Well Technologies</td><td>workwelltech</td><td><span class="region-tag amer">AMER</span></td><td>Denis Cooney</td></tr>
+        <tr class="eap-new"><td>Sep 30, 14:15</td><td>Certiverse</td><td>certiverse</td><td><span class="region-tag amer">AMER</span></td><td>Roberto Mújica</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:59</td><td>Pinewood Technologies PLC</td><td>pinewood1</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:55</td><td>Slavic401k</td><td>slavic401k-empsm</td><td><span class="region-tag amer">AMER</span></td><td>Brandie Laughlin</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:49</td><td>Siteware Soluções</td><td>stratws</td><td><span class="region-tag emea">LATAM</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:41</td><td>ITHAKA</td><td>ithakasupport</td><td><span class="region-tag amer">AMER</span></td><td>Lauren Beato</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:40</td><td>Société Centrale Canine</td><td>socitcentralecanine</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:29</td><td>TUIN LTD</td><td>gaderohelp</td><td><span class="region-tag emea">EMEA</span></td><td>Katie Lernihan</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:08</td><td>Certified Collectibles</td><td>collectiblesgroupsupport</td><td><span class="region-tag amer">AMER</span></td><td>Lauren Beato</td></tr>
+        <tr class="eap-new"><td>Sep 30, 13:03</td><td>Boligfiks</td><td>byggstart</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 12:45</td><td>Sprintax Ireland</td><td>taxback</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 12:12</td><td>Network Optix</td><td>networkoptix</td><td><span class="region-tag amer">AMER</span></td><td>Cindy Hwang</td></tr>
+        <tr class="eap-new"><td>Sep 30, 11:14</td><td>QUORSO GLOBAL INC</td><td>quorso</td><td><span class="region-tag emea">EMEA</span></td><td>Paula Ojeda</td></tr>
+        <tr class="eap-new"><td>Sep 30, 10:13</td><td>Rentman</td><td>rentmanhelp</td><td><span class="region-tag emea">EMEA</span></td><td>Lisa Ramselaar</td></tr>
+        <tr class="eap-new"><td>Sep 30, 09:13</td><td>QUBE ICT Solutions B.V.</td><td>qube</td><td><span class="region-tag emea">EMEA</span></td><td>Lisa Ramselaar</td></tr>
+        <tr class="eap-new"><td>Sep 30, 07:27</td><td>株式会社ビタブリッドジャパン</td><td>vitabridhelp</td><td><span class="region-tag emea">APAC</span></td><td>Kunitake Horie</td></tr>
+        <tr class="eap-new"><td>Sep 30, 06:02</td><td>apol</td><td>apol528</td><td><span class="region-tag emea">EMEA</span></td><td>—</td></tr>
+        <tr class="eap-new"><td>Sep 30, 01:38</td><td>Buildsoft</td><td>bsoft</td><td><span class="region-tag emea">APAC</span></td><td>Gerome Deloso</td></tr>
+        <tr><td>Sep 29, 23:29</td><td>Gumshoe</td><td>gumshoe</td><td><span class="region-tag amer">AMER</span></td><td>—</td></tr>
+        <tr><td>Sep 29, 21:45</td><td>Integrated Power Services LLC</td><td>integratedpowerserviceshelp</td><td><span class="region-tag amer">AMER</span></td><td>Mireille Cameron</td></tr>
+        <tr><td>Sep 29, 21:22</td><td>Hubii</td><td>hubii-3046</td><td><span class="region-tag emea">LATAM</span></td><td>—</td></tr>
+        <tr><td>Sep 29, 19:28</td><td>DealerBuilt</td><td>dealerbuilt</td><td><span class="region-tag amer">AMER</span></td><td>Alex Sabu</td></tr>
+        <tr><td>Sep 29, 16:45</td><td>School Space</td><td>school-spacehelp</td><td><span class="region-tag emea">EMEA</span></td><td>Katie Lernihan</td></tr>
+        <tr><td>Sep 29, 14:43</td><td>GPBR PARTICIPAÇÕES LTDA</td><td>urbansports</td><td><span class="region-tag emea">LATAM</span></td><td>Fiorella Jiménez</td></tr>
+        <tr><td>Sep 29, 12:27</td><td>KENAY RETAIL S.L.U.</td><td>klast</td><td><span class="region-tag emea">EMEA</span></td><td>Ricardo Ayala</td></tr>
+        <tr><td>Sep 29, 08:16</td><td>Zen Technology B.V.</td><td>zencom</td><td><span class="region-tag emea">EMEA</span></td><td>Taha Berk Tiryaki</td></tr>
       </tbody>
     </table>
   </div>
@@ -631,12 +632,12 @@
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Admin Copilot Flow Funnel — Since EAP Start (Aug 20)</h2>
-      <p>63% of Copilot-generated flows ran in production (DONE execs). 77% are net-new creations (saveWorkflow); 23% improved existing flows (updateWorkflowMetadata). Customers are using Copilot to build automations they wouldn't have built manually.</p>
+      <p>64% of Copilot-created flows executed in production (DONE execs) and 49% are currently live (enabled). 92% of generated flows are net-new creations (saveWorkflow); 8% improved existing flows (updateWorkflowMetadata). Customers are using Copilot to build automations they wouldn't have built manually.</p>
       <div class="chart-wrap" style="height:220px"><canvas id="chartEapFunnel"></canvas></div>
     </div>
     <div class="chart-card">
-      <h2>AMER vs EMEA — Copilot Flows Created, Activated, Executed</h2>
-      <p>AMER runs more executions per flow (5,591 vs 1,574 avg) — AMER has more accounts and more flows; EMEA Copilot flows are fewer but still high-volume production automations.</p>
+      <h2>AMER vs EMEA — Copilot Flows Created, Live, Executed</h2>
+      <p>EMEA Copilot flows run at higher volume per flow (4,416 vs 2,958 avg over the last 30 days) — AMER has more accounts and more flows, but EMEA's Copilot-built automations are the highest-volume per flow.</p>
       <div class="chart-wrap" style="height:220px"><canvas id="chartCopilotQuality"></canvas></div>
       <div class="legend" style="margin-top:10px">
         <div class="legend-item"><div class="legend-dot" style="background:var(--series-1)"></div>Flows created</div>
@@ -648,7 +649,7 @@
 
   <div class="chart-card" style="margin-bottom:16px">
     <h2>Top Accounts by Admin Copilot Flow Executions (last 30 days)</h2>
-    <p>10 accounts account for the majority of all Copilot flow executions. RNBW Holdings (safecorp, AMER) leads by volume with ~1.78M executions in the last 30 days, followed by Hellotickets (hellotickets, EMEA) at ~1.01M and Globalization Partners (globalization-partners, AMER) — all on Copilot-generated flows running autonomously at scale.</p>
+    <p>10 accounts account for the majority of all Copilot flow executions. RNBW Holdings (safecorp, AMER) leads by volume with ~1.74M successful runs in the last 30 days, followed by Hellotickets (hellotickets, EMEA) at ~1.08M and Recargapay (recargapay, LATAM) at ~401K — all on Copilot-generated flows running autonomously at scale.</p>
     <div class="chart-wrap" style="height:260px"><canvas id="chartCopilotTopAccounts"></canvas></div>
   </div>
 
@@ -689,17 +690,18 @@
 
   <div class="chart-card" style="margin-bottom:16px">
     <h2>Copilot-Generated Flows — Weekly Production Runs (since EAP start Aug 20)</h2>
-    <p>Deduped workflow executions of Admin Copilot-generated flows, external accounts only. Volume scaled rapidly from the EAP open (Aug 20) and roughly doubled to ~2.17M runs in the week of Sep 14, led by a handful of accounts scaling Copilot-built flows; the Sep 21 week is partial (through the Sep 22 snapshot). Runs are workflow executions, not action steps.</p>
+    <p>Deduped workflow executions of Admin Copilot-generated flows, external accounts only. Volume scaled rapidly from the EAP open (Aug 20), doubling to ~2.15M runs in the week of Sep 14; the Sep 21 week held 1.37M and the Sep 28 week (partial, through Sep 30) is at 963K. Runs are workflow executions, not action steps.</p>
     <div class="chart-wrap" style="height:280px"><canvas id="chartCopilotWeeklyRuns"></canvas></div>
     <table class="eap-table" style="margin-top:14px">
       <thead><tr><th>Week starting</th><th>Runs</th><th>Successful</th><th>Success rate</th></tr></thead>
       <tbody>
-        <tr><td>Aug 17 (EAP opened Aug 20)</td><td>7,342</td><td>4,669</td><td>63.6%</td></tr>
-        <tr><td>Aug 24</td><td>295,234</td><td>276,574</td><td>93.7%</td></tr>
-        <tr><td>Aug 31</td><td>1,063,814</td><td>1,048,512</td><td>98.6%</td></tr>
-        <tr><td>Sep 7</td><td>1,130,089</td><td>1,107,732</td><td>98.0%</td></tr>
-        <tr><td>Sep 14</td><td>2,174,891</td><td>2,112,269</td><td>97.1%</td></tr>
-        <tr class="eap-new"><td>Sep 21 (partial, to Sep 22)</td><td>452,255</td><td>428,578</td><td>94.8%</td></tr>
+        <tr><td>Aug 17 (EAP opened Aug 20)</td><td>52,165</td><td>49,141</td><td>94.2%</td></tr>
+        <tr><td>Aug 24</td><td>330,899</td><td>311,380</td><td>94.1%</td></tr>
+        <tr><td>Aug 31</td><td>1,053,188</td><td>1,035,792</td><td>98.3%</td></tr>
+        <tr><td>Sep 7</td><td>1,124,338</td><td>1,102,841</td><td>98.1%</td></tr>
+        <tr><td>Sep 14</td><td>2,147,134</td><td>2,082,838</td><td>97.0%</td></tr>
+        <tr><td>Sep 21</td><td>1,368,981</td><td>1,301,435</td><td>95.1%</td></tr>
+        <tr class="eap-new"><td>Sep 28 (partial, to Sep 30)</td><td>963,263</td><td>883,405</td><td>91.7%</td></tr>
       </tbody>
     </table>
   </div>
@@ -738,7 +740,7 @@
 
   <div class="chart-card" style="margin-bottom:16px">
     <h2>Manual vs Copilot — Flows Created & Activated (last 365 days, excl. internal)</h2>
-    <p>Over a full year, ~28.9K flows were built manually vs 758 via Admin Copilot (Copilot started Aug 20, so its 365-day count equals its ~21-day count). Manual activation rate is 28.7% — most manually-built flows never go live. Copilot-generated flows activate at 57.1%, above the manual rate, so Copilot isn't a leakier funnel; it converts better. The gap is volume, not conversion. (Manual counts retained from Sep 4; Copilot counts refreshed Sep 10 via the canonical Aug 20-start query.)</p>
+    <p>Over a full year, ~28.9K flows were built manually vs 1,145 via Admin Copilot (Copilot started Aug 20). Manual activation rate is 28.7% — most manually-built flows never go live. Copilot-created flows activate at 64.1%, above the manual rate, so Copilot isn't a leakier funnel; it converts better. The gap is volume, not conversion. (Manual counts retained from Sep 4; Copilot counts refreshed Sep 30 via the canonical EAP-start query.)</p>
     <table class="eap-table">
       <thead><tr><th>Method</th><th>Created (365d)</th><th>Activated</th><th>Activation rate</th></tr></thead>
       <tbody>
@@ -751,7 +753,7 @@
 
   <!-- Use case breakdown + customer detail table -->
   <!-- Net-new customer penetration via EAP -->
-  <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA · as of Sep 10, 2026)</div>
+  <div class="section-label" style="margin-top:28px">I · Admin Copilot EAP — Net-New Customer Penetration (all EAP signups, AMER + EMEA · retained from Sep 10, 2026)</div>
 
   <div class="stat-row">
     <div class="stat-tile">
@@ -943,22 +945,22 @@
     </div>
     <div class="stat-tile">
       <div class="label">Total Action Steps Executed</div>
-      <div class="value">3.14M</div>
-      <div class="sub">in Copilot-generated flows · last 30 days</div>
-      <div class="delta">AMER 2.22M (82 steps/flow) · EMEA 921K (21 steps/flow)</div>
+      <div class="value">4.37M</div>
+      <div class="sub">workflow runs in Copilot-generated flows · last 30 days</div>
+      <div class="delta">AMER 2.23M vs EMEA 2.14M · deduped runs, all states · 4.22M DONE (96.5%)</div>
     </div>
     <div class="stat-tile">
-      <div class="label">Copilot WoW Growth (Aug 24)</div>
-      <div class="value" style="color:var(--series-2)">+82</div>
-      <div class="sub">new accounts penetrated in week of Aug 24</div>
-      <div class="delta">178 cumulative penetrated · 104 adopted · 6× surge from Aug 10</div>
+      <div class="label">Copilot WoW Growth (Sep 28)</div>
+      <div class="value" style="color:var(--series-2)">+22</div>
+      <div class="sub">new accounts generated in week of Sep 28</div>
+      <div class="delta">335 cumulative generated · 255 activated (76%) · 67× surge from Aug 10</div>
     </div>
   </div>
 
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Q7 — Cumulative Copilot Penetration &amp; Adoption (Week-over-Week)</h2>
-      <p>Near-zero through July, then a steep hockey stick from Aug 17 (EAP wave). 178 accounts using Copilot, 104 with active flows in production. Adoption rate: 58%.</p>
+      <p>Steep hockey stick from the Aug 20 EAP open. 335 accounts have used Copilot to generate a flow, 255 have an executed Copilot flow in production (76%). Steady ~50–60 new accounts/week through September. Early-week "adopted above penetrated" is an artifact of in-session test runs executing before the final save.</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartCopilotWoW"></canvas></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-line" style="background:var(--series-1)"></div>Cumulative penetrated (created ≥1 flow)</div>
@@ -967,7 +969,7 @@
     </div>
     <div class="chart-card">
       <h2>Q6 — Time to Activate Copilot Flows (target &lt;30 min)</h2>
-      <p>Median activation time is 10 min globally. 73% of flows go from Copilot generation to first production run within 30 minutes — EMEA is faster (80%) than AMER (71%).</p>
+      <p>Median activation time is 11 min in both regions. 65.7% of flows go from Copilot generation to first production run within 30 minutes — EMEA is slightly faster (67.6%) than AMER (64.6%).</p>
       <div class="chart-wrap" style="height:260px"><canvas id="chartTimeToActivate"></canvas></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--series-3)"></div>Within 30 min</div>
@@ -979,12 +981,12 @@
   <div class="chart-grid-2">
     <div class="chart-card">
       <h2>Q5 — Accuracy: Edits Before Activation (AMER vs EMEA)</h2>
-      <p>Most flows need ~2 edits before going live. AMER has higher zero-edit rate (14%) — customers are using more complex prompts with better initial results. Avg 60 steps/flow AMER vs 34 EMEA.</p>
+      <p>Most flows need ~2 edits (median) before going live. Zero-edit rate is now similar across regions (AMER 13.3%, EMEA 14.3%). Avg steps/flow is inflated by multi-version step counting — treat as an upper bound.</p>
       <div class="chart-wrap" style="height:240px"><canvas id="chartAccuracy"></canvas></div>
     </div>
     <div class="chart-card">
       <h2>Q8 — Avg Action Steps per Copilot Flow (AMER vs EMEA)</h2>
-      <p>AMER customers build flows averaging 82 action steps — nearly 4× EMEA's 21. Indicates AMER accounts are using Copilot for complex multi-step automations (loops, branching, multi-API chains).</p>
+      <p>AMER flows average ~52 configured action steps vs EMEA ~45 (upper bound — the count joins steps across all workflow versions, not just the current one, so true per-flow step counts are lower). Both regions use Copilot for complex multi-step automations.</p>
       <div class="chart-wrap" style="height:240px"><canvas id="chartStepsPerFlow"></canvas></div>
     </div>
   </div>
@@ -994,7 +996,9 @@
     Funnel &amp; segment tiles (Sections A, C): refreshed Sep 30 via Snowflake (GLOBAL) to definition v3 — the precomputed dbt flags adopted org-wide on Sep 24, 2026 (same as the adoption dashboard) — at the 2026-09-29 snapshot, customer basis (CRMs) with customer ARR: Penetrated 2,435 ($556.9M), Activated 1,641 ($451.6M), Adopted 1,031 ($351.9M, ≥400 completed actions/28d + ≥3 of 4 weeks, test runs included), penetration 3.41%; Aug-31 and Jun-30 v3 comparators from month-end snapshots. v3 is measurable only from 2026-06-11 (source-table data gap); Penetrated undercounts ~6% until 2026-11-15. Prior tiles were the v2 dashboard-variant (Aug 30) — not comparable. Aug-1 'was' deltas on segment tiles replaced with v3 Aug-31 comparators ·
     Trend charts (B), segment charts (C), industry charts (D), execution mix (E/F/G/H): v2 history retained from the Aug 23 snapshot — do not read against the v3 tiles ·
     EAP signups &amp; Admin Copilot sections (I): refreshed Sep 30 via Snowflake (Alice Zhang canonical queries, amended for the service-data hook) — external = paid-customer-universe join at 2026-09-28 (prior refresh excluded only internal z3n/z4n and kept sandbox/trial, so account and flow counts read lower this refresh; that is a basis change, not a decline). TOS signups: 1,886 total, 852 paying (AMER 508 · EMEA 344). Copilot generation since EAP start (Aug 20): 335 accounts, 1,145 flows created (AMER 713 · EMEA 432) + 102 modified, 735 activated (64.5%), 558 flows live in production (492 executed in last 30d), 4.37M prod runs (4.22M DONE · 96.5%). Q5 accuracy: median 2 edits before activation, 13.7% zero-edit. Q6: median 11 min to activate, 65.7% within 30 min ·
-    Retained from prior refreshes: weekly-runs chart &amp; table (Sep 22), daily-signup chart &amp; account-type chart &amp; recent-signup table (Sep 22), net-new-customer penetration section (Sep 10), manual flow counts (I-C, Sep 4), use-case categorization (I-D, Sep 2)
+    Execution volume (Section G) refreshed Sep 30 via raw action executions (SUCCESS, test-invocation-excluded, deduped by execution, paid-universe join): Jul 93.8M · Aug 102.9M (full month) · Sep 161.8M · active accounts Sep 2,066 (AMER 1,217 · EMEA 849) · cumulative since GA ~711M (prior ~549M through Aug 30 + Sep). Sep'26 point added to the monthly series; Jul/Aug points recomputed on the same basis (prior points pre-Jul retained) ·
+    Section I charts all refreshed Sep 30: weekly Copilot production runs (through Sep 28 week, partial), daily signup volume (Aug 5–Sep 30), opt-ins by account type (852 paying · 247 sandbox · 148 trial · 639 other/internal of 1,886), recent-signup table (Sep 29–30), EAP funnel &amp; region-funnel charts, copilot flow funnel &amp; AMER-vs-EMEA quality chart, top-10 accounts by Copilot executions, Q5 accuracy (median 2 edits, zero-edit 13.7%), Q6 time-to-activate (median 11 min, 65.7% within 30), Q7 cumulative WoW (335 generated · 255 activated), Q8 avg steps (upper bound — multi-version step counting) ·
+    Retained from prior refreshes: net-new customer penetration section (Sep 10 — its 'already used Action Builder' lookback predates this refresh's method and wasn't recomputed), manual flow counts (I-C, Sep 4), use-case categorization &amp; detail table (I-D, Sep 2), v2-history trend charts (Sections B–H, Aug 23 snapshot)
   </div>
 
 </div>
@@ -1277,9 +1281,9 @@ new Chart(document.getElementById('chartTechSteps'), {
 });
 
 // ── G1: Monthly execution volume (log scale) ──
-const execMonths = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26*'];
-const execTotal  = [2916,18110,11178,5102,3098,1438,6128,28718,39077,269217045,87935525,91426792,100419092];
-const execAccts  = [17,25,40,39,40,35,58,71,65,908,1211,1377,1660];
+const execMonths = ['Aug\'25','Sep\'25','Oct\'25','Nov\'25','Dec\'25','Jan\'26','Feb\'26','Mar\'26','Apr\'26','May\'26','Jun\'26','Jul\'26','Aug\'26','Sep\'26*'];
+const execTotal  = [2916,18110,11178,5102,3098,1438,6128,28718,39077,269217045,87935525,93806034,102854917,161785470];
+const execAccts  = [17,25,40,39,40,35,58,71,65,908,1211,1365,1659,2066];
 
 new Chart(document.getElementById('chartExecVolume'), {
   type:'bar', plugins:[gaLinePlugin],
@@ -1437,10 +1441,10 @@ new Chart(document.getElementById('chartTriggerFlows'), {
 new Chart(document.getElementById('chartEapFullFunnel'), {
   type: 'bar',
   data: {
-    labels: ['Signed up (excl. internal)', 'Created ≥1 flow', 'Flow activated in prod', 'Created AND activated'],
+    labels: ['Signed up (external/paid)', 'Created ≥1 Copilot flow', 'Copilot flow executed', 'Copilot flows live today'],
     datasets: [{
-      label: 'Accounts',
-      data: [846, 319, 468, 268],
+      label: 'Accounts / flows',
+      data: [859, 335, 255, 558],
       backgroundColor: [BLUE+'33', ORANGE+'bb', AQUA+'bb', BLUE+'cc'],
       borderColor:     [BLUE,      ORANGE,      AQUA,      BLUE],
       borderWidth: 1.5, borderRadius: 4, borderSkipped: false
@@ -1452,8 +1456,8 @@ new Chart(document.getElementById('chartEapFullFunnel'), {
       legend: { display: false },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const pcts = [' (100%)', ' (37.7%)', ' (55.3%)', ' (31.7%)'];
-          return ` ${c.parsed.x} accounts${pcts[c.dataIndex]}`;
+          const pcts = [' accounts (100%)', ' accounts (39.0%)', ' accounts (29.7%)', ' flows live (48.7% of 1,145 generated)'];
+          return ` ${c.parsed.x}${pcts[c.dataIndex]}`;
         }
       }}
     },
@@ -1468,13 +1472,13 @@ new Chart(document.getElementById('chartEapFullFunnel'), {
 new Chart(document.getElementById('chartEapRegionFunnel'), {
   type: 'bar',
   data: {
-    labels: ['AMER (508)', 'EMEA (338)'],
+    labels: ['AMER (514)', 'EMEA (345)'],
     datasets: [
-      { label: 'Created flow', data: [202, 117],
+      { label: 'Created flow', data: [201, 134],
         backgroundColor: ORANGE+'cc', borderColor: ORANGE, borderWidth: 1.5, borderRadius: 3 },
-      { label: 'Activated',   data: [269, 199],
+      { label: 'Copilot flow executed',   data: [153, 102],
         backgroundColor: AQUA+'cc',   borderColor: AQUA,   borderWidth: 1.5, borderRadius: 3 },
-      { label: 'Created + Activated', data: [170, 98],
+      { label: 'Executed in last 30 days', data: [127, 91],
         backgroundColor: BLUE+'cc',   borderColor: BLUE,   borderWidth: 1.5, borderRadius: 3 }
     ]
   },
@@ -1485,7 +1489,7 @@ new Chart(document.getElementById('chartEapRegionFunnel'), {
       legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12, usePointStyle: true } },
       tooltip: { ...TIP, callbacks: {
         label: c => {
-          const totals = [508, 338];
+          const totals = [514, 345];
           return ` ${c.dataset.label}: ${c.parsed.y} (${Math.round(c.parsed.y/totals[c.dataIndex]*100)}%)`;
         }
       }}
@@ -1498,9 +1502,9 @@ new Chart(document.getElementById('chartEapRegionFunnel'), {
 });
 
 // ── I: EAP Daily Signup Trend ──
-const eapDays = ['Aug 5','Aug 10','Aug 11','Aug 12','Aug 20','Aug 21','Aug 22','Aug 23','Aug 24','Aug 25','Aug 26','Aug 27','Aug 28','Aug 29','Aug 30','Aug 31','Sep 1','Sep 2','Sep 3','Sep 4','Sep 5','Sep 6','Sep 7','Sep 8','Sep 9','Sep 10','Sep 11','Sep 12','Sep 13','Sep 14','Sep 15','Sep 16','Sep 17','Sep 18','Sep 19','Sep 20','Sep 21','Sep 22*'];
-const eapAll    = [1,19,10,1,43,62,4,10,48,45,32,44,21,5,6,33,30,56,56,51,12,6,39,56,47,52,34,3,7,36,47,44,48,33,2,4,44,35];
-const eapPaying = [0,15,5,0,30,39,3,6,34,25,21,30,13,2,5,16,21,39,42,31,7,2,25,35,36,35,25,2,3,25,30,30,25,14,0,0,28,21];
+const eapDays = ['Aug 5','Aug 6','Aug 10','Aug 11','Aug 12','Aug 13','Aug 14','Aug 17','Aug 18','Aug 19','Aug 20','Aug 21','Aug 22','Aug 23','Aug 24','Aug 25','Aug 26','Aug 27','Aug 28','Aug 29','Aug 30','Aug 31','Sep 1','Sep 2','Sep 3','Sep 4','Sep 5','Sep 6','Sep 7','Sep 8','Sep 9','Sep 10','Sep 11','Sep 12','Sep 13','Sep 14','Sep 15','Sep 16','Sep 17','Sep 18','Sep 19','Sep 20','Sep 21','Sep 22','Sep 23','Sep 24','Sep 25','Sep 26','Sep 27','Sep 28','Sep 29','Sep 30*'];
+const eapAll    = [1,4,36,16,2,1,29,7,1,3,75,74,4,11,58,61,56,55,31,6,6,43,37,76,78,65,14,9,46,73,68,94,37,6,9,43,64,55,64,46,4,6,53,46,59,63,30,4,10,50,40,39];
+const eapPaying = [0,0,15,5,0,0,0,0,0,0,30,39,3,6,34,25,21,30,13,2,5,16,22,39,42,31,7,2,25,35,37,35,25,2,3,25,30,31,25,14,0,0,28,21,32,26,15,1,3,21,15,23];
 
 new Chart(document.getElementById('chartEapDaily'), {
   type: 'line',
@@ -1547,9 +1551,9 @@ new Chart(document.getElementById('chartEapDaily'), {
 });
 
 // ── K1: Q7 WoW trend ──
-const wowWeeks = ['Jun 1','Jun 8','Jun 15','Jun 29','Jul 6','Jul 13','Jul 20','Jul 27','Aug 3','Aug 10','Aug 17','Aug 24'];
-const wowPen   = [1, 2, 2, 4, 9, 11, 13, 16, 18, 29, 96, 178];
-const wowAdopt = [1, 1, 2, 4, 5,  7,  8, 11, 13, 20, 50, 104];
+const wowWeeks = ['Aug 10','Aug 17','Aug 24','Aug 31','Sep 7','Sep 14','Sep 21','Sep 28'];
+const wowPen   = [5, 30, 93, 153, 204, 260, 313, 335];
+const wowAdopt = [16, 40, 85, 119, 164, 198, 235, 255];
 new Chart(document.getElementById('chartCopilotWoW'), {
   type:'line',
   data:{ labels: wowWeeks, datasets:[
@@ -1567,14 +1571,14 @@ new Chart(document.getElementById('chartCopilotWoW'), {
 // ── K2: Q6 Time to activate ──
 new Chart(document.getElementById('chartTimeToActivate'), {
   type:'bar',
-  data:{ labels:['AMER (144 flows)', 'EMEA (49 flows)'],
+  data:{ labels:['AMER (460 flows)', 'EMEA (272 flows)'],
     datasets:[
-      { label:'Within 30 min', data:[102, 39], backgroundColor:AQUA+'cc', borderColor:AQUA, borderWidth:1.5, borderRadius:4 },
-      { label:'Over 30 min',   data:[42,  10], backgroundColor:ORANGE+'cc', borderColor:ORANGE, borderWidth:1.5, borderRadius:4 }
+      { label:'Within 30 min', data:[297, 184], backgroundColor:AQUA+'cc', borderColor:AQUA, borderWidth:1.5, borderRadius:4 },
+      { label:'Over 30 min',   data:[163,  88], backgroundColor:ORANGE+'cc', borderColor:ORANGE, borderWidth:1.5, borderRadius:4 }
     ]},
   options:{ responsive:true, maintainAspectRatio:false,
     interaction:{ mode:'index', intersect:false },
-    plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y} flows (${Math.round(c.parsed.y/(c.dataIndex===0?144:49)*100)}%)`}} },
+    plugins:{ legend:{display:false}, tooltip:{...TIP, callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y} flows (${Math.round(c.parsed.y/(c.dataIndex===0?460:272)*100)}%)`}} },
     scales:{ x:{grid:{display:false}, ticks:{font:{size:11}}, stacked:true},
              y:{grid:{color:'#f0f0ee'}, ticks:{font:{size:11}}, stacked:true, beginAtZero:true} }
   }
@@ -1585,8 +1589,8 @@ new Chart(document.getElementById('chartAccuracy'), {
   type:'bar',
   data:{ labels:['Zero edits\n(used as-is)', 'Avg edits before\nactivation', 'Avg steps\nper flow'],
     datasets:[
-      { label:'AMER', data:[14.0, 2.6, 60.2], backgroundColor:BLUE+'cc', borderColor:BLUE, borderWidth:1.5, borderRadius:4 },
-      { label:'EMEA', data:[6.1,  2.7, 34.4], backgroundColor:ORANGE+'cc', borderColor:ORANGE, borderWidth:1.5, borderRadius:4 }
+      { label:'AMER', data:[13.3, 2.7, 72.1], backgroundColor:BLUE+'cc', borderColor:BLUE, borderWidth:1.5, borderRadius:4 },
+      { label:'EMEA', data:[14.3, 2.45, 65.3], backgroundColor:ORANGE+'cc', borderColor:ORANGE, borderWidth:1.5, borderRadius:4 }
     ]},
   options:{ responsive:true, maintainAspectRatio:false,
     interaction:{ mode:'index', intersect:false },
@@ -1606,7 +1610,7 @@ new Chart(document.getElementById('chartStepsPerFlow'), {
   type:'bar',
   data:{ labels:['AMER', 'EMEA'],
     datasets:[{ label:'Avg action steps per flow execution',
-      data:[82.1, 20.9],
+      data:[51.7, 45.1],
       backgroundColor:[BLUE+'cc', ORANGE+'cc'],
       borderColor:[BLUE, ORANGE],
       borderWidth:1.5, borderRadius:6, borderSkipped:false
@@ -1723,10 +1727,10 @@ new Chart(document.getElementById('chartUseCaseExecs'), {
 new Chart(document.getElementById('chartEapFunnel'), {
   type: 'bar',
   data: {
-    labels: ['Accounts used Copilot', 'New flows generated', 'Flows activated (live)', 'Flows ran in production'],
+    labels: ['Accounts used Copilot', 'Copilot flows generated', 'Flows executed (≥1 DONE)', 'Flows live (enabled)'],
     datasets: [{
       label: 'Count',
-      data: [283, 758, 433, 480],
+      data: [335, 1145, 735, 558],
       backgroundColor: [BLUE+'55', BLUE+'77', BLUE+'aa', BLUE+'ee'],
       borderColor: BLUE,
       borderWidth: 1.5, borderRadius: 4, borderSkipped: false
@@ -1760,19 +1764,19 @@ new Chart(document.getElementById('chartCopilotQuality'), {
     datasets: [
       {
         label: 'Flows created',
-        data: [482, 276],
+        data: [713, 432],
         backgroundColor: BLUE+'cc', borderColor: BLUE,
         borderWidth: 1.5, borderRadius: 3
       },
       {
-        label: 'Flows activated',
-        data: [271, 162],
+        label: 'Flows live (enabled)',
+        data: [349, 209],
         backgroundColor: AQUA+'cc', borderColor: AQUA,
         borderWidth: 1.5, borderRadius: 3
       },
       {
         label: 'Flows executed',
-        data: [291, 189],
+        data: [461, 233],
         backgroundColor: ORANGE+'cc', borderColor: ORANGE,
         borderWidth: 1.5, borderRadius: 3
       }
@@ -1787,8 +1791,8 @@ new Chart(document.getElementById('chartCopilotQuality'), {
       tooltip: { ...TIP, callbacks: {
         afterBody: items => {
           const r = items[0].dataIndex;
-          const execs = [1627133, 297472][r];
-          const perFlow = r===0 ? 5287 : 1470;
+          const execs = [2233463, 2141954][r];
+          const perFlow = r===0 ? 2958 : 4416;
           return [`Total executions: ${execs.toLocaleString()}`, `Avg execs/flow: ${perFlow.toLocaleString()}`];
         }
       }}
@@ -1804,10 +1808,10 @@ new Chart(document.getElementById('chartCopilotQuality'), {
 new Chart(document.getElementById('chartCopilotTopAccounts'), {
   type: 'bar',
   data: {
-    labels: ['RNBW Holdings\n(safecorp)','Hellotickets\n(hellotickets)','Globalization Partners\n(globalization-partners)','Everlab\n(everlab)','Recargapay\n(recargapay)','Scenic Tours\n(scenicaustralia)','Corsair\n(corsair)','STANLIB\n(stanlib)','UNASP\n(unaspatendimento)','Airalo\n(airalohelp)'],
+    labels: ['RNBW Holdings\n(safecorp)','Hellotickets\n(hellotickets)','Recargapay\n(recargapay)','Globalization Partners\n(globalization-partners)','Everlab\n(everlab)','Farmacias Pague Menos\n(paguemenossac)','Scenic Tours\n(scenicaustralia)','Grizzly Industrial\n(grizzly4222)','Corsair\n(corsair)','AirGSM\n(airalohelp)'],
     datasets: [{
       label: 'Executions',
-      data: [1780504, 1009710, 253046, 227129, 198452, 157948, 99867, 90128, 84349, 82508],
+      data: [1736956, 1084165, 401097, 361974, 299075, 197185, 157409, 139014, 135601, 107595],
       backgroundColor: [
         BLUE+'cc',BLUE+'cc',ORANGE+'cc',ORANGE+'cc',
         AQUA+'bb',AQUA+'bb',AQUA+'bb',
@@ -1834,9 +1838,9 @@ new Chart(document.getElementById('chartCopilotTopAccounts'), {
 
 // ── J1: Execution Mix Donut ──
 // ── I-B2: Copilot-generated flows — weekly production runs (Sep 17) ──
-const copWeekLabels = ['Aug 17\n(EAP open)','Aug 24','Aug 31','Sep 7','Sep 14','Sep 21\n(partial)'];
-const copWeekRuns   = [7342, 295234, 1063814, 1130089, 2174891, 452255];
-const copWeekSucc   = [4669, 276574, 1048512, 1110732, 2111269, 428578];
+const copWeekLabels = ['Aug 17\n(EAP open)','Aug 24','Aug 31','Sep 7','Sep 14','Sep 21','Sep 28\n(partial)'];
+const copWeekRuns   = [52165, 330899, 1053188, 1124338, 2147134, 1368981, 963263];
+const copWeekSucc   = [49141, 311380, 1035792, 1102841, 2082838, 1301435, 883405];
 new Chart(document.getElementById('chartCopilotWeeklyRuns'), {
   type: 'bar',
   data: { labels: copWeekLabels, datasets: [
@@ -1959,12 +1963,12 @@ new Chart(document.getElementById('chartRegionMix'), {
 new Chart(document.getElementById('chartEapType'), {
   type: 'bar',
   data: {
-    labels: ['Paying Instance', 'Internal Instance', 'Sandbox', 'Other / Edgecase', 'Active Trial'],
+    labels: ['Paying Customers', 'Sandbox', 'Active Trial', 'Other / Internal'],
     datasets: [{
       label: 'Opt-ins',
-      data: [720, 473, 183, 126, 98],
-      backgroundColor: [AQUA+'cc', BLUE+'55', ORANGE+'55', YELLOW+'55', MAGENTA+'55'],
-      borderColor:     [AQUA,       BLUE,       ORANGE,       YELLOW,       MAGENTA],
+      data: [852, 247, 148, 639],
+      backgroundColor: [AQUA+'cc', ORANGE+'55', MAGENTA+'55', YELLOW+'55'],
+      borderColor:     [AQUA,       ORANGE,       MAGENTA,       YELLOW],
       borderWidth: 1.5, borderRadius: 4, borderSkipped: false
     }]
   },
@@ -1975,7 +1979,7 @@ new Chart(document.getElementById('chartEapType'), {
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
-      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/1389*100)}%)` } }
+      tooltip: { ...TIP, callbacks: { label: c => ` ${c.parsed.x} accounts (${Math.round(c.parsed.x/1886*100)}%)` } }
     },
     scales: {
       x: { grid: { color: '#f0f0ee' }, ticks: { font: { size: 11 } } },
